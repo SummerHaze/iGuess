@@ -104,9 +104,9 @@
     return [[self documentsDirectory]stringByAppendingPathComponent:@"Settings.plist"];
 }
 
-- (IBAction)back{
-    [self saveDuration];
-    [self dismissViewControllerAnimated:YES completion:nil];
+//- (IBAction)back{
+
+//    [self dismissViewControllerAnimated:YES completion:nil];
     
 //    UIAlertController *alertController =
 //    [UIAlertController alertControllerWithTitle:@"设置错误！"
@@ -138,13 +138,13 @@
 //    } else {
 //        [self presentViewController:alertController animated:YES completion:nil];
 //    }
-}
+//}
 
 - (void)switchValueChanged:(id)sender {
     UISwitch *control = (UISwitch *)sender;
     if (control == self.shortDuration) {
         if (self.shortDuration.on == YES) {
-            self.duration = 10;
+            self.duration = 60;
             [self.mediumDuration setOn:NO animated:YES];
             [self.longDuration setOn:NO animated:YES];
         }
@@ -161,6 +161,8 @@
             [self.shortDuration setOn:NO animated:YES];
         }
     }
+    
+    [self saveDuration];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section

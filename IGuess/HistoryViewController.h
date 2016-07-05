@@ -11,6 +11,6 @@
 
 @interface HistoryViewController : UITableViewController <ItemDetailViewControllerDelegate>
 
-- (IBAction)back;
+//- (IBAction)back;
 
 @end

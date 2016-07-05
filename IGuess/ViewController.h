@@ -10,9 +10,9 @@
 
 @interface ViewController : UIViewController
 
--(IBAction)startGame;
--(IBAction)setting;
--(IBAction)reviewHistory;
+//-(IBAction)startGame;
+//-(IBAction)setting;
+//-(IBAction)reviewHistory;
 
 @end
 

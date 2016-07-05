@@ -1,22 +1,22 @@
 //
-//  CurrentResultViewController.m
+//  ResultViewController.m
 //  IGuess
 //
 //  Created by xia on 5/31/16.
 //  Copyright © 2016 xia. All rights reserved.
 //
 
-#import "CurrentResultViewController.h"
+#import "ResultViewController.h"
 #import "FMDatabase.h"
 #import "ItemDetail.h"
 #import "ItemDetailViewController.h"
 #import "PlayViewController.h"
 
-@interface CurrentResultViewController ()
+@interface ResultViewController ()
 
 @end
 
-@implementation CurrentResultViewController
+@implementation ResultViewController
 {
     NSMutableArray *result;
 }
@@ -55,11 +55,11 @@
     return cell;
 }
 
-//- (IBAction)back {
-//    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
-//    PlayViewController *controller = (PlayViewController *)self.window.rootViewController;
-//    [controller dismissViewControllerAnimated:NO completion:nil];
-//}
+- (IBAction)back {
+    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+    PlayViewController *controller = (PlayViewController *)self.window.rootViewController;
+    [controller dismissViewControllerAnimated:NO completion:nil];
+}
 
 - (void)viewWillDisappear:(BOOL)animated {
     [self.navigationController dismissViewControllerAnimated:NO completion:nil];

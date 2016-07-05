@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface SettingsViewController : UITableViewController
-- (IBAction)back;
+//- (IBAction)back;
 
 //- (IBAction)switchValueChanged;
 

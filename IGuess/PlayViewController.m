@@ -9,7 +9,7 @@
 #import "PlayViewController.h"
 #import "FMDatabase.h"
 #import "ItemDetailViewController.h"
-#import "CurrentResultViewController.h"
+#import "ResultViewController.h"
 
 @interface PlayViewController ()
 
@@ -395,7 +395,7 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"ShowOneTimeDetail"]) {
-        CurrentResultViewController *controller = segue.destinationViewController;
+        ResultViewController *controller = segue.destinationViewController;
         controller.results = sender;
     }
 }
@@ -410,15 +410,8 @@
     NSInteger duration;
     NSString *path = [self dataFilePath];
     if ([[NSFileManager defaultManager]fileExistsAtPath:path]) {
-        NSData *data = [[NSData alloc] initWithContentsOfFile:path];
-        NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc]initForReadingWithData:data];
-        NSNumber *number = [unarchiver decodeObjectForKey:@"duration"]; //decode后的数据为对象，不能直接复制给int
-        if (number != nil) {
-            duration = [number intValue];
-        } else {
-            duration = 60;
-        }
-        [unarchiver finishDecoding];
+        NSDictionary *settingsBefore=[NSKeyedUnarchiver unarchiveObjectWithFile:path];
+        duration = [[settingsBefore objectForKey:@"duration"] intValue];
     } else {
         duration = 60;
     }
@@ -438,7 +431,8 @@
 
 - (IBAction)back {
     [self stopGame];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:self];
+//    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)pauseOrPlay {

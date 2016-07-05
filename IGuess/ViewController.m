@@ -24,16 +24,17 @@
     // Dispose of any resources that can be recreated.
 }
 
--(IBAction)startGame{
-    
-    
-};
--(IBAction)setting{
-    
-};
--(IBAction)reviewHistory{
-    
-};
+//-(IBAction)startGame{
+//    
+//};
+//
+//-(IBAction)setting{
+//    
+//};
+//
+//-(IBAction)reviewHistory{
+//    
+//};
 
 
 @end
