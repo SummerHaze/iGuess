@@ -26,7 +26,23 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    [self getResultsFromDB];
+    [self processResultsByRound];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - Table view data source
+
+//本tableview一共有几行
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return [items count];
+}
+
+- (void)getResultsFromDB {
     maxRounds = 100;
     results = [[NSMutableArray alloc]initWithCapacity:10];
     
@@ -34,7 +50,7 @@
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     NSString *dbPath = [documentsDirectory stringByAppendingPathComponent:@"record.db"];
-//    NSString *dbPath = [[NSBundle mainBundle]pathForResource:@"record" ofType:@"db"];
+    //    NSString *dbPath = [[NSBundle mainBundle]pathForResource:@"record" ofType:@"db"];
     FMDatabase *db = [FMDatabase databaseWithPath:dbPath];
     if (![db open]) {
         return;
@@ -50,10 +66,13 @@
         [results addObject:item];
     }
     [db close];
-    
+}
+
+//将results以round分组
+- (void)processResultsByRound {
     // 将results按照游戏轮数round处理成items
     items = [[NSMutableArray alloc]initWithCapacity:maxRounds];
-
+    
     //默认词条的round安装递增顺序排列
     ItemDetail *lastItem = [results lastObject];
     NSInteger max = lastItem.round;
@@ -63,31 +82,11 @@
         NSMutableArray *innerItems = [[NSMutableArray alloc]init];
         [items addObject:innerItems];
     }
-
+    
     for (int i=0; i<[results count]; i++) {
         ItemDetail *item = results[i];
         [items[item.round -1] addObject:results[i]];
     }
-    
-//    //临时规避由于round突增而导致突增部分结果为空的情况。需要找到突增的原因
-//    for (int i=0; i<[items count]; i++) {
-//        if (items[i] == nil) {
-//            [items removeObjectAtIndex:i];
-//        }
-//    }
-    
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-#pragma mark - Table view data source
-
-//本tableview一共有几行
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [items count];
 }
 
 //统计每轮的游戏数据，用以显示在history list中
@@ -108,14 +107,6 @@
         }
         //获取每轮游戏最后一个词条的时间，作为playTime
         idetail = [items[i] lastObject];
-        
-        //将数据库中存储的timestamp转换成NSDate，算上本地时区
-//        NSDate *timeStamp = [NSDate dateWithTimeIntervalSince1970:(idetail.wordId.doubleValue/1000)];
-//        NSTimeZone *zone = [NSTimeZone systemTimeZone];
-//        NSInteger interval = [zone secondsFromGMTForDate:timeStamp];
-//
-//        hitem.playTime = [timeStamp dateByAddingTimeInterval:interval];
-        
         hitem.playTime= [NSDate dateWithTimeIntervalSince1970:(idetail.wordId.doubleValue/1000)];
         
         [statResults addObject:hitem];

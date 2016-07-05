@@ -56,9 +56,10 @@
 }
 
 - (IBAction)back {
-    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
-    PlayViewController *controller = (PlayViewController *)self.window.rootViewController;
-    [controller dismissViewControllerAnimated:NO completion:nil];
+    [self.navigationController popToRootViewControllerAnimated:NO];
+//    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+//    PlayViewController *controller = (PlayViewController *)self.window.rootViewController;
+//    [controller dismissViewControllerAnimated:NO completion:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

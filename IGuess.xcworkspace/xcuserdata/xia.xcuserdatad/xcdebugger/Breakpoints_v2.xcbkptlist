@@ -99,13 +99,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "IGuess/PlayViewController.m"
-            timestampString = "489403841.193307"
+            filePath = "IGuess/SettingsViewController.m"
+            timestampString = "489403945.378404"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "166"
-            endingLineNumber = "166"
-            landmarkName = "-StartCountDown"
+            startingLineNumber = "80"
+            endingLineNumber = "80"
+            landmarkName = "-saveDuration"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -115,13 +115,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "IGuess/SettingsViewController.m"
-            timestampString = "489403945.378404"
+            filePath = "IGuess/HistoryViewController.m"
+            timestampString = "489419888.864584"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "80"
-            endingLineNumber = "80"
-            landmarkName = "-saveDuration"
+            startingLineNumber = "28"
+            endingLineNumber = "28"
+            landmarkName = "-viewDidLoad"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

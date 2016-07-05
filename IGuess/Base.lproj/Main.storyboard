@@ -561,7 +561,13 @@
                             <outlet property="delegate" destination="udb-MN-msi" id="d9y-0T-10m"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Detail" id="F80-Nc-EMl"/>
+                    <navigationItem key="navigationItem" title="Detail" id="F80-Nc-EMl">
+                        <barButtonItem key="leftBarButtonItem" title="Back" id="jxw-iw-HHA">
+                            <connections>
+                                <action selector="back" destination="udb-MN-msi" id="6SW-Jx-WIQ"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gnR-M1-9h6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
