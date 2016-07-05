@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1664879A1D2AA6E800D290D0 /* words.db in Resources */ = {isa = PBXBuildFile; fileRef = 166487991D2AA6E800D290D0 /* words.db */; };
+		1664879E1D2B476B00D290D0 /* record.db in Resources */ = {isa = PBXBuildFile; fileRef = 1664879D1D2B476B00D290D0 /* record.db */; };
 		16A1A4201CF57DAC0013E3F8 /* HistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16A1A41F1CF57DAC0013E3F8 /* HistoryViewController.m */; };
 		16A1A4231CF57DD30013E3F8 /* ItemDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16A1A4221CF57DD30013E3F8 /* ItemDetailViewController.m */; };
 		16A1A4261CF57E020013E3F8 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16A1A4251CF57E020013E3F8 /* SettingsViewController.m */; };
@@ -22,7 +23,6 @@
 		16E86CEA1CF59458007580C4 /* HistoryItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 16E86CE91CF59458007580C4 /* HistoryItem.m */; };
 		16E86CED1CF59471007580C4 /* ItemDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 16E86CEC1CF59471007580C4 /* ItemDetail.m */; };
 		16E86CF31CFDC3E9007580C4 /* CurrentResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16E86CF21CFDC3E9007580C4 /* CurrentResultViewController.m */; };
-		16F4726B1D25195A00E6761B /* record.db in Resources */ = {isa = PBXBuildFile; fileRef = 16F4726A1D25195A00E6761B /* record.db */; };
 		81E7C033CEE5DFA03DF818B8 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F3C308B55594A4CC27920719 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -38,6 +38,7 @@
 
 /* Begin PBXFileReference section */
 		166487991D2AA6E800D290D0 /* words.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = words.db; sourceTree = "<group>"; };
+		1664879D1D2B476B00D290D0 /* record.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = record.db; sourceTree = "<group>"; };
 		16A1A41E1CF57DAC0013E3F8 /* HistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryViewController.h; sourceTree = "<group>"; };
 		16A1A41F1CF57DAC0013E3F8 /* HistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryViewController.m; sourceTree = "<group>"; };
 		16A1A4211CF57DD30013E3F8 /* ItemDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemDetailViewController.h; sourceTree = "<group>"; };
@@ -65,7 +66,6 @@
 		16E86CEC1CF59471007580C4 /* ItemDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemDetail.m; sourceTree = "<group>"; };
 		16E86CF11CFDC3E9007580C4 /* CurrentResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurrentResultViewController.h; sourceTree = "<group>"; };
 		16E86CF21CFDC3E9007580C4 /* CurrentResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurrentResultViewController.m; sourceTree = "<group>"; };
-		16F4726A1D25195A00E6761B /* record.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = record.db; sourceTree = "<group>"; };
 		2206315ADB707D51AAEC53FA /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		F3C308B55594A4CC27920719 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCE807C8E6A2B1AC26D9F0B4 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -113,8 +113,8 @@
 		16D6E4231C8C587300B7A4B9 /* IGuess */ = {
 			isa = PBXGroup;
 			children = (
+				1664879D1D2B476B00D290D0 /* record.db */,
 				166487991D2AA6E800D290D0 /* words.db */,
-				16F4726A1D25195A00E6761B /* record.db */,
 				16D6E4271C8C587300B7A4B9 /* AppDelegate.h */,
 				16D6E4281C8C587300B7A4B9 /* AppDelegate.m */,
 				16D6E42A1C8C587300B7A4B9 /* ViewController.h */,
@@ -265,7 +265,7 @@
 				16D6E4311C8C587300B7A4B9 /* Assets.xcassets in Resources */,
 				1664879A1D2AA6E800D290D0 /* words.db in Resources */,
 				16D6E42F1C8C587300B7A4B9 /* Main.storyboard in Resources */,
-				16F4726B1D25195A00E6761B /* record.db in Resources */,
+				1664879E1D2B476B00D290D0 /* record.db in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

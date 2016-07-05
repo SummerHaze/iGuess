@@ -27,7 +27,7 @@
 {
     [super viewDidLoad];
     
-    maxRounds = 50;
+    maxRounds = 100;
     results = [[NSMutableArray alloc]initWithCapacity:10];
     
     //从数据库里读取数据，存储到results里

@@ -96,24 +96,28 @@
 }
 
 - (void)getWordsFromDB {
-    //从DB中取出wordCount个随机词条对应的ID
-    _wordCount = 300;
+    //从DB中随机取出词条对应的ID
+    _wordCount = 300; //一次游戏取出的词条个数
+    _totalNumber = 4634; //数据库中词条总个数
     int random;
     NSMutableString *IDs = [[NSMutableString alloc]initWithString:@"("];
-    _totalNumber = 4634;
+    
     for (int i=1; i<=_wordCount; i++) {
         random = [self getRandomNumber:1 to:_totalNumber];
         //去重
         BOOL contain = [IDs containsString:[NSString stringWithFormat:@"%d",random]];
+        
         if (contain == NO) {
-            if (i == _wordCount) {
-                [IDs appendString:[NSString stringWithFormat:@"%d)",random]];
-            } else {
+            if (i < _wordCount) {
                 [IDs appendString:[NSString stringWithFormat:@"%d,",random]];
+            } else {
+                [IDs appendString:[NSString stringWithFormat:@"%d)",random]];
             }
+        } else {
+            i--;
         }
     }
-    //    NSLog(@"random IDs: %@",IDs);
+//    NSLog(@"random IDs: %@",IDs);
     
     //从DB中取出对应ID的数据
     NSString *dbPath = [[NSBundle mainBundle]pathForResource:@"words" ofType:@"db"];
@@ -159,7 +163,7 @@
 
 //倒计时开始
 - (void)StartCountDown {
-    _leftTime = 10;
+    _leftTime = (int)[self loadDuration];
     NSTimeInterval seconds = 1;
     self.countDownLabel.text = [NSString stringWithFormat:@"%d", _leftTime ];
     
