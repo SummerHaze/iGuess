@@ -293,29 +293,6 @@
                                     </mask>
                                 </variation>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gNv-Ap-n3k">
-                                <rect key="frame" x="72" y="176" width="326" height="187"/>
-                                <color key="backgroundColor" red="0.40000000600000002" green="0.80000001190000003" blue="1" alpha="0.19665857263513514" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="148" id="7KX-Fg-wmF"/>
-                                    <constraint firstAttribute="width" constant="328" id="Yyc-ea-3YL"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="60"/>
-                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                <color key="highlightedColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="7KX-Fg-wmF"/>
-                                        <exclude reference="Yyc-ea-3YL"/>
-                                    </mask>
-                                </variation>
-                                <variation key="widthClass=compact">
-                                    <mask key="constraints">
-                                        <include reference="7KX-Fg-wmF"/>
-                                        <include reference="Yyc-ea-3YL"/>
-                                    </mask>
-                                </variation>
-                            </label>
                             <button opaque="NO" tag="5001" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rYY-i4-d43">
                                 <rect key="frame" x="236" y="389" width="162" height="100.5"/>
                                 <constraints>
@@ -416,6 +393,29 @@
                                     <action selector="guessWrong" destination="TJt-Qd-Jnq" eventType="touchUpInside" id="Lnp-AP-aDs"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gNv-Ap-n3k">
+                                <rect key="frame" x="72" y="176" width="326" height="187"/>
+                                <color key="backgroundColor" red="0.40000000600000002" green="0.80000001190000003" blue="1" alpha="0.19665857263513514" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="148" id="7KX-Fg-wmF"/>
+                                    <constraint firstAttribute="width" constant="328" id="Yyc-ea-3YL"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="60"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="highlightedColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="7KX-Fg-wmF"/>
+                                        <exclude reference="Yyc-ea-3YL"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="7KX-Fg-wmF"/>
+                                        <include reference="Yyc-ea-3YL"/>
+                                    </mask>
+                                </variation>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -426,12 +426,14 @@
                                 <variation key="widthClass=compact" constant="58"/>
                             </constraint>
                             <constraint firstItem="1LF-xt-qnJ" firstAttribute="top" secondItem="gNv-Ap-n3k" secondAttribute="bottom" constant="60" id="C5e-5L-RSN">
-                                <variation key="widthClass=compact" constant="70"/>
+                                <variation key="widthClass=compact" constant="76"/>
                             </constraint>
-                            <constraint firstItem="TaF-Vv-s3F" firstAttribute="top" secondItem="TqK-II-Cq1" secondAttribute="top" constant="89" id="Ghh-9F-5nE"/>
+                            <constraint firstItem="TaF-Vv-s3F" firstAttribute="top" secondItem="TqK-II-Cq1" secondAttribute="top" constant="89" id="Ghh-9F-5nE">
+                                <variation key="widthClass=compact" constant="76"/>
+                            </constraint>
                             <constraint firstAttribute="trailing" secondItem="gNv-Ap-n3k" secondAttribute="trailing" constant="36" id="Hze-9f-ovN"/>
                             <constraint firstItem="rYY-i4-d43" firstAttribute="top" secondItem="gNv-Ap-n3k" secondAttribute="bottom" constant="65" id="X1M-sz-yt8">
-                                <variation key="widthClass=compact" constant="76"/>
+                                <variation key="widthClass=compact" constant="82"/>
                             </constraint>
                             <constraint firstItem="1LF-xt-qnJ" firstAttribute="leading" secondItem="TqK-II-Cq1" secondAttribute="leading" constant="56" id="Y7a-CE-P1U"/>
                             <constraint firstItem="Ov4-vj-5LD" firstAttribute="centerY" secondItem="TaF-Vv-s3F" secondAttribute="centerY" id="ZKg-5u-fKt"/>
@@ -442,7 +444,9 @@
                             <constraint firstItem="Ov4-vj-5LD" firstAttribute="leading" secondItem="TaF-Vv-s3F" secondAttribute="trailing" constant="5" id="p0T-kd-uFp">
                                 <variation key="widthClass=compact" constant="8"/>
                             </constraint>
-                            <constraint firstItem="gNv-Ap-n3k" firstAttribute="top" secondItem="TaF-Vv-s3F" secondAttribute="bottom" constant="60" id="y59-fx-X84"/>
+                            <constraint firstItem="gNv-Ap-n3k" firstAttribute="top" secondItem="TaF-Vv-s3F" secondAttribute="bottom" constant="60" id="y59-fx-X84">
+                                <variation key="widthClass=compact" constant="67"/>
+                            </constraint>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
@@ -499,7 +503,7 @@
                     <connections>
                         <outlet property="countDownLabel" destination="Ov4-vj-5LD" id="j6y-Qf-dB8"/>
                         <outlet property="puzzleLabel" destination="gNv-Ap-n3k" id="kbV-I2-aul"/>
-                        <segue destination="udb-MN-msi" kind="show" identifier="ShowOneTimeDetail" id="jFR-cN-jQl"/>
+                        <segue destination="st9-oz-ZUc" kind="presentation" identifier="ShowOneTimeDetail" id="jFR-cN-jQl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="waz-fr-LTh" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -571,13 +575,13 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gnR-M1-9h6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3114" y="437"/>
+            <point key="canvasLocation" x="3825" y="437"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="1xt-er-E7T">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="uvU-R0-STI" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="history" id="7bv-JG-0aa">
+                    <tabBarItem key="tabBarItem" systemItem="history" id="7bv-JG-0aa">
                         <inset key="imageInsets" minX="0.0" minY="6" maxX="0.0" maxY="-6"/>
                     </tabBarItem>
                     <toolbarItems/>
@@ -598,7 +602,7 @@
         <scene sceneID="OfM-PM-Kwf">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="G8d-Ub-Oey" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="settings" id="hYO-sF-DDk">
+                    <tabBarItem key="tabBarItem" systemItem="more" id="hYO-sF-DDk">
                         <inset key="imageInsets" minX="0.0" minY="6" maxX="0.0" maxY="-6"/>
                     </tabBarItem>
                     <toolbarItems/>
@@ -615,10 +619,10 @@
             </objects>
             <point key="canvasLocation" x="997.5" y="1830"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Home View Controller-->
         <scene sceneID="6B9-mJ-aa5">
             <objects>
-                <tabBarController id="GGQ-ey-ndr" sceneMemberID="viewController">
+                <tabBarController id="GGQ-ey-ndr" customClass="HomeViewController" sceneMemberID="viewController">
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="RoC-X4-URI">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
@@ -639,7 +643,7 @@
         <scene sceneID="IsO-1t-dNB">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Kgd-xv-Srr" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="playGame" id="hFj-r7-fZ1">
+                    <tabBarItem key="tabBarItem" systemItem="favorites" id="hFj-r7-fZ1">
                         <inset key="imageInsets" minX="0.0" minY="10" maxX="0.0" maxY="-10"/>
                     </tabBarItem>
                     <toolbarItems/>
@@ -692,7 +696,7 @@
                                 </variation>
                                 <connections>
                                     <action selector="startGame" destination="vwk-QL-Jd4" eventType="touchUpInside" id="orv-Gh-odU"/>
-                                    <segue destination="TJt-Qd-Jnq" kind="show" id="Jii-cV-AeJ"/>
+                                    <segue destination="TJt-Qd-Jnq" kind="presentation" id="Jii-cV-AeJ"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -726,13 +730,28 @@
             </objects>
             <point key="canvasLocation" x="1681.5" y="437"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="e5J-ri-QeS">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="st9-oz-ZUc" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ilD-sI-JCs">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="udb-MN-msi" kind="relationship" relationship="rootViewController" id="UA0-Js-uSE"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Fl5-j3-vrn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3114" y="437"/>
+        </scene>
     </scenes>
     <resources>
         <image name="fail" width="200" height="200"/>
-        <image name="history" width="30" height="30"/>
         <image name="pass" width="200" height="200"/>
         <image name="pause" width="200" height="200"/>
-        <image name="playGame" width="40" height="40"/>
-        <image name="settings" width="30" height="30"/>
     </resources>
 </document>

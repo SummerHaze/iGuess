@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ResultViewController.h"
 
-@interface PlayViewController : UIViewController
+@interface PlayViewController : UIViewController <ResultViewControllerDelegate>
 
 - (IBAction)guessRight;
 - (IBAction)guessWrong;

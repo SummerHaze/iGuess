@@ -140,7 +140,7 @@
 //    }
 //}
 
-- (void)switchValueChanged:(id)sender {
+- (void)switchValueChanged: (id)sender{
     UISwitch *control = (UISwitch *)sender;
     if (control == self.shortDuration) {
         if (self.shortDuration.on == YES) {

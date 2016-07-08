@@ -12,6 +12,7 @@
 #import "ItemDetailViewController.h"
 #import "PlayViewController.h"
 
+
 @interface ResultViewController ()
 
 @end
@@ -24,6 +25,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     result = self.results;
+    NSLog(@"222self presenting:%@", self.presentingViewController);
+    NSLog(@"222self navigation:%@", self.navigationController);
+    NSLog(@"222self navigation presenting:%@", self.navigationController.presentingViewController);
+//    [self.navigationController.presentedViewController.presentingViewController.presentedViewController dismissViewControllerAnimated:NO completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -56,15 +61,17 @@
 }
 
 - (IBAction)back {
-    [self.navigationController popToRootViewControllerAnimated:NO];
+//    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.delegate dismissViews:self];
+//    [self dismissViewControllerAnimated:YES completion:nil];
 //    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 //    PlayViewController *controller = (PlayViewController *)self.window.rootViewController;
 //    [controller dismissViewControllerAnimated:NO completion:nil];
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
-    [self.navigationController dismissViewControllerAnimated:NO completion:nil];
-}
+//- (void)viewWillDisappear:(BOOL)animated {
+//    [self dismissViewControllerAnimated:NO completion:nil];
+//}
 
 
 @end

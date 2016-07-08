@@ -10,6 +10,7 @@
 #import "FMDatabase.h"
 #import "ItemDetailViewController.h"
 #import "ResultViewController.h"
+#import "HomeViewController.h"
 
 @interface PlayViewController ()
 
@@ -17,20 +18,20 @@
 
 @implementation PlayViewController
 {
-    NSString *puzzleValue;
     NSMutableArray *puzzles;   //所有的谜面词语
     NSMutableArray *results;   //猜词结果
     NSMutableArray *tmpResults;
+    NSString *puzzleValue;
     NSTimer *timer;
-    int _leftTime;      //游戏总时间
-    int _rightCounts;   //猜对的词条数
-    int _wrongCounts;   //猜错的词条数
-    int _count;         //已经猜词的词条总数量
-    int _wordCount;     //初始化时随机读取的词条数量
-    int _round;         //游戏轮数
-    int _totalNumber;   //数据库中的词条总数
     UIButton *fail;
     UIButton *pass;
+    int _count;         //已经猜词的词条总数量
+    int _leftTime;      //游戏总时间
+    int _rightCounts;   //猜对的词条数
+    int _round;         //游戏轮数
+    int _totalNumber;   //数据库中的词条总数
+    int _wordCount;     //初始化时随机读取的词条数量
+    int _wrongCounts;   //猜错的词条数
 }
 
 - (void)viewDidLoad {
@@ -42,6 +43,14 @@
     [self startNewGame];
 
 }
+
+//- (void)viewWillAppear:(BOOL)animated {
+//    NSLog(@"333self presenting:%@", self.presentingViewController);
+//    NSLog(@"333self presented:%@", self.presentedViewController);
+//    if ([self.presentedViewController isKindOfClass: [UINavigationController class]]) {
+//        [self dismissViewControllerAnimated:NO completion:nil];
+//    }
+//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -164,6 +173,7 @@
 //倒计时开始
 - (void)StartCountDown {
     _leftTime = (int)[self loadDuration];
+//    _leftTime = 10;  //debug
     NSTimeInterval seconds = 1;
     self.countDownLabel.text = [NSString stringWithFormat:@"%d", _leftTime ];
     
@@ -212,18 +222,22 @@
                                                          style:UIAlertActionStyleCancel
                                                        handler:^(UIAlertAction *action)
                                                             {
-//                                                                [self cancelShowResult];
                                                                 [self startNewGame];
-                                                               
-            
                                                             }];
         UIAlertAction *confirm = [UIAlertAction actionWithTitle:@"查看结果"
                                                           style:UIAlertActionStyleDefault
                                                         handler:^(UIAlertAction *action)
                                                             {
-//                                                                [self stop];
                                                                 [self showResult];
-//                                                                [self dismissViewControllerAnimated:NO completion:nil];
+                                                            
+                                                                NSLog(@"self:%@", self);
+                                                                NSLog(@"self presenting:%@", self.presentingViewController);
+                                                                NSLog(@"self presented:%@", self.presentedViewController);
+                                                                NSLog(@"self parent:%@", self.parentViewController);
+
+                                                                NSLog(@"self navigation:%@", self.navigationController);
+//                                                                [self.navigationController popViewControllerAnimated:YES];
+//                                                                [self.presentingViewController dismissViewControllerAnimated:NO completion:nil];
                                                             }];
         [alertController addAction:cancel];
         [alertController addAction:confirm];
@@ -264,7 +278,23 @@
 
 - (void)showResult {
 //    [self stop];
-    [self performSelector:@selector(showCurrentResult:) withObject:tmpResults afterDelay:0];
+//    [self showCurrentResult:tmpResults];
+    [self performSegueWithIdentifier:@"ShowOneTimeDetail" sender:tmpResults];
+//    [self performSelector:@selector(showCurrentResult:) withObject:tmpResults afterDelay:0];
+}
+
+//- (void)showCurrentResult:(NSMutableArray *)result {
+//    [self performSegueWithIdentifier:@"ShowOneTimeDetail" sender:result];
+//}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"ShowOneTimeDetail"]) {
+        UINavigationController *navigationController = segue.destinationViewController;
+        ResultViewController *controller = (ResultViewController *)navigationController.topViewController;
+        controller.results = sender;
+        NSLog(@"self presenting:%@", self.presentingViewController);
+        controller.delegate = self;
+    }
 }
 
 //保存一个词条的猜词结果
@@ -393,19 +423,6 @@
     return (int)(from + (arc4random() % (to - from + 1)));
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"ShowOneTimeDetail"]) {
-        ResultViewController *controller = segue.destinationViewController;
-        controller.results = sender;
-    }
-}
-
-//展示当次游戏的具体结果
-- (void)showCurrentResult:(NSMutableArray *)record {
-    [self performSegueWithIdentifier:@"ShowOneTimeDetail" sender:record];
-    
-}
-
 - (NSInteger)loadDuration {
     NSInteger duration;
     NSString *path = [self dataFilePath];
@@ -453,5 +470,20 @@
 - (IBAction)deleteWordsFromDB {
     
 }
+
+- (void)dismissViews:(ResultViewController *)controller{
+    NSLog(@"444 %@",self);
+    NSLog(@"444 self presenting:%@", self.presentingViewController);
+    NSLog(@"444 self presented:%@", self.presentedViewController);
+    [self.presentingViewController dismissViewControllerAnimated:NO completion:nil];
+}
+
+//- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
+//    NSLog(@"333self presenting:%@", self.presentingViewController);
+//    NSLog(@"333self presented:%@", self.presentedViewController);
+//    if (viewController == self) {
+//        [self dismissViewControllerAnimated:NO completion:nil];
+//    }
+//}
 
 @end
