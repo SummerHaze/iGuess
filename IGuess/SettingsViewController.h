@@ -13,6 +13,7 @@
 
 //- (IBAction)switchValueChanged;
 
+@property (nonatomic) IBOutlet UISwitch *testDuration;
 @property (nonatomic) IBOutlet UISwitch *shortDuration;
 @property (nonatomic) IBOutlet UISwitch *mediumDuration;
 @property (nonatomic) IBOutlet UISwitch *longDuration;

@@ -1,10 +1,10 @@
-//
+//  
 //  HistoryViewController.m
 //  IGuess
-//
+//  
 //  Created by xia on 5/25/16.
 //  Copyright © 2016 xia. All rights reserved.
-//
+//  
 
 #import "HistoryViewController.h"
 #import "HistoryItem.h"
@@ -18,9 +18,9 @@
 
 @implementation HistoryViewController
 {
-    NSMutableArray *results; //记录从数据库中读取的游戏数据
-    NSMutableArray *items; //按round分类后的results
-    NSInteger maxRounds; //每次取数据的最大条数（即游戏轮数）
+    NSMutableArray *results; // 记录从数据库中读取的游戏数据
+    NSMutableArray *items; // 按round分类后的results
+    NSInteger maxRounds; // 每次取数据的最大条数（即游戏轮数）
 }
 
 - (void)viewDidLoad
@@ -39,12 +39,11 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    //  Dispose of any resources that can be recreated.
 }
 
 #pragma mark - Table view data source
 
-//本tableview一共有几行
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [items count];
 }
@@ -53,15 +52,25 @@
     maxRounds = 100;
     results = [[NSMutableArray alloc]initWithCapacity:10];
     
-    //从数据库里读取数据，存储到results里
+    // 从数据库里读取数据，存储到results里
+    NSFileManager *fm = [NSFileManager defaultManager];
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     NSString *dbPath = [documentsDirectory stringByAppendingPathComponent:@"record.db"];
-    //    NSString *dbPath = [[NSBundle mainBundle]pathForResource:@"record" ofType:@"db"];
+    
+    // 游戏开始时切换至history界面，无record.db，此时也要复制之
+    if (![fm fileExistsAtPath:dbPath]) {
+        NSError *error;
+        NSString *resourcePath = [[NSBundle mainBundle]pathForResource:@"record" ofType:@"db"];
+        [fm copyItemAtPath:resourcePath toPath:dbPath error:&error];
+    }
+    
     FMDatabase *db = [FMDatabase databaseWithPath:dbPath];
     if (![db open]) {
+        NSLog(@"record.db打开失败");
         return;
     }
+    
     NSString *query = [NSString stringWithFormat:@"SELECT * FROM chengyuResult"];
     FMResultSet *s = [db executeQuery:query];
     while ([s next]) {
@@ -75,16 +84,16 @@
     [db close];
 }
 
-//将results以round分组
+// 将results以round分组
 - (void)processResultsByRound {
     // 将results按照游戏轮数round处理成items
     items = [[NSMutableArray alloc]initWithCapacity:maxRounds];
     
-    //默认词条的round安装递增顺序排列
+    // 默认词条的round按照递增顺序排列
     ItemDetail *lastItem = [results lastObject];
     NSInteger max = lastItem.round;
     
-    //在items中初始化max个空Array元素，否则addobject时报错。这里要再想个更合理的办法
+    // 在items中初始化max个空Array元素，否则addobject时报错。这里要再想个更合理的办法
     for (int i=0; i<max; i++) {
         NSMutableArray *innerItems = [[NSMutableArray alloc]init];
         [items addObject:innerItems];
@@ -96,7 +105,7 @@
     }
 }
 
-//统计每轮的游戏数据，用以显示在history list中
+// 统计每轮的游戏数据，用以显示在history list中
 - (NSMutableArray *)statResults:(NSMutableArray *)result
 {
     ItemDetail *idetail = [[ItemDetail alloc]init];
@@ -112,7 +121,7 @@
                 hitem.failNumber += 1;
             }
         }
-        //获取每轮游戏最后一个词条的时间，作为playTime
+        // 获取每轮游戏最后一个词条的时间，作为playTime
         idetail = [items[i] lastObject];
         hitem.playTime= [NSDate dateWithTimeIntervalSince1970:(idetail.wordId.doubleValue/1000)];
         
@@ -121,15 +130,15 @@
     return statResults;
 }
 
-//本tableview的每行data（row）是什么
+// 本tableview的每行data（row）是什么
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HistoryItem" forIndexPath:indexPath];
     
-    //显示当次游戏轮数的label，以后可优化成日期
+    // 显示当次游戏轮数的label，以后可优化成日期
     UILabel *roundLabel = (UILabel *)[cell viewWithTag:1000];
-    //显示当次游戏统计结果的label
+    // 显示当次游戏统计结果的label
     UILabel *statLabel = (UILabel *)[cell viewWithTag:1001];
     
     NSMutableArray *statResults = [self statResults:results];
@@ -166,8 +175,8 @@
     }
 }
 
-//- (IBAction)back {
+// - (IBAction)back {
 //    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
-//}
+// }
 
 @end

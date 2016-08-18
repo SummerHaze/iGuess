@@ -130,7 +130,7 @@
     
     //从DB中取出对应ID的数据
     NSString *dbPath = [[NSBundle mainBundle]pathForResource:@"words" ofType:@"db"];
-    NSLog(@"mainbundle:%@", dbPath);
+//    NSLog(@"mainbundle:%@", dbPath);
     
     FMDatabase *db = [FMDatabase databaseWithPath:dbPath];
     if (![db open]) {
@@ -172,7 +172,7 @@
 
 //倒计时开始
 - (void)StartCountDown {
-    _leftTime = (int)[self loadDuration];
+//    _leftTime = (int)[self loadDuration];
 //    _leftTime = 10;  //debug
     NSTimeInterval seconds = 1;
     self.countDownLabel.text = [NSString stringWithFormat:@"%d", _leftTime ];
@@ -229,13 +229,6 @@
                                                         handler:^(UIAlertAction *action)
                                                             {
                                                                 [self showResult];
-                                                            
-                                                                NSLog(@"self:%@", self);
-                                                                NSLog(@"self presenting:%@", self.presentingViewController);
-                                                                NSLog(@"self presented:%@", self.presentedViewController);
-                                                                NSLog(@"self parent:%@", self.parentViewController);
-
-                                                                NSLog(@"self navigation:%@", self.navigationController);
 //                                                                [self.navigationController popViewControllerAnimated:YES];
 //                                                                [self.presentingViewController dismissViewControllerAnimated:NO completion:nil];
                                                             }];
@@ -292,7 +285,7 @@
         UINavigationController *navigationController = segue.destinationViewController;
         ResultViewController *controller = (ResultViewController *)navigationController.topViewController;
         controller.results = sender;
-        NSLog(@"self presenting:%@", self.presentingViewController);
+//        NSLog(@"self presenting:%@", self.presentingViewController);
         controller.delegate = self;
     }
 }
@@ -308,7 +301,7 @@
 //    formatter.timeZone = [NSTimeZone localTimeZone];
 //    NSString *dateString = [formatter stringFromDate:date];
     
-    //要用时间戳形式存储游戏时间，否则点击过快可能造成两次的时间相同，添加进字典失败
+    //要用毫秒时间戳形式存储游戏时间，否则点击过快可能造成两次的时间相同，添加进字典失败
     NSDate *dat = [NSDate dateWithTimeIntervalSinceNow:0];
     NSTimeInterval interval = [dat timeIntervalSince1970]*1000;
     NSString *timestamp = [NSString stringWithFormat:@"%.0f", interval];
@@ -336,6 +329,7 @@
     }
     
     //从DB中取出对应ID的数据
+    NSLog(@"chegnyuResult数据表保存路径: %@", dbPath);
     FMDatabase *db = [FMDatabase databaseWithPath:dbPath];
     if (![db open]) {
         NSLog(@"打开数据库失败");
@@ -345,7 +339,7 @@
     if (results != nil) {
         for (NSDictionary *singleRecord in results){
             if (![db executeUpdate:sql withParameterDictionary:singleRecord]) {
-                NSLog(@"保存数据失败");
+                NSLog(@"保存一轮猜词结果到数据库失败");
                 return;
             };
         }
@@ -412,11 +406,13 @@
     } else {
         _round = 1;
     }
+    NSLog(@"加载游戏的轮数为: %d", _round);
 }
 
 - (void)loadSettings {
     _leftTime = (int)[self loadDuration];
     [self loadRound];
+    
 }
 
 - (int)getRandomNumber:(int)from to:(int)to {
@@ -432,6 +428,13 @@
     } else {
         duration = 60;
     }
+    NSLog(@"加载游戏的时长为: %ld", (long)duration);
+    
+    // 不知道什么导致加载的duration为10，偶现，暂时先规避
+//    if (duration < 60) {
+//        duration = 60;
+//    }
+    
     return duration;
 }
 
@@ -472,9 +475,6 @@
 }
 
 - (void)dismissViews:(ResultViewController *)controller{
-    NSLog(@"444 %@",self);
-    NSLog(@"444 self presenting:%@", self.presentingViewController);
-    NSLog(@"444 self presented:%@", self.presentedViewController);
     [self.presentingViewController dismissViewControllerAnimated:NO completion:nil];
 }
 

@@ -25,9 +25,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     result = self.results;
-    NSLog(@"222self presenting:%@", self.presentingViewController);
-    NSLog(@"222self navigation:%@", self.navigationController);
-    NSLog(@"222self navigation presenting:%@", self.navigationController.presentingViewController);
+//    NSLog(@"222self presenting:%@", self.presentingViewController);
+//    NSLog(@"222self navigation:%@", self.navigationController);
+//    NSLog(@"222self navigation presenting:%@", self.navigationController.presentingViewController);
 //    [self.navigationController.presentedViewController.presentingViewController.presentedViewController dismissViewControllerAnimated:NO completion:nil];
 }
 

@@ -18,6 +18,7 @@
     [super viewDidLoad];
     [self loadDuration];
     
+    [self.testDuration addTarget:self action:@selector(switchValueChanged:) forControlEvents:UIControlEventValueChanged];
     [self.shortDuration addTarget:self action:@selector(switchValueChanged:) forControlEvents:UIControlEventValueChanged];
     [self.mediumDuration addTarget:self action:@selector(switchValueChanged:) forControlEvents:UIControlEventValueChanged];
     [self.longDuration addTarget:self action:@selector(switchValueChanged:) forControlEvents:UIControlEventValueChanged];
@@ -27,14 +28,22 @@
         self.shortDuration.on = YES;
         self.mediumDuration.on = NO;
         self.longDuration.on = NO;
+        self.testDuration.on = NO;
     } else if(self.duration == 120) {
         self.shortDuration.on = NO;
         self.mediumDuration.on = YES;
         self.longDuration.on = NO;
+        self.testDuration.on = NO;
     } else if(self.duration == 180) {
         self.shortDuration.on = NO;
         self.mediumDuration.on = NO;
         self.longDuration.on = YES;
+        self.testDuration.on = NO;
+    } else if(self.duration == 10) {
+        self.shortDuration.on = NO;
+        self.mediumDuration.on = NO;
+        self.longDuration.on = NO;
+        self.testDuration.on = YES;
     }
 }
 
@@ -58,6 +67,7 @@
     } else {
         self.duration = 60;
     }
+    NSLog(@"设置页面，加载的游戏时长为: %ld", (long)self.duration);
 }
 
 - (void)saveDuration {
@@ -65,7 +75,7 @@
     NSString *path = [self dataFilePath];
     NSNumber *round;
     
-    //先把round拿出来，再跟duration组成字典存进去。解决writeToFile覆盖导致设置duration后round置0的问题
+    //先把round拿出来，再与duration组成字典存进去。解决writeToFile覆盖导致设置duration后round置0的问题
     if ([[NSFileManager defaultManager]fileExistsAtPath:path]) {
         NSDictionary *settingsBefore=[NSKeyedUnarchiver unarchiveObjectWithFile:path];
         round = [settingsBefore objectForKey:@"round"];
@@ -83,6 +93,7 @@
     NSMutableArray *values = [[NSMutableArray alloc]init];
     [values addObject:round];
     [values addObject:[NSNumber numberWithInteger:self.duration]];
+    NSLog(@"保存游戏的时长为: %ld", (long)self.duration);
     NSDictionary *settingsAfter = [[NSDictionary alloc]initWithObjects:values forKeys:keys];
     [NSKeyedArchiver archiveRootObject:settingsAfter toFile:path];
 //    NSMutableData *data = [[NSMutableData alloc]init];
@@ -147,18 +158,28 @@
             self.duration = 60;
             [self.mediumDuration setOn:NO animated:YES];
             [self.longDuration setOn:NO animated:YES];
+            [self.testDuration setOn:NO animated:YES];
         }
     } else if (control == self.mediumDuration) {
         if (self.mediumDuration.on == YES) {
             self.duration = 120;
             [self.shortDuration setOn:NO animated:YES];
             [self.longDuration setOn:NO animated:YES];
+            [self.testDuration setOn:NO animated:YES];
         }
     } else if (control == self.longDuration) {
         if (self.longDuration.on == YES) {
             self.duration = 180;
             [self.mediumDuration setOn:NO animated:YES];
             [self.shortDuration setOn:NO animated:YES];
+            [self.testDuration setOn:NO animated:YES];
+        }
+    } else if (control == self.testDuration) {
+        if (self.testDuration.on == YES) {
+            self.duration = 10;
+            [self.mediumDuration setOn:NO animated:YES];
+            [self.shortDuration setOn:NO animated:YES];
+            [self.longDuration setOn:NO animated:YES];
         }
     }
     
