@@ -14,6 +14,7 @@
 		16A1A4201CF57DAC0013E3F8 /* HistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16A1A41F1CF57DAC0013E3F8 /* HistoryViewController.m */; };
 		16A1A4231CF57DD30013E3F8 /* ItemDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16A1A4221CF57DD30013E3F8 /* ItemDetailViewController.m */; };
 		16A1A4261CF57E020013E3F8 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16A1A4251CF57E020013E3F8 /* SettingsViewController.m */; };
+		16C0574E1D65BADA002C1CB8 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 16C0574D1D65BADA002C1CB8 /* libPods.a */; };
 		16D6E4261C8C587300B7A4B9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 16D6E4251C8C587300B7A4B9 /* main.m */; };
 		16D6E4291C8C587300B7A4B9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 16D6E4281C8C587300B7A4B9 /* AppDelegate.m */; };
 		16D6E42C1C8C587300B7A4B9 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16D6E42B1C8C587300B7A4B9 /* ViewController.m */; };
@@ -25,7 +26,6 @@
 		16E86CEA1CF59458007580C4 /* HistoryItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 16E86CE91CF59458007580C4 /* HistoryItem.m */; };
 		16E86CED1CF59471007580C4 /* ItemDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 16E86CEC1CF59471007580C4 /* ItemDetail.m */; };
 		16E86CF31CFDC3E9007580C4 /* ResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16E86CF21CFDC3E9007580C4 /* ResultViewController.m */; };
-		81E7C033CEE5DFA03DF818B8 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F3C308B55594A4CC27920719 /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +51,11 @@
 		16A1A4221CF57DD30013E3F8 /* ItemDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemDetailViewController.m; sourceTree = "<group>"; };
 		16A1A4241CF57E020013E3F8 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		16A1A4251CF57E020013E3F8 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		16C0574A1D65AAFA002C1CB8 /* IGuess-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IGuess-Prefix.pch"; sourceTree = "<group>"; };
+		16C0574B1D65BABA002C1CB8 /* libCocoaLumberjack.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libCocoaLumberjack.a; path = "../../../../Library/Developer/Xcode/DerivedData/IGuess-dblsfizdxbnydbgcxsdiqvtzgupg/Build/Products/Debug-iphonesimulator/libCocoaLumberjack.a"; sourceTree = "<group>"; };
+		16C0574D1D65BADA002C1CB8 /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "../../../../Library/Developer/Xcode/DerivedData/IGuess-dblsfizdxbnydbgcxsdiqvtzgupg/Build/Products/Debug-iphonesimulator/libPods.a"; sourceTree = "<group>"; };
+		16C0574F1D65BB0E002C1CB8 /* libCocoaLumberjack.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libCocoaLumberjack.a; path = "Pods/../build/Debug-iphoneos/libCocoaLumberjack.a"; sourceTree = "<group>"; };
+		16C057511D65BBEE002C1CB8 /* libCocoaLumberjack.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libCocoaLumberjack.a; path = "Pods/../build/Debug-iphoneos/libCocoaLumberjack.a"; sourceTree = "<group>"; };
 		16D6E4211C8C587300B7A4B9 /* IGuess.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IGuess.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		16D6E4251C8C587300B7A4B9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		16D6E4271C8C587300B7A4B9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -82,7 +87,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				81E7C033CEE5DFA03DF818B8 /* libPods.a in Frameworks */,
+				16C0574E1D65BADA002C1CB8 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -148,6 +153,7 @@
 				16D6E4321C8C587300B7A4B9 /* LaunchScreen.storyboard */,
 				16D6E4351C8C587300B7A4B9 /* Info.plist */,
 				16D6E4241C8C587300B7A4B9 /* Supporting Files */,
+				16C0574A1D65AAFA002C1CB8 /* IGuess-Prefix.pch */,
 			);
 			path = IGuess;
 			sourceTree = "<group>";
@@ -172,6 +178,10 @@
 		23C76219E95CB47AA1426830 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				16C057511D65BBEE002C1CB8 /* libCocoaLumberjack.a */,
+				16C0574F1D65BB0E002C1CB8 /* libCocoaLumberjack.a */,
+				16C0574D1D65BADA002C1CB8 /* libPods.a */,
+				16C0574B1D65BABA002C1CB8 /* libCocoaLumberjack.a */,
 				F3C308B55594A4CC27920719 /* libPods.a */,
 			);
 			name = Frameworks;
@@ -479,8 +489,14 @@
 			baseConfigurationReference = 2206315ADB707D51AAEC53FA /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "IGuess/IGuess-Prefix.pch";
 				INFOPLIST_FILE = IGuess/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = xz.IGuess;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -491,8 +507,14 @@
 			baseConfigurationReference = FCE807C8E6A2B1AC26D9F0B4 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "IGuess/IGuess-Prefix.pch";
 				INFOPLIST_FILE = IGuess/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = xz.IGuess;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

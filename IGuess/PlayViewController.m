@@ -34,6 +34,41 @@
     int _wrongCounts;   //猜错的词条数
 }
 
+
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    if ((self = [super initWithCoder:aDecoder])) {
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(applicationDidEnterBackground)
+                                                     name:UIApplicationDidEnterBackgroundNotification
+                                                   object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(applicationDidEnterForeground)
+                                                     name:UIApplicationWillEnterForegroundNotification
+                                                   object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(applicationWillTerminate)
+                                                     name:UIApplicationWillTerminateNotification
+                                                   object:nil];
+    }
+    return self;
+}
+
+- (void)applicationDidEnterBackground {
+    [self pauseGame];
+    DDLogVerbose(@"游戏过程中退后台，暂停游戏");
+}
+
+- (void)applicationDidEnterForeground {
+    [self resumeGame];
+    DDLogVerbose(@"游戏恢复前台，继续游戏");
+}
+
+- (void)applicationWillTerminate {
+    [self stopGame];
+    DDLogVerbose(@"游戏过程中被异常终止，保存结果成功");
+}
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 
@@ -45,8 +80,8 @@
 }
 
 //- (void)viewWillAppear:(BOOL)animated {
-//    NSLog(@"333self presenting:%@", self.presentingViewController);
-//    NSLog(@"333self presented:%@", self.presentedViewController);
+//    DDLogVerbose(@"333self presenting:%@", self.presentingViewController);
+//    DDLogVerbose(@"333self presented:%@", self.presentedViewController);
 //    if ([self.presentedViewController isKindOfClass: [UINavigationController class]]) {
 //        [self dismissViewControllerAnimated:NO completion:nil];
 //    }
@@ -55,6 +90,10 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 //开始新一轮游戏
@@ -75,6 +114,8 @@
     
     //启动倒计时
     [self StartCountDown];
+    
+    DDLogError(@"游戏初始化成功");
 }
 
 //结束游戏
@@ -126,14 +167,15 @@
             i--;
         }
     }
-//    NSLog(@"random IDs: %@",IDs);
+//    DDLogVerbose(@"random IDs: %@",IDs);
     
     //从DB中取出对应ID的数据
     NSString *dbPath = [[NSBundle mainBundle]pathForResource:@"words" ofType:@"db"];
-//    NSLog(@"mainbundle:%@", dbPath);
+//    DDLogVerbose(@"mainbundle:%@", dbPath);
     
     FMDatabase *db = [FMDatabase databaseWithPath:dbPath];
     if (![db open]) {
+        DDLogError(@"打开words.db失败");
         return;
     }
     NSString *query = [NSString stringWithFormat:@"SELECT * FROM chengyu where ID in %@",IDs];
@@ -229,8 +271,6 @@
                                                         handler:^(UIAlertAction *action)
                                                             {
                                                                 [self showResult];
-//                                                                [self.navigationController popViewControllerAnimated:YES];
-//                                                                [self.presentingViewController dismissViewControllerAnimated:NO completion:nil];
                                                             }];
         [alertController addAction:cancel];
         [alertController addAction:confirm];
@@ -240,7 +280,7 @@
     }
 }
 
-//猜对
+// 猜对
 - (IBAction)guessRight {
     _rightCounts += 1;
     _count += 1;
@@ -248,7 +288,7 @@
     [self goToNextPuzzle];
 };
 
-//猜错
+// 猜错
 - (IBAction)guessWrong {
     _wrongCounts += 1;
     _count += 1;
@@ -265,15 +305,11 @@
 
 
 - (void)cancelShowResult {
-//    [self stop];
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)showResult {
-//    [self stop];
-//    [self showCurrentResult:tmpResults];
     [self performSegueWithIdentifier:@"ShowOneTimeDetail" sender:tmpResults];
-//    [self performSelector:@selector(showCurrentResult:) withObject:tmpResults afterDelay:0];
 }
 
 //- (void)showCurrentResult:(NSMutableArray *)result {
@@ -285,23 +321,22 @@
         UINavigationController *navigationController = segue.destinationViewController;
         ResultViewController *controller = (ResultViewController *)navigationController.topViewController;
         controller.results = sender;
-//        NSLog(@"self presenting:%@", self.presentingViewController);
         controller.delegate = self;
     }
 }
 
-//保存一个词条的猜词结果
+// 保存一个词条的猜词结果
 - (void)saveResult:(NSString *)name result:(NSString *)result {
     NSMutableDictionary *singleRecord = [NSMutableDictionary dictionary];
     
-    //获取系统当前的时间戳
+    // 获取系统当前的时间戳
 //    NSDate *date = [NSDate date];
 //    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
 //    formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
 //    formatter.timeZone = [NSTimeZone localTimeZone];
 //    NSString *dateString = [formatter stringFromDate:date];
     
-    //要用毫秒时间戳形式存储游戏时间，否则点击过快可能造成两次的时间相同，添加进字典失败
+    // 要用毫秒时间戳形式存储游戏时间，否则点击过快可能造成两次的时间相同，添加进字典失败
     NSDate *dat = [NSDate dateWithTimeIntervalSinceNow:0];
     NSTimeInterval interval = [dat timeIntervalSince1970]*1000;
     NSString *timestamp = [NSString stringWithFormat:@"%.0f", interval];
@@ -314,9 +349,9 @@
     [results addObject:singleRecord];
 }
 
-//保存一轮所有的词条的猜词结果
+// 保存一轮所有的词条的猜词结果
 - (void)saveResults {
-    //将DB从工程目录拷贝到document目录，否则只读不可写
+    // 将DB从工程目录拷贝到document目录，否则只读不可写
     NSFileManager *fm = [NSFileManager defaultManager];
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
@@ -328,18 +363,18 @@
         [fm copyItemAtPath:resourcePath toPath:dbPath error:&error];
     }
     
-    //从DB中取出对应ID的数据
-    NSLog(@"chegnyuResult数据表保存路径: %@", dbPath);
+    // 从DB中取出对应ID的数据
+    DDLogVerbose(@"chegnyuResult数据表保存路径: %@", dbPath);
     FMDatabase *db = [FMDatabase databaseWithPath:dbPath];
     if (![db open]) {
-        NSLog(@"打开数据库失败");
+        DDLogVerbose(@"打开数据库失败");
         return;
     }
     NSString *sql = @"INSERT INTO chengyuResult (result,id,round,name) VALUES(:result,:id,:round,:name);";
     if (results != nil) {
         for (NSDictionary *singleRecord in results){
             if (![db executeUpdate:sql withParameterDictionary:singleRecord]) {
-                NSLog(@"保存一轮猜词结果到数据库失败");
+                DDLogVerbose(@"保存一轮猜词结果到数据库失败");
                 return;
             };
         }
@@ -355,17 +390,17 @@
     
 }
 
-//将round保存到plist中
+// 将round保存到本地
 - (void)saveRound {
     NSString *path = [self dataFilePath];
     NSNumber *duration;
     
-    //先把duration拿出来，再跟round组成字典存进去。解决writeToFile覆盖导致设置duration后round置0的问题
+    // 先把duration拿出来，再跟round组成字典存进去。解决writeToFile覆盖导致设置duration后round置0的问题
     if ([tmpResults count] != 0) {
 //        NSMutableData *data = [[NSMutableData alloc]init];
 //        NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc]initForWritingWithMutableData:data];
 //        [archiver encodeObject:[NSString stringWithFormat:@"%d",_round] forKey:@"round"];
-//        NSLog(@"summ playing-save round: %ld", (long)_round);
+//        DDLogVerbose(@"summ playing-save round: %ld", (long)_round);
 //        [archiver finishEncoding];
 //        [data writeToFile:[self dataFilePath] atomically:YES];
         if ([[NSFileManager defaultManager]fileExistsAtPath:path]) {
@@ -400,13 +435,13 @@
 //        NSData *data = [[NSData alloc] initWithContentsOfFile:path];
 //        NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc]initForReadingWithData:data];
 //        NSNumber *number = [unarchiver decodeObjectForKey:@"round"]; //decode后的数据为对象，不能直接复制给int
-//        NSLog(@"summ playing-load round: %ld", (long)_round);
+//        DDLogVerbose(@"summ playing-load round: %ld", (long)_round);
 //        _round = [number intValue] + 1;
 //        [unarchiver finishDecoding];
     } else {
         _round = 1;
     }
-    NSLog(@"加载游戏的轮数为: %d", _round);
+    DDLogVerbose(@"加载游戏的轮数为: %d", _round);
 }
 
 - (void)loadSettings {
@@ -428,7 +463,7 @@
     } else {
         duration = 60;
     }
-    NSLog(@"加载游戏的时长为: %ld", (long)duration);
+    DDLogVerbose(@"加载游戏的时长为: %ld", (long)duration);
     
     // 不知道什么导致加载的duration为10，偶现，暂时先规避
 //    if (duration < 60) {
@@ -445,7 +480,7 @@
 }
 
 - (NSString *)dataFilePath {
-//    NSLog(@"dataFilePath : %@",[[self documentsDirectory]stringByAppendingPathComponent:@"Settings.plist"]);
+//    DDLogVerbose(@"dataFilePath : %@",[[self documentsDirectory]stringByAppendingPathComponent:@"Settings.plist"]);
     return [[self documentsDirectory]stringByAppendingPathComponent:@"Settings.plist"];
 }
 
@@ -479,8 +514,8 @@
 }
 
 //- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
-//    NSLog(@"333self presenting:%@", self.presentingViewController);
-//    NSLog(@"333self presented:%@", self.presentedViewController);
+//    DDLogVerbose(@"333self presenting:%@", self.presentingViewController);
+//    DDLogVerbose(@"333self presented:%@", self.presentedViewController);
 //    if (viewController == self) {
 //        [self dismissViewControllerAnimated:NO completion:nil];
 //    }

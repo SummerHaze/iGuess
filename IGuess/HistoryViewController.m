@@ -67,7 +67,7 @@
     
     FMDatabase *db = [FMDatabase databaseWithPath:dbPath];
     if (![db open]) {
-        NSLog(@"record.db打开失败");
+        DDLogVerbose(@"record.db打开失败");
         return;
     }
     
@@ -157,7 +157,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"IndexPath: %@", [indexPath description]);
+    DDLogVerbose(@"IndexPath: %@", [indexPath description]);
     [self performSegueWithIdentifier:@"ShowDetail" sender:tableView.indexPathForSelectedRow];
 }
 

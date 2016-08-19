@@ -62,12 +62,12 @@
 //        NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc]initForReadingWithData:data];
 //        NSNumber *number = [unarchiver decodeObjectForKey:@"duration"]; //decode后的数据为对象，不能直接复制给int
 //        self.duration = [number intValue];
-//        NSLog(@"summ setting-load duration: %ld", (long)self.duration);
+//        DDLogVerbose(@"summ setting-load duration: %ld", (long)self.duration);
 //        [unarchiver finishDecoding];
     } else {
         self.duration = 60;
     }
-    NSLog(@"设置页面，加载的游戏时长为: %ld", (long)self.duration);
+    DDLogVerbose(@"设置页面，加载的游戏时长为: %ld", (long)self.duration);
 }
 
 - (void)saveDuration {
@@ -93,12 +93,12 @@
     NSMutableArray *values = [[NSMutableArray alloc]init];
     [values addObject:round];
     [values addObject:[NSNumber numberWithInteger:self.duration]];
-    NSLog(@"保存游戏的时长为: %ld", (long)self.duration);
+    DDLogVerbose(@"保存游戏的时长为: %ld", (long)self.duration);
     NSDictionary *settingsAfter = [[NSDictionary alloc]initWithObjects:values forKeys:keys];
     [NSKeyedArchiver archiveRootObject:settingsAfter toFile:path];
 //    NSMutableData *data = [[NSMutableData alloc]init];
 //    NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc]initForWritingWithMutableData:data];
-//    NSLog(@"summ setting-save duration: %ld", (long)self.duration);
+//    DDLogVerbose(@"summ setting-save duration: %ld", (long)self.duration);
 //    [archiver encodeObject:[NSString stringWithFormat:@"%ld",(long)self.duration] forKey:@"duration"];
 //    [archiver finishEncoding];
 //    [data writeToFile:[self dataFilePath] atomically:YES];
@@ -111,7 +111,7 @@
 }
 
 - (NSString *)dataFilePath {
-    NSLog(@"dataFilePath : %@",[[self documentsDirectory]stringByAppendingPathComponent:@"Settings.plist"]);
+    DDLogVerbose(@"dataFilePath : %@",[[self documentsDirectory]stringByAppendingPathComponent:@"Settings.plist"]);
     return [[self documentsDirectory]stringByAppendingPathComponent:@"Settings.plist"];
 }
 
@@ -209,7 +209,7 @@
 
 /*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"reuseIdentifier" forIndexPath:indexPath];
     
     // Configure the cell...
     

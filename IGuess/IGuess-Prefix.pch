@@ -1,0 +1,47 @@
+//
+//  IGuess-Prefix.pch
+//  IGuess
+//
+//  Created by xia on 8/18/16.
+//  Copyright © 2016 xia. All rights reserved.
+//
+
+#ifndef IGuess_Prefix_pch
+#define IGuess_Prefix_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+
+
+//#ifdef DEBUG
+//#define DebugLog(format, ...) NSLog((@"%s [Line %d] " format), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
+//#else
+//#define DebugLog(...) do { } while (0)
+//#endif
+
+//#ifndef __IPHONE_5_0
+//#warning "This project uses features only available in iOS SDK 5.0 and later"
+//#endif
+
+#define LOG_LEVEL_DEF ddLogLevel
+#import <CocoaLumberjack/CocoaLumberjack.h>
+
+//static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
+
+#ifdef DEBUG
+static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
+#else
+static const DDLogLevel ddLogLevel = DDLogLevelError;
+#endif
+
+//#ifdef DEBUG
+//#define DLog(format, ...) DDLogError((@"[文件名:%s]" "[函数名:%s]" "[行号:%d]" format), __FILE__, __FUNCTION__, __LINE__, ##__VA_ARGS__);
+//#else
+//#define DLog(...);
+//#endif
+
+#endif /* IGuess_Prefix_pch */
+
+
+
