@@ -13,11 +13,10 @@
 
 - (IBAction)guessRight;
 - (IBAction)guessWrong;
-- (IBAction)deleteWordsFromDB;
+
 - (IBAction)back;
 - (IBAction)pauseOrPlay;
 
-@property(nonatomic) IBOutlet UILabel *countDownLabel;
-@property(nonatomic) IBOutlet UILabel *puzzleLabel;
+//- (IBAction)deleteWordsFromDB;
 
 @end

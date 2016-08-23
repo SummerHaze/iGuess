@@ -14,6 +14,12 @@
 
 @interface PlayViewController ()
 
+@property (nonatomic, weak) IBOutlet UIButton *controlButton;
+@property (nonatomic, weak) IBOutlet UIButton *passButton;
+@property (nonatomic, weak) IBOutlet UIButton *failButton;
+@property (nonatomic, weak) IBOutlet UILabel *countDownLabel;
+@property (nonatomic, weak) IBOutlet UILabel *puzzleLabel;
+
 @end
 
 @implementation PlayViewController
@@ -23,8 +29,8 @@
     NSMutableArray *tmpResults;
     NSString *puzzleValue;
     NSTimer *timer;
-    UIButton *fail;
-    UIButton *pass;
+    UIImage *_pauseImage;
+    UIImage *_playImage;
     int _count;         //已经猜词的词条总数量
     int _leftTime;      //游戏总时间
     int _rightCounts;   //猜对的词条数
@@ -50,30 +56,47 @@
                                                      name:UIApplicationWillTerminateNotification
                                                    object:nil];
     }
+    
     return self;
 }
 
+//切后台，或进程异常退出保护
 - (void)applicationDidEnterBackground {
-    [self pauseGame];
-    DDLogVerbose(@"游戏过程中退后台，暂停游戏");
+    if ([_controlButton.currentBackgroundImage isEqual: _pauseImage] ) {
+        //切换后台前，游戏未暂停
+        DDLogDebug(@"游戏进行时切后台，暂停");
+        [self pauseGame];
+    } else {
+        DDLogDebug(@"游戏暂停时切后台，不做处理");
+    }
 }
 
 - (void)applicationDidEnterForeground {
-    [self resumeGame];
-    DDLogVerbose(@"游戏恢复前台，继续游戏");
+    if ([_controlButton.currentBackgroundImage isEqual: _pauseImage] ) {
+        DDLogDebug(@"游戏恢复前台，继续");
+        [self resumeGame];
+        
+    } else {
+        DDLogDebug(@"游戏恢复前台，保持暂停");
+    }
 }
 
 - (void)applicationWillTerminate {
     [self stopGame];
-    DDLogVerbose(@"游戏过程中被异常终止，保存结果成功");
+    DDLogDebug(@"游戏过程中被异常终止，保存结果成功");
 }
 
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-    fail = (UIButton *)[self.view viewWithTag:5000];
-    pass = (UIButton *)[self.view viewWithTag:5001];
+//    
+//    self.failButton = (UIButton *)[self.view viewWithTag:5000];
+//    self.passButton = (UIButton *)[self.view viewWithTag:5001];
+//    self.controlButton = (UIButton *)[self.view viewWithTag:4000];
+    
+    _pauseImage = [UIImage imageNamed:@"pause.png"];
+    _playImage = [UIImage imageNamed:@"play.png"];
+    
     
     [self startNewGame];
 
@@ -123,26 +146,24 @@
     [self saveResults];
     [self saveRound];
     self.puzzleLabel.text = nil;
+    DDLogError(@"游戏结束");
 }
 
 //暂停游戏
 - (void)pauseGame {
-    //    [self saveRecord];
-    //    [self saveRound];
-    //    _round -= 1;
-    
     [self PauseCountDown];
-    fail.enabled = NO;
-    pass.enabled = NO;
+    self.failButton.enabled = NO;
+    self.passButton.enabled = NO;
+    DDLogVerbose(@"游戏暂停成功");
     
 }
 
 //暂停后恢复游戏
 - (void)resumeGame {
     [self ResumeCountDown];
-    fail.enabled = YES;
-    pass.enabled = YES;
-    
+    self.failButton.enabled = YES;
+    self.passButton.enabled = YES;
+    DDLogVerbose(@"游戏恢复成功");
 }
 
 - (void)getWordsFromDB {
@@ -491,15 +512,11 @@
 }
 
 - (IBAction)pauseOrPlay {
-    UIButton *button = (UIButton *)[self.view viewWithTag:4000];
-    UIImage *pause = [UIImage imageNamed:@"pause.png"];
-    UIImage *play = [UIImage imageNamed:@"play.png"];
-    
-    if ([button.currentBackgroundImage isEqual: pause] ) {
-        [button setBackgroundImage:play forState:UIControlStateNormal];
+    if ([self.controlButton.currentBackgroundImage isEqual: _pauseImage]) {
+        [self.controlButton setBackgroundImage:_playImage forState:UIControlStateNormal];
         [self pauseGame];
-    } else {
-        [button setBackgroundImage:pause forState:UIControlStateNormal];
+    } else if ([self.controlButton.currentBackgroundImage isEqual: _playImage]) {
+        [self.controlButton setBackgroundImage:_pauseImage forState:UIControlStateNormal];
         [self resumeGame];
     }
 }

@@ -32,9 +32,6 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
-                                                    <variation key="widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="30" y="11.5" width="29.5" height="21"/>
-                                                    </variation>
                                                 </label>
                                             </subviews>
                                             <constraints>
@@ -70,7 +67,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="Kud-cY-VWZ">
-                                        <rect key="frame" x="0.0" y="99" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="143" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Kud-cY-VWZ" id="q4B-Ps-Th0">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
@@ -98,8 +95,8 @@
                                                     <exclude reference="Yrg-nI-7v7"/>
                                                 </mask>
                                                 <mask key="constraints">
-                                                    <exclude reference="ouV-RK-mh9"/>
                                                     <exclude reference="9Q0-XL-CFp"/>
+                                                    <exclude reference="ouV-RK-mh9"/>
                                                     <exclude reference="A7d-bm-cQQ"/>
                                                     <exclude reference="knE-sI-Eym"/>
                                                 </mask>
@@ -110,8 +107,8 @@
                                                     <include reference="Yrg-nI-7v7"/>
                                                 </mask>
                                                 <mask key="constraints">
-                                                    <include reference="ouV-RK-mh9"/>
                                                     <include reference="9Q0-XL-CFp"/>
+                                                    <include reference="ouV-RK-mh9"/>
                                                     <include reference="A7d-bm-cQQ"/>
                                                     <include reference="knE-sI-Eym"/>
                                                 </mask>
@@ -119,7 +116,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="EB7-cu-Mng">
-                                        <rect key="frame" x="0.0" y="143" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="187" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="EB7-cu-Mng" id="LlQ-uN-BdY">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
@@ -171,7 +168,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KJ6-Bo-mKy">
-                                        <rect key="frame" x="0.0" y="187" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="231" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KJ6-Bo-mKy" id="aiA-JY-oPs">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
@@ -551,7 +548,10 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="controlButton" destination="DoW-nE-Y8Z" id="7qI-MN-QGJ"/>
                         <outlet property="countDownLabel" destination="Ov4-vj-5LD" id="j6y-Qf-dB8"/>
+                        <outlet property="failButton" destination="1LF-xt-qnJ" id="oYC-na-brj"/>
+                        <outlet property="passButton" destination="rYY-i4-d43" id="hrF-Kv-YpH"/>
                         <outlet property="puzzleLabel" destination="gNv-Ap-n3k" id="kbV-I2-aul"/>
                         <segue destination="st9-oz-ZUc" kind="presentation" identifier="ShowOneTimeDetail" id="jFR-cN-jQl"/>
                     </connections>
