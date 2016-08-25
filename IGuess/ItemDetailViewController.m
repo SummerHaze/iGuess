@@ -8,6 +8,7 @@
 
 #import "ItemDetailViewController.h"
 #import "ItemDetail.h"
+#import "MeaningViewController.h"
 
 @interface ItemDetailViewController ()
 
@@ -16,6 +17,15 @@
 @implementation ItemDetailViewController
 {
     NSMutableArray *_lists;
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    if ((self = [super initWithCoder:aDecoder])) {
+        _lists = [[NSMutableArray alloc]initWithCapacity:20];
+        //        [self.delegate getItems:self]; //init里，对象未建立，不能设置delegate
+    }
+    
+    return self;
 }
 
 - (void)viewDidLoad {
@@ -29,6 +39,14 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"ShowMeaning"]) {
+        MeaningViewController *controller = segue.destinationViewController;
+        controller.name = sender;
+    }
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -38,7 +56,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
+    static NSString *CellIdentifier = @"ItemDetailCell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
@@ -47,18 +65,16 @@
     }
     
     ItemDetail *item = _lists[self.index.row][indexPath.row];
-    cell.textLabel.text = [NSString stringWithFormat:@"%@    %@", item.name, item.result.uppercaseString];
-    
+    cell.textLabel.text = [NSString stringWithFormat:@"%@     %@", item.name, item.result.uppercaseString];
+//    cell.detailTextLabel.text = @"123";
     return cell;
 }
 
-- (id)initWithCoder:(NSCoder *)aDecoder {
-    if ((self = [super initWithCoder:aDecoder])) {
-        _lists = [[NSMutableArray alloc]initWithCapacity:20];
-//        [self.delegate getItems:self]; //init里，对象未建立，不能设置delegate
-    }
-    
-    return self;
+#pragma mark – Table view delegate
+
+- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath{
+    ItemDetail *item = _lists[self.index.row][indexPath.row];
+    [self performSegueWithIdentifier:@"ShowMeaning" sender:item.name];
 }
 
 

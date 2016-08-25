@@ -24,20 +24,20 @@
 
 @implementation PlayViewController
 {
-    NSMutableArray *puzzles;   //所有的谜面词语
-    NSMutableArray *results;   //猜词结果
+    NSMutableArray *puzzles;    //谜面
+    NSMutableArray *results;    //总结果
     NSMutableArray *tmpResults;
     NSString *puzzleValue;
     NSTimer *timer;
     UIImage *_pauseImage;
     UIImage *_playImage;
-    int _count;         //已经猜词的词条总数量
-    int _leftTime;      //游戏总时间
-    int _rightCounts;   //猜对的词条数
-    int _round;         //游戏轮数
-    int _totalNumber;   //数据库中的词条总数
-    int _wordCount;     //初始化时随机读取的词条数量
-    int _wrongCounts;   //猜错的词条数
+    int _totalWordCounts;   //数据库中的词条总数
+    int _guessedWordCounts; //已经猜词的词条总数量
+    int _initWordCounts;    //初始化时随机读取的词条数量
+    int _duration;          //游戏总时间
+    int _round;             //游戏轮数
+    int _passCounts;        //猜对的词条数
+    int _failCounts;        //猜错的词条数
 }
 
 
@@ -136,7 +136,7 @@
     [self goToNextPuzzle];
     
     //启动倒计时
-    [self StartCountDown];
+    [self startCountDown];
     
     DDLogError(@"游戏初始化成功");
 }
@@ -151,7 +151,7 @@
 
 //暂停游戏
 - (void)pauseGame {
-    [self PauseCountDown];
+    [self pauseCountDown];
     self.failButton.enabled = NO;
     self.passButton.enabled = NO;
     DDLogVerbose(@"游戏暂停成功");
@@ -160,7 +160,7 @@
 
 //暂停后恢复游戏
 - (void)resumeGame {
-    [self ResumeCountDown];
+    [self resumeCountDown];
     self.failButton.enabled = YES;
     self.passButton.enabled = YES;
     DDLogVerbose(@"游戏恢复成功");
@@ -168,18 +168,18 @@
 
 - (void)getWordsFromDB {
     //从DB中随机取出词条对应的ID
-    _wordCount = 300; //一次游戏取出的词条个数
-    _totalNumber = 4634; //数据库中词条总个数
+    _initWordCounts = 300; //一次游戏取出的词条个数
+    _totalWordCounts = 4634; //数据库中词条总个数
     int random;
     NSMutableString *IDs = [[NSMutableString alloc]initWithString:@"("];
     
-    for (int i=1; i<=_wordCount; i++) {
-        random = [self getRandomNumber:1 to:_totalNumber];
+    for (int i=1; i<=_initWordCounts; i++) {
+        random = [self getRandomNumber:1 to:_totalWordCounts];
         //去重
         BOOL contain = [IDs containsString:[NSString stringWithFormat:@"%d",random]];
         
         if (contain == NO) {
-            if (i < _wordCount) {
+            if (i < _initWordCounts) {
                 [IDs appendString:[NSString stringWithFormat:@"%d,",random]];
             } else {
                 [IDs appendString:[NSString stringWithFormat:@"%d)",random]];
@@ -234,40 +234,42 @@
 
 
 //倒计时开始
-- (void)StartCountDown {
-//    _leftTime = (int)[self loadDuration];
-//    _leftTime = 10;  //debug
-    NSTimeInterval seconds = 1;
-    self.countDownLabel.text = [NSString stringWithFormat:@"%d", _leftTime ];
+- (void)startCountDown {
+    NSTimeInterval interval = 1;
+    self.countDownLabel.text = [NSString stringWithFormat:@"%d", _duration ];
     
-    timer = [NSTimer scheduledTimerWithTimeInterval:seconds target:self selector:@selector(showStopAlert) userInfo:nil repeats:YES];
+    timer = [NSTimer scheduledTimerWithTimeInterval:interval target:self selector:@selector(updateCountDown) userInfo:nil repeats:YES];
 //    [[NSRunLoop currentRunLoop]addTimer:timer forMode:NSRunLoopCommonModes];
     [timer setFireDate:[NSDate distantPast]];
 }
 
 //倒计时结束，释放定时器
-- (void)StopCountDown {
-    [timer invalidate];
-    timer = nil;
+- (void)stopCountDown {
+    if ([timer isValid] == YES) {
+        [timer invalidate];
+        timer = nil;
+    }
 }
 
 //倒计时暂停
-- (void)PauseCountDown {
+- (void)pauseCountDown {
     [timer setFireDate:[NSDate distantFuture]];
 }
 
 //倒计时恢复
-- (void)ResumeCountDown {
-    [timer setFireDate:[NSDate distantPast]];
+- (void)resumeCountDown {
+    [timer setFireDate:[NSDate date]];
 }
 
 
 //倒计时结束后，强制弹框结束游戏
-- (void)showStopAlert {
+- (void)updateCountDown {
     int count = self.countDownLabel.text.intValue;
     if (--count < 0) {
-        [timer invalidate];
+        // 倒计时结束，停止游戏，显示结果
+        [self stopCountDown];
         [self stopGame];
+        
         NSInteger passCount = 0;
         NSInteger failCount = 0;
         for (NSDictionary *record in tmpResults) {
@@ -277,6 +279,7 @@
                 failCount += 1;
             }
         }
+        
         UIAlertController *alertController =
         [UIAlertController alertControllerWithTitle:@"游戏结束！"
                                             message:[NSString stringWithFormat:@"PASS: %ld\n FAIL: %ld",(long)passCount, (long)failCount]
@@ -296,31 +299,33 @@
         [alertController addAction:cancel];
         [alertController addAction:confirm];
         [self presentViewController:alertController animated:NO completion:nil];
+        
     } else {
+        // 倒计时未结束，仅更新countDownLabel
         self.countDownLabel.text =[NSString stringWithFormat:@"%d",count];
     }
 }
 
 // 猜对
 - (IBAction)guessRight {
-    _rightCounts += 1;
-    _count += 1;
+    _passCounts += 1;
+    _guessedWordCounts += 1;
     [self saveResult:puzzleValue result:@"pass"];
     [self goToNextPuzzle];
 };
 
 // 猜错
 - (IBAction)guessWrong {
-    _wrongCounts += 1;
-    _count += 1;
+    _failCounts += 1;
+    _guessedWordCounts += 1;
     [self saveResult:puzzleValue result:@"fail"];
     [self goToNextPuzzle];
 };
 
 
 - (void)goToNextPuzzle {
-    puzzleValue = [puzzles objectAtIndex:_count];
-    _count += 1;
+    puzzleValue = [puzzles objectAtIndex:_guessedWordCounts];
+    _guessedWordCounts += 1;
     self.puzzleLabel.text = puzzleValue;
 }
 
@@ -332,10 +337,6 @@
 - (void)showResult {
     [self performSegueWithIdentifier:@"ShowOneTimeDetail" sender:tmpResults];
 }
-
-//- (void)showCurrentResult:(NSMutableArray *)result {
-//    [self performSegueWithIdentifier:@"ShowOneTimeDetail" sender:result];
-//}
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"ShowOneTimeDetail"]) {
@@ -349,13 +350,6 @@
 // 保存一个词条的猜词结果
 - (void)saveResult:(NSString *)name result:(NSString *)result {
     NSMutableDictionary *singleRecord = [NSMutableDictionary dictionary];
-    
-    // 获取系统当前的时间戳
-//    NSDate *date = [NSDate date];
-//    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-//    formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
-//    formatter.timeZone = [NSTimeZone localTimeZone];
-//    NSString *dateString = [formatter stringFromDate:date];
     
     // 要用毫秒时间戳形式存储游戏时间，否则点击过快可能造成两次的时间相同，添加进字典失败
     NSDate *dat = [NSDate dateWithTimeIntervalSinceNow:0];
@@ -385,7 +379,7 @@
     }
     
     // 从DB中取出对应ID的数据
-    DDLogVerbose(@"chegnyuResult数据表保存路径: %@", dbPath);
+    DDLogVerbose(@"chengyuResult数据表保存路径: %@", dbPath);
     FMDatabase *db = [FMDatabase databaseWithPath:dbPath];
     if (![db open]) {
         DDLogVerbose(@"打开数据库失败");
@@ -418,19 +412,9 @@
     
     // 先把duration拿出来，再跟round组成字典存进去。解决writeToFile覆盖导致设置duration后round置0的问题
     if ([tmpResults count] != 0) {
-//        NSMutableData *data = [[NSMutableData alloc]init];
-//        NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc]initForWritingWithMutableData:data];
-//        [archiver encodeObject:[NSString stringWithFormat:@"%d",_round] forKey:@"round"];
-//        DDLogVerbose(@"summ playing-save round: %ld", (long)_round);
-//        [archiver finishEncoding];
-//        [data writeToFile:[self dataFilePath] atomically:YES];
         if ([[NSFileManager defaultManager]fileExistsAtPath:path]) {
             NSDictionary *settingsBefore=[NSKeyedUnarchiver unarchiveObjectWithFile:path];
             duration = [settingsBefore objectForKey:@"duration"];
-            //        NSData *data = [[NSData alloc] initWithContentsOfFile:path];
-            //        NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc]initForReadingWithData:data];
-            //        number = [unarchiver decodeObjectForKey:@"round"]; //decode后的数据为对象，不能直接复制给int
-            //        [unarchiver finishDecoding];
         } else {
             duration = [NSNumber numberWithInt:10];
         }
@@ -450,15 +434,8 @@
 - (void)loadRound {
     NSString *path = [self dataFilePath];
     if ([[NSFileManager defaultManager]fileExistsAtPath:path]) {
-        
         NSDictionary *settingsBefore=[NSKeyedUnarchiver unarchiveObjectWithFile:path];
         _round = [[settingsBefore objectForKey:@"round"] intValue] + 1;
-//        NSData *data = [[NSData alloc] initWithContentsOfFile:path];
-//        NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc]initForReadingWithData:data];
-//        NSNumber *number = [unarchiver decodeObjectForKey:@"round"]; //decode后的数据为对象，不能直接复制给int
-//        DDLogVerbose(@"summ playing-load round: %ld", (long)_round);
-//        _round = [number intValue] + 1;
-//        [unarchiver finishDecoding];
     } else {
         _round = 1;
     }
@@ -466,7 +443,7 @@
 }
 
 - (void)loadSettings {
-    _leftTime = (int)[self loadDuration];
+    _duration = (int)[self loadDuration];
     [self loadRound];
     
 }
@@ -521,7 +498,7 @@
     }
 }
 
-
+// to be complemented
 - (IBAction)deleteWordsFromDB {
     
 }

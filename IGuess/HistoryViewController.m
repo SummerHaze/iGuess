@@ -157,7 +157,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    DDLogVerbose(@"IndexPath: %@", [indexPath description]);
+//    DDLogVerbose(@"IndexPath: %@", [indexPath description]);
     [self performSegueWithIdentifier:@"ShowDetail" sender:tableView.indexPathForSelectedRow];
 }
 

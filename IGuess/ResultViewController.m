@@ -11,7 +11,7 @@
 #import "ItemDetail.h"
 #import "ItemDetailViewController.h"
 #import "PlayViewController.h"
-
+#import "MeaningViewController.h"
 
 @interface ResultViewController ()
 
@@ -36,6 +36,18 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)back {
+    [self.delegate dismissViews:self];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"ShowMeaningToo"]) {
+        MeaningViewController *controller = segue.destinationViewController;
+        controller.name = sender;
+    }
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -48,30 +60,22 @@
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CurrentResult" forIndexPath:indexPath];
     
-    //显示当次游戏轮数的label，以后可优化成日期
-    UILabel *roundLabel = (UILabel *)[cell viewWithTag:2000];
-    //显示当次游戏统计结果的label
-    UILabel *statLabel = (UILabel *)[cell viewWithTag:2001];
-    
+//    UILabel *roundLabel = (UILabel *)[cell viewWithTag:2000];
+//    UILabel *statLabel = (UILabel *)[cell viewWithTag:2001];
 //    NSMutableArray *statResults = [self statResults:results];
+    
     NSDictionary *item = result[indexPath.row];
-    roundLabel.text = [item objectForKey:@"name"];
-    statLabel.text = [item objectForKey:@"result"];
+    cell.textLabel.text = [NSString stringWithFormat:@"%@   %@", [item objectForKey:@"name"], [item objectForKey:@"result"]];
+    
     return cell;
 }
 
-- (IBAction)back {
-//    [self dismissViewControllerAnimated:YES completion:nil];
-    [self.delegate dismissViews:self];
-//    [self dismissViewControllerAnimated:YES completion:nil];
-//    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
-//    PlayViewController *controller = (PlayViewController *)self.window.rootViewController;
-//    [controller dismissViewControllerAnimated:NO completion:nil];
-}
+#pragma mark – Table view delegate
 
-//- (void)viewWillDisappear:(BOOL)animated {
-//    [self dismissViewControllerAnimated:NO completion:nil];
-//}
+- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath{
+    NSDictionary *item = result[indexPath.row];
+    [self performSegueWithIdentifier:@"ShowMeaningToo" sender:[item objectForKey:@"name"]];
+}
 
 
 @end
