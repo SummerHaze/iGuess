@@ -170,6 +170,7 @@
 {
     if ([segue.identifier isEqualToString:@"ShowDetail"]) {
         ItemDetailViewController *controller = segue.destinationViewController;
+        controller.hidesBottomBarWhenPushed = YES;
         controller.delegate = self;
         controller.index = sender;
     }

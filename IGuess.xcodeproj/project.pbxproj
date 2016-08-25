@@ -59,7 +59,7 @@
 		16C0574D1D65BADA002C1CB8 /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "../../../../Library/Developer/Xcode/DerivedData/IGuess-dblsfizdxbnydbgcxsdiqvtzgupg/Build/Products/Debug-iphonesimulator/libPods.a"; sourceTree = "<group>"; };
 		16C0574F1D65BB0E002C1CB8 /* libCocoaLumberjack.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libCocoaLumberjack.a; path = "Pods/../build/Debug-iphoneos/libCocoaLumberjack.a"; sourceTree = "<group>"; };
 		16C057511D65BBEE002C1CB8 /* libCocoaLumberjack.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libCocoaLumberjack.a; path = "Pods/../build/Debug-iphoneos/libCocoaLumberjack.a"; sourceTree = "<group>"; };
-		16D6E4211C8C587300B7A4B9 /* IGuess.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IGuess.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		16D6E4211C8C587300B7A4B9 /* 猜猜看.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "猜猜看.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		16D6E4251C8C587300B7A4B9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		16D6E4271C8C587300B7A4B9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		16D6E4281C8C587300B7A4B9 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -118,7 +118,7 @@
 		16D6E4221C8C587300B7A4B9 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				16D6E4211C8C587300B7A4B9 /* IGuess.app */,
+				16D6E4211C8C587300B7A4B9 /* 猜猜看.app */,
 				16D6E43A1C8C587300B7A4B9 /* IGuessTests.xctest */,
 			);
 			name = Products;
@@ -221,7 +221,7 @@
 			);
 			name = IGuess;
 			productName = IGuess;
-			productReference = 16D6E4211C8C587300B7A4B9 /* IGuess.app */;
+			productReference = 16D6E4211C8C587300B7A4B9 /* 猜猜看.app */;
 			productType = "com.apple.product-type.application";
 		};
 		16D6E4391C8C587300B7A4B9 /* IGuessTests */ = {
@@ -504,7 +504,7 @@
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = xz.IGuess;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "猜猜看";
 			};
 			name = Debug;
 		};
@@ -522,7 +522,7 @@
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = xz.IGuess;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "猜猜看";
 			};
 			name = Release;
 		};

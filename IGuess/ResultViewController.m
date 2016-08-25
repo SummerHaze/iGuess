@@ -31,13 +31,19 @@
 //    [self.navigationController.presentedViewController.presentingViewController.presentedViewController dismissViewControllerAnimated:NO completion:nil];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:NO];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
 - (IBAction)back {
-    [self.delegate dismissViews:self];
+//    [self.delegate dismissViews:self];
+    [self.navigationController popToRootViewControllerAnimated:NO];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

@@ -57,6 +57,8 @@
                                                    object:nil];
     }
     
+    self.hidesBottomBarWhenPushed = YES;
+    
     return self;
 }
 
@@ -65,6 +67,7 @@
     if ([_controlButton.currentBackgroundImage isEqual: _pauseImage] ) {
         //切换后台前，游戏未暂停
         DDLogDebug(@"游戏进行时切后台，暂停");
+        self.countDownLabel.text = [NSString stringWithFormat:@"%d", self.countDownLabel.text.intValue + 1];
         [self pauseGame];
     } else {
         DDLogDebug(@"游戏暂停时切后台，不做处理");
@@ -74,6 +77,7 @@
 - (void)applicationDidEnterForeground {
     if ([_controlButton.currentBackgroundImage isEqual: _pauseImage] ) {
         DDLogDebug(@"游戏恢复前台，继续");
+        self.countDownLabel.text = [NSString stringWithFormat:@"%d", self.countDownLabel.text.intValue + 1];
         [self resumeGame];
         
     } else {
@@ -97,18 +101,15 @@
     _pauseImage = [UIImage imageNamed:@"pause.png"];
     _playImage = [UIImage imageNamed:@"play.png"];
     
-    
     [self startNewGame];
-
+    
 }
 
-//- (void)viewWillAppear:(BOOL)animated {
-//    DDLogVerbose(@"333self presenting:%@", self.presentingViewController);
-//    DDLogVerbose(@"333self presented:%@", self.presentedViewController);
-//    if ([self.presentedViewController isKindOfClass: [UINavigationController class]]) {
-//        [self dismissViewControllerAnimated:NO completion:nil];
-//    }
-//}
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:YES animated:NO];
+    
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -119,29 +120,32 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-//开始新一轮游戏
+// 开始新一轮游戏
 - (void)startNewGame {
     [self getWordsFromDB];
     
-//    //初始化alertview
+//    // 初始化alertview
 //    [self showAlertView];
     
-    //初始化records数组
+    // 初始化records数组
     results = [NSMutableArray arrayWithCapacity:300];
     
-    //加载round和countDown设置
-    [self loadSettings];
-    
-    //显示下一个词条
+    // 显示下一个词条
     [self goToNextPuzzle];
     
-    //启动倒计时
+    // 加载round和countDown设置
+    [self loadSettings];
+//    [self updateCountDownLabel:_duration];
+    self.countDownLabel.text = [NSString stringWithFormat:@"%d", _duration + 1];
+//    DDLogDebug(@"init label value: %@", self.countDownLabel.text);
+    
+    // 启动倒计时
     [self startCountDown];
     
     DDLogError(@"游戏初始化成功");
 }
 
-//结束游戏
+// 结束游戏
 - (void)stopGame {
     [self saveResults];
     [self saveRound];
@@ -149,7 +153,7 @@
     DDLogError(@"游戏结束");
 }
 
-//暂停游戏
+// 暂停游戏
 - (void)pauseGame {
     [self pauseCountDown];
     self.failButton.enabled = NO;
@@ -158,7 +162,7 @@
     
 }
 
-//暂停后恢复游戏
+// 暂停后恢复游戏
 - (void)resumeGame {
     [self resumeCountDown];
     self.failButton.enabled = YES;
@@ -167,9 +171,9 @@
 }
 
 - (void)getWordsFromDB {
-    //从DB中随机取出词条对应的ID
-    _initWordCounts = 300; //一次游戏取出的词条个数
-    _totalWordCounts = 4634; //数据库中词条总个数
+    // 从DB中随机取出词条对应的ID
+    _initWordCounts = 300; // 一次游戏取出的词条个数
+    _totalWordCounts = 4634; // 数据库中词条总个数
     int random;
     NSMutableString *IDs = [[NSMutableString alloc]initWithString:@"("];
     
@@ -190,7 +194,7 @@
     }
 //    DDLogVerbose(@"random IDs: %@",IDs);
     
-    //从DB中取出对应ID的数据
+    // 从DB中取出对应ID的数据
     NSString *dbPath = [[NSBundle mainBundle]pathForResource:@"words" ofType:@"db"];
 //    DDLogVerbose(@"mainbundle:%@", dbPath);
     
@@ -233,17 +237,18 @@
 //}
 
 
-//倒计时开始
+// 倒计时开始
 - (void)startCountDown {
     NSTimeInterval interval = 1;
-    self.countDownLabel.text = [NSString stringWithFormat:@"%d", _duration ];
-    
-    timer = [NSTimer scheduledTimerWithTimeInterval:interval target:self selector:@selector(updateCountDown) userInfo:nil repeats:YES];
-//    [[NSRunLoop currentRunLoop]addTimer:timer forMode:NSRunLoopCommonModes];
+    timer = [NSTimer scheduledTimerWithTimeInterval:interval
+                                             target:self
+                                           selector:@selector(updateCountDown)
+                                           userInfo:nil
+                                            repeats:YES];
     [timer setFireDate:[NSDate distantPast]];
 }
 
-//倒计时结束，释放定时器
+// 倒计时结束，释放定时器
 - (void)stopCountDown {
     if ([timer isValid] == YES) {
         [timer invalidate];
@@ -251,18 +256,18 @@
     }
 }
 
-//倒计时暂停
+// 倒计时暂停
 - (void)pauseCountDown {
     [timer setFireDate:[NSDate distantFuture]];
 }
 
-//倒计时恢复
+// 倒计时恢复
 - (void)resumeCountDown {
     [timer setFireDate:[NSDate date]];
 }
 
 
-//倒计时结束后，强制弹框结束游戏
+// 倒计时结束后，强制弹框结束游戏
 - (void)updateCountDown {
     int count = self.countDownLabel.text.intValue;
     if (--count < 0) {
@@ -302,7 +307,8 @@
         
     } else {
         // 倒计时未结束，仅更新countDownLabel
-        self.countDownLabel.text =[NSString stringWithFormat:@"%d",count];
+//        [self updateCountDownLabel:count];
+        self.countDownLabel.text =[NSString stringWithFormat:@"%d", count];
     }
 }
 
@@ -340,10 +346,11 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"ShowOneTimeDetail"]) {
-        UINavigationController *navigationController = segue.destinationViewController;
-        ResultViewController *controller = (ResultViewController *)navigationController.topViewController;
+//        UINavigationController *navigationController = segue.destinationViewController;
+        ResultViewController *controller = (ResultViewController *)segue.destinationViewController;
         controller.results = sender;
-        controller.delegate = self;
+//        controller.hidesBottomBarWhenPushed = NO;
+//        controller.delegate = self;
     }
 }
 

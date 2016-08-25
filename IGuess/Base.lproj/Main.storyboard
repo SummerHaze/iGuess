@@ -607,7 +607,7 @@
                         <outlet property="failButton" destination="1LF-xt-qnJ" id="oYC-na-brj"/>
                         <outlet property="passButton" destination="rYY-i4-d43" id="hrF-Kv-YpH"/>
                         <outlet property="puzzleLabel" destination="gNv-Ap-n3k" id="kbV-I2-aul"/>
-                        <segue destination="st9-oz-ZUc" kind="presentation" identifier="ShowOneTimeDetail" id="jFR-cN-jQl"/>
+                        <segue destination="udb-MN-msi" kind="show" identifier="ShowOneTimeDetail" id="Bis-UI-Qo3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="waz-fr-LTh" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -670,7 +670,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gnR-M1-9h6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3825" y="437"/>
+            <point key="canvasLocation" x="3109.5" y="339"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="1xt-er-E7T">
@@ -791,7 +791,7 @@
                                 </variation>
                                 <connections>
                                     <action selector="startGame" destination="vwk-QL-Jd4" eventType="touchUpInside" id="orv-Gh-odU"/>
-                                    <segue destination="TJt-Qd-Jnq" kind="presentation" id="Jii-cV-AeJ"/>
+                                    <segue destination="TJt-Qd-Jnq" kind="show" id="Jii-cV-AeJ"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -824,24 +824,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8TO-Gm-RDZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1681.5" y="437"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="e5J-ri-QeS">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="st9-oz-ZUc" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ilD-sI-JCs">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="udb-MN-msi" kind="relationship" relationship="rootViewController" id="UA0-Js-uSE"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Fl5-j3-vrn" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3114" y="437"/>
         </scene>
     </scenes>
     <resources>
