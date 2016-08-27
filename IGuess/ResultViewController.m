@@ -25,10 +25,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     result = self.results;
-//    DDLogVerbose(@"222self presenting:%@", self.presentingViewController);
-//    DDLogVerbose(@"222self navigation:%@", self.navigationController);
-//    DDLogVerbose(@"222self navigation presenting:%@", self.navigationController.presentingViewController);
-//    [self.navigationController.presentedViewController.presentingViewController.presentedViewController dismissViewControllerAnimated:NO completion:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -71,7 +67,7 @@
 //    NSMutableArray *statResults = [self statResults:results];
     
     NSDictionary *item = result[indexPath.row];
-    cell.textLabel.text = [NSString stringWithFormat:@"%@   %@", [item objectForKey:@"name"], [item objectForKey:@"result"]];
+    cell.textLabel.text = [NSString stringWithFormat:@"%@   %@", [item objectForKey:@"name"], [item objectForKey:@"result"]].uppercaseString;
     
     return cell;
 }

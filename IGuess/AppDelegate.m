@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "Bugly/Bugly.h"
 //#import <CocoaLumberjack/CocoaLumberjack.h>
 
 
@@ -19,6 +20,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
+    // 初始化CocoaLumberjack
     [DDLog addLogger:[DDASLLogger sharedInstance]];
     [DDLog addLogger:[DDTTYLogger sharedInstance]];
     // 开启颜色区分
@@ -32,8 +34,10 @@
     fileLogger.logFileManager.maximumNumberOfLogFiles = 7;
     
     [DDLog addLogger:fileLogger];
-
     
+    // 初始化Bugly
+    [Bugly startWithAppId:@"900049207"];
+
     return YES;
 }
 

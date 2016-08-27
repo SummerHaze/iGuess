@@ -14,6 +14,15 @@
 		</dict>
 		<dict>
 			<key>FooterText</key>
+			<string>Copyright 2016 tencent.com. All rights reserved.
+</string>
+			<key>Title</key>
+			<string>Bugly</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>FooterText</key>
 			<string>Software License Agreement (BSD License)
 
 Copyright (c) 2010-2016, Deusty, LLC

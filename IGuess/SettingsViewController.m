@@ -10,6 +10,13 @@
 
 @interface SettingsViewController ()
 
+@property (nonatomic) IBOutlet UISwitch *testDuration;
+@property (nonatomic) IBOutlet UISwitch *shortDuration;
+@property (nonatomic) IBOutlet UISwitch *mediumDuration;
+@property (nonatomic) IBOutlet UISwitch *longDuration;
+@property (nonatomic) NSInteger duration;
+
+
 @end
 
 @implementation SettingsViewController
@@ -57,13 +64,6 @@
     if ([[NSFileManager defaultManager]fileExistsAtPath:path]) {
         NSDictionary *settingsBefore=[NSKeyedUnarchiver unarchiveObjectWithFile:path];
         self.duration = [[settingsBefore objectForKey:@"duration"] intValue];
-//
-//        NSData *data = [[NSData alloc] initWithContentsOfFile:path];
-//        NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc]initForReadingWithData:data];
-//        NSNumber *number = [unarchiver decodeObjectForKey:@"duration"]; //decode后的数据为对象，不能直接复制给int
-//        self.duration = [number intValue];
-//        DDLogVerbose(@"summ setting-load duration: %ld", (long)self.duration);
-//        [unarchiver finishDecoding];
     } else {
         self.duration = 60;
     }
@@ -79,10 +79,6 @@
     if ([[NSFileManager defaultManager]fileExistsAtPath:path]) {
         NSDictionary *settingsBefore=[NSKeyedUnarchiver unarchiveObjectWithFile:path];
         round = [settingsBefore objectForKey:@"round"];
-//        NSData *data = [[NSData alloc] initWithContentsOfFile:path];
-//        NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc]initForReadingWithData:data];
-//        number = [unarchiver decodeObjectForKey:@"round"]; //decode后的数据为对象，不能直接复制给int
-//        [unarchiver finishDecoding];
     } else {
         round = [NSNumber numberWithInt:1];
     }
@@ -96,12 +92,7 @@
     DDLogVerbose(@"保存游戏的时长为: %ld", (long)self.duration);
     NSDictionary *settingsAfter = [[NSDictionary alloc]initWithObjects:values forKeys:keys];
     [NSKeyedArchiver archiveRootObject:settingsAfter toFile:path];
-//    NSMutableData *data = [[NSMutableData alloc]init];
-//    NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc]initForWritingWithMutableData:data];
-//    DDLogVerbose(@"summ setting-save duration: %ld", (long)self.duration);
-//    [archiver encodeObject:[NSString stringWithFormat:@"%ld",(long)self.duration] forKey:@"duration"];
-//    [archiver finishEncoding];
-//    [data writeToFile:[self dataFilePath] atomically:YES];
+
 }
 
 - (NSString *)documentsDirectory {
@@ -115,41 +106,6 @@
     return [[self documentsDirectory]stringByAppendingPathComponent:@"Settings.plist"];
 }
 
-//- (IBAction)back{
-
-//    [self dismissViewControllerAnimated:YES completion:nil];
-    
-//    UIAlertController *alertController =
-//    [UIAlertController alertControllerWithTitle:@"设置错误！"
-//                                        message:@"请确认只有一个开关开启"
-//                                 preferredStyle:UIAlertControllerStyleAlert];
-//    UIAlertAction *confirm = [UIAlertAction actionWithTitle:@"确定"
-//                                                      style:UIAlertActionStyleDefault
-//                                                    handler:nil];
-//    [alertController addAction:confirm];
-//    
-//    //获取开关的状态，当且只有1个开关开，其他开关关时，设置才有效。否则报错
-//    NSMutableArray *switches = [[NSMutableArray alloc]init];
-//    [switches addObject:[NSNumber numberWithBool:self.shortDuration.on]];
-//    [switches addObject:[NSNumber numberWithBool:self.mediumDuration.on]];
-//    [switches addObject:[NSNumber numberWithBool:self.longDuration.on]];
-//    
-//    NSUInteger position = [switches indexOfObject:[NSNumber numberWithBool:YES]];
-//    
-//    if (position != NSNotFound) {
-//        [switches removeObjectAtIndex:position];
-//        if ([switches indexOfObject:[NSNumber numberWithBool:YES]] == NSNotFound) {
-//            //把开关状态存储下来
-//            self.duration = 60 * (position + 1);
-//            [self saveDuration];
-//            [self dismissViewControllerAnimated:YES completion:nil];
-//        } else {
-//            [self presentViewController:alertController animated:YES completion:nil];
-//        }
-//    } else {
-//        [self presentViewController:alertController animated:YES completion:nil];
-//    }
-//}
 
 - (void)switchValueChanged: (id)sender{
     UISwitch *control = (UISwitch *)sender;

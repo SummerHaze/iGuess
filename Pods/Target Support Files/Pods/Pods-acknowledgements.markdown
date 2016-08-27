@@ -1,6 +1,11 @@
 # Acknowledgements
 This application makes use of the following third party libraries:
 
+## Bugly
+
+Copyright 2016 tencent.com. All rights reserved.
+
+
 ## CocoaLumberjack
 
 Software License Agreement (BSD License)

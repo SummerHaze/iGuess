@@ -13,21 +13,16 @@
 // You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
 
 
-
-//#ifdef DEBUG
-//#define DebugLog(format, ...) NSLog((@"%s [Line %d] " format), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
-//#else
-//#define DebugLog(...) do { } while (0)
-//#endif
-
 //#ifndef __IPHONE_5_0
 //#warning "This project uses features only available in iOS SDK 5.0 and later"
 //#endif
 
+
+// configure the framework
 #define LOG_LEVEL_DEF ddLogLevel
 #import <CocoaLumberjack/CocoaLumberjack.h>
 
-//static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
+//static const DDLogLevel ddLogLevel = DDLogLevelDebug;
 
 #ifdef DEBUG
 static const DDLogLevel ddLogLevel = DDLogLevelVerbose;

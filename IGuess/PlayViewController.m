@@ -20,6 +20,12 @@
 @property (nonatomic, weak) IBOutlet UILabel *countDownLabel;
 @property (nonatomic, weak) IBOutlet UILabel *puzzleLabel;
 
+- (IBAction)guessRight;
+- (IBAction)guessWrong;
+
+- (IBAction)back;
+- (IBAction)pauseOrPlay;
+
 @end
 
 @implementation PlayViewController
@@ -75,9 +81,9 @@
 }
 
 - (void)applicationDidEnterForeground {
-    if ([_controlButton.currentBackgroundImage isEqual: _pauseImage] ) {
+    if ([_controlButton.currentBackgroundImage isEqual: _pauseImage]) {
         DDLogDebug(@"游戏恢复前台，继续");
-        self.countDownLabel.text = [NSString stringWithFormat:@"%d", self.countDownLabel.text.intValue + 1];
+        self.countDownLabel.text = [NSString stringWithFormat:@"%d", self.countDownLabel.text.intValue + 1];    
         [self resumeGame];
         
     } else {
@@ -123,10 +129,7 @@
 // 开始新一轮游戏
 - (void)startNewGame {
     [self getWordsFromDB];
-    
-//    // 初始化alertview
-//    [self showAlertView];
-    
+
     // 初始化records数组
     results = [NSMutableArray arrayWithCapacity:300];
     
@@ -135,9 +138,7 @@
     
     // 加载round和countDown设置
     [self loadSettings];
-//    [self updateCountDownLabel:_duration];
     self.countDownLabel.text = [NSString stringWithFormat:@"%d", _duration + 1];
-//    DDLogDebug(@"init label value: %@", self.countDownLabel.text);
     
     // 启动倒计时
     [self startCountDown];
@@ -192,7 +193,6 @@
             i--;
         }
     }
-//    DDLogVerbose(@"random IDs: %@",IDs);
     
     // 从DB中取出对应ID的数据
     NSString *dbPath = [[NSBundle mainBundle]pathForResource:@"words" ofType:@"db"];
@@ -218,24 +218,6 @@
     [db close];
     
 }
-
-
-//- (void)showAlertView {
-//    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"倒计时" message:@"234" preferredStyle:UIAlertControllerStyleAlert];
-//    
-//    _leftTime = 3;
-//    NSTimeInterval seconds = 1;
-//    self.countDownLabel.text = [NSString stringWithFormat:@"%d", _leftTime ];
-//    timer = [NSTimer scheduledTimerWithTimeInterval:seconds
-//                                             target:self
-//                                           selector:@selector(showStopAlert)
-//                                           userInfo:nil
-//                                            repeats:YES];
-//    [[NSRunLoop currentRunLoop]addTimer:timer forMode:NSRunLoopCommonModes];
-//    
-//    [self presentViewController:alertController animated:NO completion:nil];
-//}
-
 
 // 倒计时开始
 - (void)startCountDown {
@@ -346,11 +328,8 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"ShowOneTimeDetail"]) {
-//        UINavigationController *navigationController = segue.destinationViewController;
         ResultViewController *controller = (ResultViewController *)segue.destinationViewController;
         controller.results = sender;
-//        controller.hidesBottomBarWhenPushed = NO;
-//        controller.delegate = self;
     }
 }
 
@@ -389,14 +368,15 @@
     DDLogVerbose(@"chengyuResult数据表保存路径: %@", dbPath);
     FMDatabase *db = [FMDatabase databaseWithPath:dbPath];
     if (![db open]) {
-        DDLogVerbose(@"打开数据库失败");
+        DDLogError(@"打开数据库record.db失败");
         return;
     }
     NSString *sql = @"INSERT INTO chengyuResult (result,id,round,name) VALUES(:result,:id,:round,:name);";
     if (results != nil) {
         for (NSDictionary *singleRecord in results){
+            DDLogDebug(@"当前保存的猜词结果为: %@", singleRecord);
             if (![db executeUpdate:sql withParameterDictionary:singleRecord]) {
-                DDLogVerbose(@"保存一轮猜词结果到数据库失败");
+                DDLogError(@"保存一轮猜词结果到record.db失败");
                 return;
             };
         }

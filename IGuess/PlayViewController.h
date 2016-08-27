@@ -7,16 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ResultViewController.h"
 
-@interface PlayViewController : UIViewController <ResultViewControllerDelegate>
-
-- (IBAction)guessRight;
-- (IBAction)guessWrong;
-
-- (IBAction)back;
-- (IBAction)pauseOrPlay;
-
-//- (IBAction)deleteWordsFromDB;
+@interface PlayViewController : UIViewController
 
 @end

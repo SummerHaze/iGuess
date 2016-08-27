@@ -12,7 +12,7 @@
 
 @interface StartViewController : UIViewController
 
--(IBAction)startGame;
+//-(IBAction)startGame;
 
 
 @end
