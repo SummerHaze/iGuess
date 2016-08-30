@@ -12,6 +12,8 @@
 #import "ResultViewController.h"
 #import "HomeViewController.h"
 
+static const NSInteger tmpDuration = 10;
+
 @interface PlayViewController ()
 
 @property (nonatomic, weak) IBOutlet UIButton *controlButton;
@@ -407,7 +409,7 @@
             NSDictionary *settingsBefore=[NSKeyedUnarchiver unarchiveObjectWithFile:path];
             duration = [settingsBefore objectForKey:@"duration"];
         } else {
-            duration = [NSNumber numberWithInt:10];
+            duration = [NSNumber numberWithInt:tmpDuration];
         }
         
         NSMutableArray *keys = [[NSMutableArray alloc]init];
@@ -450,9 +452,9 @@
         NSDictionary *settingsBefore=[NSKeyedUnarchiver unarchiveObjectWithFile:path];
         duration = [[settingsBefore objectForKey:@"duration"] intValue];
     } else {
-        duration = 60;
+        duration = tmpDuration;
     }
-    DDLogVerbose(@"加载游戏的时长为: %ld", (long)duration);
+    DDLogVerbose(@"play页面加载游戏的时长为: %ld", (long)duration);
     
     // 不知道什么导致加载的duration为10，偶现，暂时先规避
 //    if (duration < 60) {

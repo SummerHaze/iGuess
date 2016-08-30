@@ -9,6 +9,8 @@
 #import "SettingsViewController.h"
 #import "TypePickerViewController.h"
 
+static const NSInteger tmpDuration = 10;
+
 @interface SettingsViewController ()
 
 @property (nonatomic ,retain) IBOutlet UISwitch *testDuration;
@@ -65,9 +67,9 @@
         NSDictionary *settingsBefore=[NSKeyedUnarchiver unarchiveObjectWithFile:path];
         self.duration = [[settingsBefore objectForKey:@"duration"] intValue];
     } else {
-        self.duration = 60;
+        self.duration = tmpDuration;
     }
-    DDLogVerbose(@"设置页面，加载的游戏时长为: %ld", (long)self.duration);
+    DDLogVerbose(@"setting页面加载游戏的时长为: %ld", (long)self.duration);
 }
 
 - (void)saveDuration {
@@ -79,7 +81,7 @@
         NSDictionary *settingsBefore=[NSKeyedUnarchiver unarchiveObjectWithFile:path];
         round = [settingsBefore objectForKey:@"round"];
     } else {
-        round = [NSNumber numberWithInt:1];
+        round = [NSNumber numberWithInt:0];
     }
     
     NSMutableArray *keys = [[NSMutableArray alloc]init];
@@ -88,7 +90,7 @@
     NSMutableArray *values = [[NSMutableArray alloc]init];
     [values addObject:round];
     [values addObject:[NSNumber numberWithInteger:self.duration]];
-    DDLogVerbose(@"保存游戏的时长为: %ld", (long)self.duration);
+    DDLogVerbose(@"setting页面保存游戏的时长为: %ld", (long)self.duration);
     NSDictionary *settingsAfter = [[NSDictionary alloc]initWithObjects:values forKeys:keys];
     [NSKeyedArchiver archiveRootObject:settingsAfter toFile:path];
 
@@ -116,9 +118,6 @@
         } else {
             [s setOn:NO animated:YES];
         }
-        
-        
-        
     }];
     [self saveDuration];
 }
