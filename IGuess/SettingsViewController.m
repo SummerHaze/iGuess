@@ -11,10 +11,10 @@
 
 @interface SettingsViewController ()
 
-@property (nonatomic) IBOutlet UISwitch *testDuration;
-@property (nonatomic) IBOutlet UISwitch *shortDuration;
-@property (nonatomic) IBOutlet UISwitch *mediumDuration;
-@property (nonatomic) IBOutlet UISwitch *longDuration;
+@property (nonatomic ,retain) IBOutlet UISwitch *testDuration;
+@property (nonatomic,retain) IBOutlet UISwitch *shortDuration;
+@property (nonatomic,retain) IBOutlet UISwitch *mediumDuration;
+@property (nonatomic,retain) IBOutlet UISwitch *longDuration;
 @property (nonatomic) NSInteger duration;
 @property (nonatomic, weak) IBOutlet UILabel *typeLabel;
 
@@ -22,38 +22,36 @@
 @end
 
 @implementation SettingsViewController
-
+{
+    NSDictionary *_dic;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self loadDuration];
     
+//#if DEBUG
     [self.testDuration addTarget:self action:@selector(switchValueChanged:) forControlEvents:UIControlEventValueChanged];
+//#endif
     [self.shortDuration addTarget:self action:@selector(switchValueChanged:) forControlEvents:UIControlEventValueChanged];
     [self.mediumDuration addTarget:self action:@selector(switchValueChanged:) forControlEvents:UIControlEventValueChanged];
     [self.longDuration addTarget:self action:@selector(switchValueChanged:) forControlEvents:UIControlEventValueChanged];
 
-    //这个方法太蠢了，不忍直视
-    if (self.duration == 60) {
-        self.shortDuration.on = YES;
-        self.mediumDuration.on = NO;
-        self.longDuration.on = NO;
-        self.testDuration.on = NO;
-    } else if(self.duration == 120) {
-        self.shortDuration.on = NO;
-        self.mediumDuration.on = YES;
-        self.longDuration.on = NO;
-        self.testDuration.on = NO;
-    } else if(self.duration == 180) {
-        self.shortDuration.on = NO;
-        self.mediumDuration.on = NO;
-        self.longDuration.on = YES;
-        self.testDuration.on = NO;
-    } else if(self.duration == 10) {
-        self.shortDuration.on = NO;
-        self.mediumDuration.on = NO;
-        self.longDuration.on = NO;
-        self.testDuration.on = YES;
-    }
+    _dic = [NSDictionary dictionaryWithObjectsAndKeys:
+                         self.testDuration, @10,
+                         self.shortDuration, @60,
+                         self.mediumDuration, @120,
+                         self.longDuration, @180,
+                         nil];
+    
+    [_dic enumerateKeysAndObjectsUsingBlock:^(NSNumber *key, id obj, BOOL *stop) {
+        UISwitch *s = obj;
+        if (key.intValue == self.duration ) {
+            s.on = YES;
+        } else {
+            s.on = NO;
+        }
+    }];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -108,38 +106,20 @@
 }
 
 
-- (void)switchValueChanged: (id)sender{
+- (void)switchValueChanged: (id)sender {
     UISwitch *control = (UISwitch *)sender;
-    if (control == self.shortDuration) {
-        if (self.shortDuration.on == YES) {
-            self.duration = 60;
-            [self.mediumDuration setOn:NO animated:YES];
-            [self.longDuration setOn:NO animated:YES];
-            [self.testDuration setOn:NO animated:YES];
+    [_dic enumerateKeysAndObjectsUsingBlock:^(NSNumber *key, id obj, BOOL *stop) {
+        UISwitch *s = obj;
+        if (control == s && control.on == YES) {
+            self.duration = key.integerValue;
+            [s setOn:YES animated:YES];
+        } else {
+            [s setOn:NO animated:YES];
         }
-    } else if (control == self.mediumDuration) {
-        if (self.mediumDuration.on == YES) {
-            self.duration = 120;
-            [self.shortDuration setOn:NO animated:YES];
-            [self.longDuration setOn:NO animated:YES];
-            [self.testDuration setOn:NO animated:YES];
-        }
-    } else if (control == self.longDuration) {
-        if (self.longDuration.on == YES) {
-            self.duration = 180;
-            [self.mediumDuration setOn:NO animated:YES];
-            [self.shortDuration setOn:NO animated:YES];
-            [self.testDuration setOn:NO animated:YES];
-        }
-    } else if (control == self.testDuration) {
-        if (self.testDuration.on == YES) {
-            self.duration = 10;
-            [self.mediumDuration setOn:NO animated:YES];
-            [self.shortDuration setOn:NO animated:YES];
-            [self.longDuration setOn:NO animated:YES];
-        }
-    }
-    
+        
+        
+        
+    }];
     [self saveDuration];
 }
 
