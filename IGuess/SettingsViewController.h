@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TypePickerViewController.h"
 
-@interface SettingsViewController : UITableViewController
-
+@interface SettingsViewController : UITableViewController <TypePickerViewControllerDelegate>
 
 
 @end

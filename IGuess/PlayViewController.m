@@ -99,7 +99,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    
+//
 //    self.failButton = (UIButton *)[self.view viewWithTag:5000];
 //    self.passButton = (UIButton *)[self.view viewWithTag:5001];
 //    self.controlButton = (UIButton *)[self.view viewWithTag:4000];
@@ -114,7 +114,11 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:NO];
-    
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:NO];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -7,6 +7,7 @@
 //
 
 #import "SettingsViewController.h"
+#import "TypePickerViewController.h"
 
 @interface SettingsViewController ()
 
@@ -15,6 +16,7 @@
 @property (nonatomic) IBOutlet UISwitch *mediumDuration;
 @property (nonatomic) IBOutlet UISwitch *longDuration;
 @property (nonatomic) NSInteger duration;
+@property (nonatomic, weak) IBOutlet UILabel *typeLabel;
 
 
 @end
@@ -71,7 +73,6 @@
 }
 
 - (void)saveDuration {
-    
     NSString *path = [self dataFilePath];
     NSNumber *round;
     
@@ -146,8 +147,40 @@
 {
     if (section == 0) {
         return @"PLAY DURATION";
+    } else if (section == 1){
+        return @"COMMON";
+    } else if (section == 2){
+        return @"MORE";
     } else {
         return nil;
+    }
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"PickType"]) {
+        TypePickerViewController *controller = segue.destinationViewController;
+        controller.delegate = self;
+    }
+}
+
+#pragma mark – TypePickerViewController delegate
+- (void)typePicker:(TypePickerViewController *)controller didPickType:(NSString *)typeName {
+    self.typeLabel.text = typeName;
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+
+#pragma mark – Table view delegate
+
+- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 1 && indexPath.row == 0) {
+        [self performSegueWithIdentifier:@"PickType" sender:nil];
+    }
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 1 && indexPath.row == 0) {
+        [self performSegueWithIdentifier:@"PickType" sender:nil];
     }
 }
 

@@ -27,10 +27,10 @@
     result = self.results;
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    [self.navigationController setNavigationBarHidden:NO animated:NO];
-}
+//- (void)viewWillAppear:(BOOL)animated {
+//    [super viewWillAppear:animated];
+//    [self.navigationController setNavigationBarHidden:NO animated:NO];
+//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -68,6 +68,8 @@
     
     NSDictionary *item = result[indexPath.row];
     cell.textLabel.text = [NSString stringWithFormat:@"%@   %@", [item objectForKey:@"name"], [item objectForKey:@"result"]].uppercaseString;
+    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     return cell;
 }

@@ -66,6 +66,7 @@
     
     ItemDetail *item = _lists[self.index.row][indexPath.row];
     cell.textLabel.text = [NSString stringWithFormat:@"%@     %@", item.name, item.result.uppercaseString];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
 //    cell.detailTextLabel.text = @"123";
     return cell;
 }
