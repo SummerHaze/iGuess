@@ -21,11 +21,13 @@
     NSMutableArray *results; // 记录从数据库中读取的游戏数据
     NSMutableArray *items; // 按round分类后的results
     NSInteger maxRounds; // 每次取数据的最大条数（即游戏轮数）
+    NSString *_type;
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self loadType];
     [self getResultsFromDB];
     [self processResultsByRound];
 }
@@ -42,6 +44,13 @@
     //  Dispose of any resources that can be recreated.
 }
 
+- (void)loadType {
+    // 加载词库
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    _type = [defaults stringForKey:@"type"];
+    DDLogVerbose(@"history页面加载词库类型为: %@", _type);
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -56,22 +65,30 @@
     NSFileManager *fm = [NSFileManager defaultManager];
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
-    NSString *dbPath = [documentsDirectory stringByAppendingPathComponent:@"record.db"];
+    NSString *dbPath = [documentsDirectory stringByAppendingPathComponent:@"results.db"];
     
     // 游戏开始时切换至history界面，无record.db，此时也要复制之
     if (![fm fileExistsAtPath:dbPath]) {
         NSError *error;
-        NSString *resourcePath = [[NSBundle mainBundle]pathForResource:@"record" ofType:@"db"];
+        NSString *resourcePath = [[NSBundle mainBundle]pathForResource:@"results" ofType:@"db"];
         [fm copyItemAtPath:resourcePath toPath:dbPath error:&error];
     }
     
     FMDatabase *db = [FMDatabase databaseWithPath:dbPath];
     if (![db open]) {
-        DDLogVerbose(@"record.db打开失败");
+        DDLogVerbose(@"results.db打开失败");
         return;
     }
     
-    NSString *query = [NSString stringWithFormat:@"SELECT * FROM chengyuResult"];
+    NSString *query;
+    if ([_type isEqualToString: @"成语"]) {
+        query = [NSString stringWithFormat:@"SELECT * FROM chengyuResult"];
+    } else if ([_type isEqualToString: @"计算机"]) {
+        query = [NSString stringWithFormat:@"SELECT * FROM jisuanjiResult"];
+    } else if ([_type isEqualToString: @"布袋戏"]) {
+        query = [NSString stringWithFormat:@"SELECT * FROM budaixiResult"];
+    }
+    
     FMResultSet *s = [db executeQuery:query];
     while ([s next]) {
         ItemDetail *item = [[ItemDetail alloc]init];

@@ -19,20 +19,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _types = @[
-                   @"成语",
-                   @"歌曲",
-                   @"明星",
-                   @"文学",
-                   @"科技",
-                   @"流氓",
-                   @"霹雳"];
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    _types = @[@"成语", @"计算机", @"布袋戏"];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -233,7 +233,7 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bz6-Wt-SnQ">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="成语" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bz6-Wt-SnQ">
                                                     <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -415,6 +415,7 @@
                     <connections>
                         <outlet property="longDuration" destination="OvW-eq-GOM" id="2Bm-FX-flh"/>
                         <outlet property="mediumDuration" destination="mbu-JD-GNL" id="yfO-j0-sf4"/>
+                        <outlet property="notify" destination="tiT-eH-Ibo" id="4fG-p5-48W"/>
                         <outlet property="shortDuration" destination="iO7-hi-cyb" id="cbj-wi-zdp"/>
                         <outlet property="testDuration" destination="2Ek-YY-GTM" id="C6A-Ud-sGW"/>
                         <outlet property="typeLabel" destination="bz6-Wt-SnQ" id="uhl-iZ-xFP"/>

@@ -13,6 +13,10 @@
 #import "HomeViewController.h"
 
 static const NSInteger tmpDuration = 10;
+static const int initMembers = 300;  //首次取出来的词条数
+static const NSInteger chengyuCounts = 4634;
+static const NSInteger budaixiCounts = 12400;
+static const NSInteger jisuanjiCounts = 132;
 
 @interface PlayViewController ()
 
@@ -32,14 +36,15 @@ static const NSInteger tmpDuration = 10;
 
 @implementation PlayViewController
 {
-    NSMutableArray *puzzles;    //谜面
-    NSMutableArray *results;    //总结果
-    NSMutableArray *tmpResults;
-    NSString *puzzleValue;
-    NSTimer *timer;
+    NSMutableArray *_puzzles;    //谜面
+    NSMutableArray *_results;    //总结果
+    NSMutableArray *_tmpResults;
+    NSString *_puzzleValue;
+    NSTimer *_timer;
     UIImage *_pauseImage;
     UIImage *_playImage;
-    int _totalWordCounts;   //数据库中的词条总数
+    NSString *_type;        //词库类型
+    int _totalWordsCounts;  //数据库中的词条总数
     int _guessedWordCounts; //已经猜词的词条总数量
     int _initWordCounts;    //初始化时随机读取的词条数量
     int _duration;          //游戏总时间
@@ -101,21 +106,16 @@ static const NSInteger tmpDuration = 10;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//
-//    self.failButton = (UIButton *)[self.view viewWithTag:5000];
-//    self.passButton = (UIButton *)[self.view viewWithTag:5001];
-//    self.controlButton = (UIButton *)[self.view viewWithTag:4000];
     
     _pauseImage = [UIImage imageNamed:@"pause.png"];
     _playImage = [UIImage imageNamed:@"play.png"];
-    
-    [self startNewGame];
     
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:NO];
+    [self startNewGame];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -134,19 +134,20 @@ static const NSInteger tmpDuration = 10;
 
 // 开始新一轮游戏
 - (void)startNewGame {
+    // 加载设置
+    [self loadSettings];
+    
+    // 数据库中读词条
     [self getWordsFromDB];
 
-    // 初始化records数组
-    results = [NSMutableArray arrayWithCapacity:300];
+    // 初始化results数组
+    _results = [NSMutableArray arrayWithCapacity:initMembers];
     
     // 显示下一个词条
     [self goToNextPuzzle];
     
-    // 加载round和countDown设置
-    [self loadSettings];
-    self.countDownLabel.text = [NSString stringWithFormat:@"%d", _duration + 1];
-    
     // 启动倒计时
+    self.countDownLabel.text = [NSString stringWithFormat:@"%d", _duration + 1];
     [self startCountDown];
     
     DDLogError(@"游戏初始化成功");
@@ -177,49 +178,65 @@ static const NSInteger tmpDuration = 10;
     DDLogVerbose(@"游戏恢复成功");
 }
 
+// 从DB中随机取出词条对应的ID
 - (void)getWordsFromDB {
-    // 从DB中随机取出词条对应的ID
-    _initWordCounts = 300; // 一次游戏取出的词条个数
-    _totalWordCounts = 4634; // 数据库中词条总个数
-    int random;
-    NSMutableString *IDs = [[NSMutableString alloc]initWithString:@"("];
-    
-    for (int i=1; i<=_initWordCounts; i++) {
-        random = [self getRandomNumber:1 to:_totalWordCounts];
-        //去重
-        BOOL contain = [IDs containsString:[NSString stringWithFormat:@"%d",random]];
-        
-        if (contain == NO) {
-            if (i < _initWordCounts) {
-                [IDs appendString:[NSString stringWithFormat:@"%d,",random]];
-            } else {
-                [IDs appendString:[NSString stringWithFormat:@"%d)",random]];
-            }
-        } else {
-            i--;
-        }
+    if ([_type isEqualToString: @"成语"]) {
+        _totalWordsCounts = chengyuCounts;
+    } else if ([_type isEqualToString: @"计算机"]) {
+        _totalWordsCounts = jisuanjiCounts;
+    } else if ([_type isEqualToString: @"布袋戏"]) {
+        _totalWordsCounts = budaixiCounts;
     }
     
+    int random;
+    NSMutableString *IDs = [[NSMutableString alloc]initWithString:@"("];
+
+    if (_totalWordsCounts > initMembers) {
+        for (int i=1; i<=initMembers; i++) {
+            random = [self getRandomNumber:1 to:_totalWordsCounts];
+            //去重
+            BOOL contain = [IDs containsString:[NSString stringWithFormat:@"%d",random]];
+            
+            if (contain == NO) {
+                if (i < initMembers) {
+                    [IDs appendString:[NSString stringWithFormat:@"%d,",random]];
+                } else {
+                    [IDs appendString:[NSString stringWithFormat:@"%d)",random]];
+                }
+            } else {
+                i--;
+            }
+        }
+    }
+
     // 从DB中取出对应ID的数据
-    NSString *dbPath = [[NSBundle mainBundle]pathForResource:@"words" ofType:@"db"];
-//    DDLogVerbose(@"mainbundle:%@", dbPath);
-    
-    FMDatabase *db = [FMDatabase databaseWithPath:dbPath];
+    FMDatabase *db = [FMDatabase databaseWithPath:[[NSBundle mainBundle]pathForResource:@"words" ofType:@"db"]];
     if (![db open]) {
         DDLogError(@"打开words.db失败");
         return;
     }
-    NSString *query = [NSString stringWithFormat:@"SELECT * FROM chengyu where ID in %@",IDs];
+    
+    NSString *query;
+    if ([_type isEqualToString: @"成语"]) {
+        query = [NSString stringWithFormat:@"SELECT * FROM chengyu where ID in %@",IDs];
+    } else if ([_type isEqualToString: @"计算机"]) {
+        query = @"SELECT * FROM jisuanji order by random()";
+    } else if ([_type isEqualToString: @"布袋戏"]) {
+        query = [NSString stringWithFormat:@"SELECT * FROM budaixi where ID in %@",IDs];
+    } else {
+        DDLogError(@"play页面加载的词库类型有误，类型为: %@", _type);
+    }
+    
     FMResultSet *s = [db executeQuery:query];
-    int id;
-    NSString *type;
+//    int wordId;
+//    NSString *type;
     NSString *name;
-    puzzles = [NSMutableArray arrayWithCapacity:300];
+    _puzzles = [NSMutableArray arrayWithCapacity:MIN(initMembers,_totalWordsCounts)];
     while ([s next]) {
-        id = [s intForColumn:@"ID"];
-        type = [s stringForColumn:@"TYPE"];
+//        wordId = [s intForColumn:@"ID"];
+//        type = [s stringForColumn:@"TYPE"];
         name = [s stringForColumn:@"NAME"];
-        [puzzles addObject:name];
+        [_puzzles addObject:name];
     }
     [db close];
     
@@ -228,30 +245,30 @@ static const NSInteger tmpDuration = 10;
 // 倒计时开始
 - (void)startCountDown {
     NSTimeInterval interval = 1;
-    timer = [NSTimer scheduledTimerWithTimeInterval:interval
+    _timer = [NSTimer scheduledTimerWithTimeInterval:interval
                                              target:self
                                            selector:@selector(updateCountDown)
                                            userInfo:nil
                                             repeats:YES];
-    [timer setFireDate:[NSDate distantPast]];
+    [_timer setFireDate:[NSDate distantPast]];
 }
 
 // 倒计时结束，释放定时器
 - (void)stopCountDown {
-    if ([timer isValid] == YES) {
-        [timer invalidate];
-        timer = nil;
+    if ([_timer isValid] == YES) {
+        [_timer invalidate];
+        _timer = nil;
     }
 }
 
 // 倒计时暂停
 - (void)pauseCountDown {
-    [timer setFireDate:[NSDate distantFuture]];
+    [_timer setFireDate:[NSDate distantFuture]];
 }
 
 // 倒计时恢复
 - (void)resumeCountDown {
-    [timer setFireDate:[NSDate date]];
+    [_timer setFireDate:[NSDate date]];
 }
 
 
@@ -265,7 +282,7 @@ static const NSInteger tmpDuration = 10;
         
         NSInteger passCount = 0;
         NSInteger failCount = 0;
-        for (NSDictionary *record in tmpResults) {
+        for (NSDictionary *record in _tmpResults) {
             if ([[record objectForKey:@"result"] isEqualToString: @"pass"]) {
                 passCount += 1;
             } else {
@@ -304,7 +321,7 @@ static const NSInteger tmpDuration = 10;
 - (IBAction)guessRight {
     _passCounts += 1;
     _guessedWordCounts += 1;
-    [self saveResult:puzzleValue result:@"pass"];
+    [self saveResult:_puzzleValue result:@"pass"];
     [self goToNextPuzzle];
 };
 
@@ -312,15 +329,15 @@ static const NSInteger tmpDuration = 10;
 - (IBAction)guessWrong {
     _failCounts += 1;
     _guessedWordCounts += 1;
-    [self saveResult:puzzleValue result:@"fail"];
+    [self saveResult:_puzzleValue result:@"fail"];
     [self goToNextPuzzle];
 };
 
 
 - (void)goToNextPuzzle {
-    puzzleValue = [puzzles objectAtIndex:_guessedWordCounts];
+    _puzzleValue = [_puzzles objectAtIndex:_guessedWordCounts];
     _guessedWordCounts += 1;
-    self.puzzleLabel.text = puzzleValue;
+    self.puzzleLabel.text = _puzzleValue;
 }
 
 
@@ -329,7 +346,7 @@ static const NSInteger tmpDuration = 10;
 }
 
 - (void)showResult {
-    [self performSegueWithIdentifier:@"ShowOneTimeDetail" sender:tmpResults];
+    [self performSegueWithIdentifier:@"ShowOneTimeDetail" sender:_tmpResults];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -353,7 +370,7 @@ static const NSInteger tmpDuration = 10;
     [singleRecord setObject:name forKey:@"name"];
     [singleRecord setObject:result forKey:@"result"];
     
-    [results addObject:singleRecord];
+    [_results addObject:singleRecord];
 }
 
 // 保存一轮所有的词条的猜词结果
@@ -362,8 +379,8 @@ static const NSInteger tmpDuration = 10;
     NSFileManager *fm = [NSFileManager defaultManager];
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
-    NSString *dbPath = [documentsDirectory stringByAppendingPathComponent:@"record.db"];
-    NSString *resourcePath = [[NSBundle mainBundle]pathForResource:@"record" ofType:@"db"];
+    NSString *dbPath = [documentsDirectory stringByAppendingPathComponent:@"results.db"];
+    NSString *resourcePath = [[NSBundle mainBundle]pathForResource:@"results" ofType:@"db"];
     NSError *error;
     
     if (![fm fileExistsAtPath:dbPath]) {
@@ -371,18 +388,27 @@ static const NSInteger tmpDuration = 10;
     }
     
     // 从DB中取出对应ID的数据
-    DDLogVerbose(@"chengyuResult数据表保存路径: %@", dbPath);
+    DDLogVerbose(@"results.db数据库保存路径: %@", dbPath);
     FMDatabase *db = [FMDatabase databaseWithPath:dbPath];
     if (![db open]) {
-        DDLogError(@"打开数据库record.db失败");
+        DDLogError(@"打开数据库results.db失败");
         return;
     }
-    NSString *sql = @"INSERT INTO chengyuResult (result,id,round,name) VALUES(:result,:id,:round,:name);";
-    if (results != nil) {
-        for (NSDictionary *singleRecord in results){
+    
+    NSString *sql;
+    if ([_type isEqualToString: @"成语"]) {
+        sql = @"INSERT INTO chengyuResult (result,id,round,name) VALUES(:result,:id,:round,:name);";
+    } else if ([_type isEqualToString: @"计算机"]) {
+        sql = @"INSERT INTO jisuanjiResult (result,id,round,name) VALUES(:result,:id,:round,:name);";
+    } else if ([_type isEqualToString: @"布袋戏"]) {
+        sql = @"INSERT INTO budaixiResult (result,id,round,name) VALUES(:result,:id,:round,:name);";
+    }
+    
+    if (_results != nil) {
+        for (NSDictionary *singleRecord in _results){
             DDLogDebug(@"当前保存的猜词结果为: %@", singleRecord);
             if (![db executeUpdate:sql withParameterDictionary:singleRecord]) {
-                DDLogError(@"保存一轮猜词结果到record.db失败");
+                DDLogError(@"保存一轮猜词结果到results.db失败");
                 return;
             };
         }
@@ -390,11 +416,9 @@ static const NSInteger tmpDuration = 10;
 
     [db close];
     
-//    BOOL a = [fm copyItemAtPath:dbPath toPath:resourcePath error:&error];
-    
-    tmpResults = [[NSMutableArray alloc]init];
-    [tmpResults addObjectsFromArray:results];
-    [results removeAllObjects];
+    _tmpResults = [[NSMutableArray alloc]init];
+    [_tmpResults addObjectsFromArray:_results];
+    [_results removeAllObjects];
     
 }
 
@@ -404,7 +428,7 @@ static const NSInteger tmpDuration = 10;
     NSNumber *duration;
     
     // 先把duration拿出来，再跟round组成字典存进去。解决writeToFile覆盖导致设置duration后round置0的问题
-    if ([tmpResults count] != 0) {
+    if ([_tmpResults count] != 0) {
         if ([[NSFileManager defaultManager]fileExistsAtPath:path]) {
             NSDictionary *settingsBefore=[NSKeyedUnarchiver unarchiveObjectWithFile:path];
             duration = [settingsBefore objectForKey:@"duration"];
@@ -424,6 +448,30 @@ static const NSInteger tmpDuration = 10;
     
 }
 
+
+
+- (void)loadSettings {
+    [self loadDuration];
+    [self loadRound];
+    [self loadType];
+    
+}
+
+- (int)getRandomNumber:(int)from to:(int)to {
+    return (int)(from + (arc4random() % (to - from + 1)));
+}
+
+- (void)loadDuration {
+    NSString *path = [self dataFilePath];
+    if ([[NSFileManager defaultManager]fileExistsAtPath:path]) {
+        NSDictionary *settingsBefore=[NSKeyedUnarchiver unarchiveObjectWithFile:path];
+        _duration = [[settingsBefore objectForKey:@"duration"] intValue];
+    } else {
+        _duration = tmpDuration;
+    }
+    DDLogVerbose(@"play页面加载游戏的时长为: %ld", (long)_duration);
+}
+
 - (void)loadRound {
     NSString *path = [self dataFilePath];
     if ([[NSFileManager defaultManager]fileExistsAtPath:path]) {
@@ -435,33 +483,17 @@ static const NSInteger tmpDuration = 10;
     DDLogVerbose(@"加载游戏的轮数为: %d", _round);
 }
 
-- (void)loadSettings {
-    _duration = (int)[self loadDuration];
-    [self loadRound];
-    
-}
-
-- (int)getRandomNumber:(int)from to:(int)to {
-    return (int)(from + (arc4random() % (to - from + 1)));
-}
-
-- (NSInteger)loadDuration {
-    NSInteger duration;
-    NSString *path = [self dataFilePath];
-    if ([[NSFileManager defaultManager]fileExistsAtPath:path]) {
-        NSDictionary *settingsBefore=[NSKeyedUnarchiver unarchiveObjectWithFile:path];
-        duration = [[settingsBefore objectForKey:@"duration"] intValue];
-    } else {
-        duration = tmpDuration;
+- (void)loadType {
+    // 加载词库
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    _type = [defaults stringForKey:@"type"];
+    DDLogVerbose(@"play页面加载词库类型为: %@", _type);
+    if (_type == nil) {
+        _type = @"成语";
+        [defaults setObject:_type forKey:@"type"];
+        DDLogVerbose(@"play页面加载词库类型为空，默认成语");
     }
-    DDLogVerbose(@"play页面加载游戏的时长为: %ld", (long)duration);
     
-    // 不知道什么导致加载的duration为10，偶现，暂时先规避
-//    if (duration < 60) {
-//        duration = 60;
-//    }
-    
-    return duration;
 }
 
 - (NSString *)documentsDirectory {
