@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1656BF1D1D7ECE5300689B8D /* MoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1656BF1C1D7ECE5300689B8D /* MoreViewController.m */; };
 		166487D51D2B9FC100D290D0 /* StartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 166487D41D2B9FC100D290D0 /* StartViewController.m */; };
 		166487DB1D2F7ACB00D290D0 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 166487DA1D2F7ACB00D290D0 /* HomeViewController.m */; };
 		167578BC1D7163F8001308E1 /* TypePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 167578BB1D7163F8001308E1 /* TypePickerViewController.m */; };
@@ -41,6 +42,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1656BF1B1D7ECE5300689B8D /* MoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoreViewController.h; sourceTree = "<group>"; };
+		1656BF1C1D7ECE5300689B8D /* MoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoreViewController.m; sourceTree = "<group>"; };
 		166487D31D2B9FC100D290D0 /* StartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StartViewController.h; sourceTree = "<group>"; };
 		166487D41D2B9FC100D290D0 /* StartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StartViewController.m; sourceTree = "<group>"; };
 		166487D91D2F7ACB00D290D0 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
@@ -154,6 +157,8 @@
 				16B965BA1D6EC5DC004F42FF /* MeaningViewController.m */,
 				16E86CEB1CF59471007580C4 /* ItemDetail.h */,
 				16E86CEC1CF59471007580C4 /* ItemDetail.m */,
+				1656BF1B1D7ECE5300689B8D /* MoreViewController.h */,
+				1656BF1C1D7ECE5300689B8D /* MoreViewController.m */,
 				16A1A4241CF57E020013E3F8 /* SettingsViewController.h */,
 				16A1A4251CF57E020013E3F8 /* SettingsViewController.m */,
 				167578BA1D7163F8001308E1 /* TypePickerViewController.h */,
@@ -365,6 +370,7 @@
 				16D6E44B1C8C5D8F00B7A4B9 /* PlayViewController.m in Sources */,
 				16E86CEA1CF59458007580C4 /* HistoryItem.m in Sources */,
 				16D6E42C1C8C587300B7A4B9 /* ViewController.m in Sources */,
+				1656BF1D1D7ECE5300689B8D /* MoreViewController.m in Sources */,
 				167578BC1D7163F8001308E1 /* TypePickerViewController.m in Sources */,
 				166487D51D2B9FC100D290D0 /* StartViewController.m in Sources */,
 				16D6E4291C8C587300B7A4B9 /* AppDelegate.m in Sources */,

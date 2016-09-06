@@ -333,11 +333,38 @@ static const NSInteger jisuanjiCounts = 132;
     [self goToNextPuzzle];
 };
 
-
 - (void)goToNextPuzzle {
+    NSInteger offset = 300;
+//    CGPoint puzzleCenter = self.puzzleLabel.center;
+    if (_puzzleValue != nil) {
+        // label由左横滑进屏幕
+        CGPoint puzzleCenter = self.puzzleLabel.center;
+        puzzleCenter.x -= offset;
+        self.puzzleLabel.center = puzzleCenter;
+        
+        puzzleCenter.x += offset;
+        [UIView animateWithDuration:0.5
+                         animations:^{
+                             self.puzzleLabel.center = puzzleCenter;
+                         }
+                         completion:nil];
+    }
+//        // label向右横滑出屏幕
+//        puzzleCenter.x += 100;
+//        DDLogDebug(@"目的puzzleLabel坐标为：%f-%f", puzzleCenter.x, puzzleCenter.y);
+//        [UIView animateWithDuration:2
+//                         animations:^{
+//                             self.puzzleLabel.center = puzzleCenter;
+//                         }
+//                         completion:^(BOOL finished) {
+//                             DDLogDebug(@"animation to right: %d",finished);
+//                         }];
+//    }
+
     _puzzleValue = [_puzzles objectAtIndex:_guessedWordCounts];
     _guessedWordCounts += 1;
     self.puzzleLabel.text = _puzzleValue;
+   
 }
 
 
