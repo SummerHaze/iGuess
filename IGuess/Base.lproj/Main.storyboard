@@ -610,13 +610,13 @@
         <!--Detail-->
         <scene sceneID="5t3-kW-7Z8">
             <objects>
-                <tableViewController id="6hY-Xy-4R3" customClass="ItemDetailViewController" sceneMemberID="viewController">
+                <tableViewController id="6hY-Xy-4R3" customClass="ResultDetailViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="pGP-QO-eyi">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="detailDisclosureButton" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ItemDetailCell" textLabel="lzi-Fy-gXJ" detailTextLabel="Fwl-WY-Vcq" style="IBUITableViewCellStyleValue1" id="kVh-D2-ZEz">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="detailDisclosureButton" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ResultDetailCell" textLabel="lzi-Fy-gXJ" detailTextLabel="Fwl-WY-Vcq" style="IBUITableViewCellStyleValue1" id="kVh-D2-ZEz">
                                 <rect key="frame" x="0.0" y="92" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="kVh-D2-ZEz" id="bXa-g1-Qlo">
@@ -917,13 +917,7 @@
                             </mask>
                         </variation>
                     </view>
-                    <navigationItem key="navigationItem" id="D7s-Zy-7mQ">
-                        <barButtonItem key="leftBarButtonItem" title="Back" id="aeb-zR-1sH">
-                            <connections>
-                                <action selector="back" destination="TJt-Qd-Jnq" id="SBK-bh-p9f"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="D7s-Zy-7mQ"/>
                     <connections>
                         <outlet property="controlButton" destination="DoW-nE-Y8Z" id="7qI-MN-QGJ"/>
                         <outlet property="countDownLabel" destination="Ov4-vj-5LD" id="j6y-Qf-dB8"/>
@@ -1042,10 +1036,10 @@
             </objects>
             <point key="canvasLocation" x="966" y="1822"/>
         </scene>
-        <!--Home View Controller-->
+        <!--Tab Bar Controller-->
         <scene sceneID="6B9-mJ-aa5">
             <objects>
-                <tabBarController id="GGQ-ey-ndr" customClass="HomeViewController" sceneMemberID="viewController">
+                <tabBarController id="GGQ-ey-ndr" sceneMemberID="viewController">
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="RoC-X4-URI">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
@@ -1086,10 +1080,10 @@
             </objects>
             <point key="canvasLocation" x="997.5" y="429"/>
         </scene>
-        <!--Start View Controller-->
+        <!--View Controller-->
         <scene sceneID="qL5-lf-hFj">
             <objects>
-                <viewController id="vwk-QL-Jd4" customClass="StartViewController" sceneMemberID="viewController">
+                <viewController id="vwk-QL-Jd4" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="pxB-rl-KxJ"/>
                         <viewControllerLayoutGuide type="bottom" id="tM8-aE-trs"/>

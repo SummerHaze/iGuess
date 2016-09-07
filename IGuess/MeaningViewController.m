@@ -25,8 +25,7 @@
     webView.autoresizingMask = (UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth);
     
     [self.view addSubview: webView];
-    
-//    NSString *encodingString = [self.name stringByAddingPercentEncodingWithAllowedCharacters:controlCharacterSet];
+
     NSString *encodingString = [self.name stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSString *urlString = [NSString stringWithFormat:@"http://baike.baidu.com/item/%@", encodingString];
     DDLogDebug(@"request url is: %@", urlString);
@@ -41,15 +40,5 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

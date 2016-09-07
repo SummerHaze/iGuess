@@ -79,9 +79,7 @@ static const NSInteger tmpDuration = 10;
         DDLogVerbose(@"setting页面加载词库类型为空，默认成语");
     }
     self.typeLabel.text = _type;
-    
 }
-
 
 - (void)setDurationSwitchStatus {
     _dic = [NSDictionary dictionaryWithObjectsAndKeys:

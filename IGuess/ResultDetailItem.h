@@ -1,5 +1,5 @@
 //
-//  ItemDetail.h
+//  ResultDetailItem.h
 //  IGuess
 //
 //  Created by xia on 5/25/16.
@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface ItemDetail : NSObject
+@interface ResultDetailItem : NSObject
 
 //词语名字
 @property (nonatomic) NSString *name;

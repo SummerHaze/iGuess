@@ -1,5 +1,5 @@
 //
-//  HistoryItem.h
+//  ResultItem.h
 //  IGuess
 //
 //  Created by xia on 5/25/16.
@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface HistoryItem : NSObject
+@interface ResultItem : NSObject
 
 //游戏的轮数
 @property NSInteger round;

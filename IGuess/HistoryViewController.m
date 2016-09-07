@@ -7,10 +7,10 @@
 //  
 
 #import "HistoryViewController.h"
-#import "HistoryItem.h"
+#import "ResultItem.h"
 #import "FMDatabase.h"
-#import "ItemDetail.h"
-#import "ItemDetailViewController.h"
+#import "ResultDetailItem.h"
+#import "ResultDetailViewController.h"
 
 @interface HistoryViewController ()
 
@@ -51,12 +51,6 @@
     DDLogVerbose(@"history页面加载词库类型为: %@", _type);
 }
 
-#pragma mark - Table view data source
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [items count];
-}
-
 - (void)getResultsFromDB {
     maxRounds = 100;
     results = [[NSMutableArray alloc]initWithCapacity:10];
@@ -91,7 +85,7 @@
     
     FMResultSet *s = [db executeQuery:query];
     while ([s next]) {
-        ItemDetail *item = [[ItemDetail alloc]init];
+        ResultDetailItem *item = [[ResultDetailItem alloc]init];
         item.wordId = [s stringForColumn:@"id"];
         item.name = [s stringForColumn:@"name"];
         item.result = [s stringForColumn:@"result"];
@@ -107,7 +101,7 @@
     items = [[NSMutableArray alloc]initWithCapacity:maxRounds];
     
     // 默认词条的round按照递增顺序排列
-    ItemDetail *lastItem = [results lastObject];
+    ResultDetailItem *lastItem = [results lastObject];
     NSInteger max = lastItem.round;
     
     // 在items中初始化max个空Array元素，否则addobject时报错。这里要再想个更合理的办法
@@ -117,7 +111,7 @@
     }
     
     for (int i=0; i<[results count]; i++) {
-        ItemDetail *item = results[i];
+        ResultDetailItem *item = results[i];
         [items[item.round -1] addObject:results[i]];
     }
 }
@@ -125,10 +119,10 @@
 // 统计每轮的游戏数据，用以显示在history list中
 - (NSMutableArray *)statResults:(NSMutableArray *)result
 {
-    ItemDetail *idetail = [[ItemDetail alloc]init];
+    ResultDetailItem *idetail = [[ResultDetailItem alloc]init];
     NSMutableArray *statResults = [[NSMutableArray alloc]init];
     for (int i=0; i<[items count]; i++) {
-        HistoryItem *hitem = [[HistoryItem alloc]init];
+        ResultItem *hitem = [[ResultItem alloc]init];
         hitem.round = i+1;
         for (int j=0; j<[items[i] count]; j++) {
             idetail = items[i][j];
@@ -147,7 +141,26 @@
     return statResults;
 }
 
-// 本tableview的每行data（row）是什么
+- (NSMutableArray *)getItems:(ResultDetailViewController *)controller
+{
+    return items;
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"ShowDetail"]) {
+        ResultDetailViewController *controller = segue.destinationViewController;
+        controller.hidesBottomBarWhenPushed = YES;
+        controller.delegate = self;
+        controller.index = sender;
+    }
+}
+
+#pragma mark - Table view data source
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return [items count];
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -159,7 +172,7 @@
     UILabel *statLabel = (UILabel *)[cell viewWithTag:1001];
     
     NSMutableArray *statResults = [self statResults:results];
-    HistoryItem *item = statResults[indexPath.row];
+    ResultItem *item = statResults[indexPath.row];
     
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc]init];
     [dateFormat setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
@@ -171,26 +184,11 @@
     return cell;
 }
 
-
+#pragma mark – Table view delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 //    DDLogVerbose(@"IndexPath: %@", [indexPath description]);
     [self performSegueWithIdentifier:@"ShowDetail" sender:tableView.indexPathForSelectedRow];
-}
-
-- (NSMutableArray *)getItems:(ItemDetailViewController *)controller
-{
-    return items;
-}
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([segue.identifier isEqualToString:@"ShowDetail"]) {
-        ItemDetailViewController *controller = segue.destinationViewController;
-        controller.hidesBottomBarWhenPushed = YES;
-        controller.delegate = self;
-        controller.index = sender;
-    }
 }
 
 @end

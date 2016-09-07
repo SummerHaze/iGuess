@@ -1,20 +1,20 @@
 //
-//  ItemDetailViewController.m
+//  ResultDetailViewController.m
 //  IGuess
 //
 //  Created by xia on 5/25/16.
 //  Copyright © 2016 xia. All rights reserved.
 //
 
-#import "ItemDetailViewController.h"
-#import "ItemDetail.h"
+#import "ResultDetailViewController.h"
+#import "ResultDetailItem.h"
 #import "MeaningViewController.h"
 
-@interface ItemDetailViewController ()
+@interface ResultDetailViewController ()
 
 @end
 
-@implementation ItemDetailViewController
+@implementation ResultDetailViewController
 {
     NSMutableArray *_lists;
 }
@@ -48,7 +48,6 @@
 }
 
 #pragma mark - Table view data source
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [_lists[self.index.row] count];
 }
@@ -56,7 +55,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"ItemDetailCell";
+    static NSString *CellIdentifier = @"ResultDetailCell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
@@ -64,7 +63,7 @@
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
-    ItemDetail *item = _lists[self.index.row][indexPath.row];
+    ResultDetailItem *item = _lists[self.index.row][indexPath.row];
     cell.textLabel.text = [NSString stringWithFormat:@"%@     %@", item.name, item.result.uppercaseString];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
 //    cell.detailTextLabel.text = @"123";
@@ -72,9 +71,8 @@
 }
 
 #pragma mark – Table view delegate
-
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath{
-    ItemDetail *item = _lists[self.index.row][indexPath.row];
+    ResultDetailItem *item = _lists[self.index.row][indexPath.row];
     [self performSegueWithIdentifier:@"ShowMeaning" sender:item.name];
 }
 

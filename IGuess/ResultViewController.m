@@ -8,8 +8,8 @@
 
 #import "ResultViewController.h"
 #import "FMDatabase.h"
-#import "ItemDetail.h"
-#import "ItemDetailViewController.h"
+#import "ResultDetailItem.h"
+#import "ResultDetailViewController.h"
 #import "PlayViewController.h"
 #import "MeaningViewController.h"
 
@@ -26,11 +26,6 @@
     [super viewDidLoad];
     result = self.results;
 }
-
-//- (void)viewWillAppear:(BOOL)animated {
-//    [super viewWillAppear:animated];
-//    [self.navigationController setNavigationBarHidden:NO animated:NO];
-//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -51,7 +46,6 @@
 }
 
 #pragma mark - Table view data source
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [result count];
 }
@@ -74,8 +68,7 @@
     return cell;
 }
 
-#pragma mark – Table view delegate
-
+#pragma mark - Table view delegate
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath{
     NSDictionary *item = result[indexPath.row];
     [self performSegueWithIdentifier:@"ShowMeaningToo" sender:[item objectForKey:@"name"]];
