@@ -8,6 +8,7 @@
 
 #import "WordGuessingGame.h"
 #import "DBOperation.h"
+#import "ResultDetailItem.h"
 
 static const NSInteger TMP_DURATION = 10;
 static const int INIT_ITEM_COUNTS = 300;  //首次取出来的词条数
@@ -137,19 +138,24 @@ static const NSInteger JISUANJI_COUNTS = 132;
 
 // 保存一个词条的猜词结果
 - (void)saveSingleResult:(NSString *)name result:(NSString *)result {
-    NSMutableDictionary *singleRecord = [NSMutableDictionary dictionary];
+//    NSMutableDictionary *singleRecord = [NSMutableDictionary dictionary];
     
     // 要用毫秒时间戳形式存储游戏时间，否则点击过快可能造成两次的时间相同，添加进字典失败
     NSDate *dat = [NSDate dateWithTimeIntervalSinceNow:0];
     NSTimeInterval interval = [dat timeIntervalSince1970]*1000;
     NSString *timestamp = [NSString stringWithFormat:@"%.0f", interval];
     
-    [singleRecord setObject:timestamp forKey:@"id"]; //猜词词条时间戳
-    [singleRecord setObject:[NSString stringWithFormat:@"%ld",(long)self.round] forKey:@"round"];
-    [singleRecord setObject:name forKey:@"name"];
-    [singleRecord setObject:result forKey:@"result"];
+    ResultDetailItem *item = [[ResultDetailItem alloc]init];
+    item.wordId = timestamp;
+    item.round = self.round;
+    item.name = name;
+    item.result = result;
+//    [singleRecord setObject:timestamp forKey:@"id"]; //猜词词条时间戳
+//    [singleRecord setObject:[NSString stringWithFormat:@"%ld",(long)self.round] forKey:@"round"];
+//    [singleRecord setObject:name forKey:@"name"];
+//    [singleRecord setObject:result forKey:@"result"];
     
-    [tmpResults addObject:singleRecord];
+    [tmpResults addObject:item];
 }
 
 - (void)guessRight {

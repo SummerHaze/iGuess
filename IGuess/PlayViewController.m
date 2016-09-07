@@ -9,6 +9,7 @@
 #import "PlayViewController.h"
 #import "ResultViewController.h"
 #import "WordGuessingGame.h"
+#import "ResultDetailItem.h"
 
 @interface PlayViewController ()
 
@@ -168,8 +169,8 @@
         
         NSInteger passCount = 0;
         NSInteger failCount = 0;
-        for (NSDictionary *record in self.game.results) {
-            if ([[record objectForKey:@"result"] isEqualToString: @"pass"]) {
+        for (ResultDetailItem *item in self.game.results) {
+            if ([item.result isEqualToString: @"pass"]) {
                 passCount += 1;
             } else {
                 failCount += 1;
@@ -193,7 +194,7 @@
                                                           style:UIAlertActionStyleDefault
                                                         handler:^(UIAlertAction *action)
                                                             {
-                                                                [self performSegueWithIdentifier:@"ShowOneTimeDetail" sender:self.game.results];
+                                                                [self performSegueWithIdentifier:@"ShowDetailToo" sender:self.game.results];
                                                             }];
         [alertController addAction:cancel];
         [alertController addAction:confirm];
@@ -250,7 +251,7 @@
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"ShowOneTimeDetail"]) {
+    if ([segue.identifier isEqualToString:@"ShowDetailToo"]) {
         ResultViewController *controller = (ResultViewController *)segue.destinationViewController;
         controller.results = sender;
     }

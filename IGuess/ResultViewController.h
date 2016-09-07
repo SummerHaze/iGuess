@@ -10,11 +10,20 @@
 
 @class ResultViewController;
 
+//@protocol ResultViewControllerDelegate <NSObject>
+//
+//- (NSMutableArray *)getItems:(ResultViewController *)controller;
+//
+//@end
+
 
 @interface ResultViewController : UITableViewController <UIApplicationDelegate>
 
 @property (nonatomic) NSMutableArray *results;
 
 - (IBAction)back;
+
+//@property (nonatomic, weak) id <ResultViewControllerDelegate> delegate;
+@property (nonatomic) NSIndexPath *index;
 
 @end

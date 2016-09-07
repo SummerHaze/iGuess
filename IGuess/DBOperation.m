@@ -8,6 +8,7 @@
 
 #import "DBOperation.h"
 #import "FMDatabase.h"
+#import "ResultDetailItem.h"
 
 @implementation DBOperation
 
@@ -37,6 +38,43 @@
     
 }
 
+- (NSMutableArray *)getResultsFromDB:(NSString *)DBName sql:(NSString *)sql {
+    // 从数据库里读取数据，存储到results里
+    NSFileManager *fm = [NSFileManager defaultManager];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *name = [NSString stringWithFormat:@"%@.db",DBName];
+    NSString *dbPath = [documentsDirectory stringByAppendingPathComponent:name];
+    
+    // 游戏开始时切换至history界面，无results.db，此时也要复制之
+    if (![fm fileExistsAtPath:dbPath]) {
+        NSError *error;
+        NSString *resourcePath = [[NSBundle mainBundle]pathForResource:DBName ofType:@"db"];
+        [fm copyItemAtPath:resourcePath toPath:dbPath error:&error];
+    }
+    
+    FMDatabase *db = [FMDatabase databaseWithPath:dbPath];
+    if (![db open]) {
+        DDLogVerbose(@"%@打开失败", DBName);
+        return nil;
+    }
+
+    NSMutableArray *results = [[NSMutableArray alloc]init];
+    FMResultSet *s = [db executeQuery:sql];
+    while ([s next]) {
+        ResultDetailItem *item = [[ResultDetailItem alloc]init];
+        item.wordId = [s stringForColumn:@"id"];
+        item.name = [s stringForColumn:@"name"];
+        item.result = [s stringForColumn:@"result"];
+        item.round = [s intForColumn:@"round"];
+        [results addObject:item];
+    }
+    
+    [db close];
+    
+    return results;
+    
+}
 
 - (void)saveResultsToDB:(NSString *)DBName sql:(NSString *)sql results:(NSArray *)results {
     // 将DB从工程目录拷贝到document目录，否则只读不可写
@@ -60,9 +98,12 @@
     }
     
     if (results != nil) {
-        for (NSDictionary *singleRecord in results){
-            DDLogDebug(@"当前保存的猜词结果为: %@", singleRecord);
-            if (![db executeUpdate:sql withParameterDictionary:singleRecord]) {
+        for (ResultDetailItem *item in results){
+            DDLogDebug(@"当前保存的猜词结果为: %@", item);
+            if (![db executeUpdate:sql withArgumentsInArray:@[item.result,
+                                                              item.wordId,
+                                                              [NSNumber numberWithInteger:item.round],
+                                                              item.name]]) {
                 DDLogError(@"保存一轮猜词结果到%@失败", name);
                 return;
             };

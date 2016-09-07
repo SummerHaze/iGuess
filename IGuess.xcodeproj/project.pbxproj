@@ -26,6 +26,7 @@
 		16D6E4341C8C587300B7A4B9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 16D6E4321C8C587300B7A4B9 /* LaunchScreen.storyboard */; };
 		16D6E43F1C8C587300B7A4B9 /* IGuessTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 16D6E43E1C8C587300B7A4B9 /* IGuessTests.m */; };
 		16D6E44B1C8C5D8F00B7A4B9 /* PlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16D6E44A1C8C5D8F00B7A4B9 /* PlayViewController.m */; };
+		16DB22001D8030F100081CFC /* History.m in Sources */ = {isa = PBXBuildFile; fileRef = 16DB21FF1D8030F100081CFC /* History.m */; };
 		16E86CEA1CF59458007580C4 /* ResultItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 16E86CE91CF59458007580C4 /* ResultItem.m */; };
 		16E86CED1CF59471007580C4 /* ResultDetailItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 16E86CEC1CF59471007580C4 /* ResultDetailItem.m */; };
 		16E86CF31CFDC3E9007580C4 /* ResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16E86CF21CFDC3E9007580C4 /* ResultViewController.m */; };
@@ -80,6 +81,8 @@
 		16D6E4401C8C587300B7A4B9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		16D6E4491C8C5D8F00B7A4B9 /* PlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayViewController.h; sourceTree = "<group>"; };
 		16D6E44A1C8C5D8F00B7A4B9 /* PlayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayViewController.m; sourceTree = "<group>"; };
+		16DB21FE1D8030F100081CFC /* History.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = History.h; sourceTree = "<group>"; };
+		16DB21FF1D8030F100081CFC /* History.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = History.m; sourceTree = "<group>"; };
 		16E86CE81CF59458007580C4 /* ResultItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResultItem.h; sourceTree = "<group>"; };
 		16E86CE91CF59458007580C4 /* ResultItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResultItem.m; sourceTree = "<group>"; };
 		16E86CEB1CF59471007580C4 /* ResultDetailItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResultDetailItem.h; sourceTree = "<group>"; };
@@ -216,6 +219,8 @@
 				16E86CEC1CF59471007580C4 /* ResultDetailItem.m */,
 				1691363F1D7F1FF5001BB375 /* WordGuessingGame.h */,
 				169136401D7F1FF5001BB375 /* WordGuessingGame.m */,
+				16DB21FE1D8030F100081CFC /* History.h */,
+				16DB21FF1D8030F100081CFC /* History.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -232,6 +237,8 @@
 			children = (
 				16D6E42A1C8C587300B7A4B9 /* ViewController.h */,
 				16D6E42B1C8C587300B7A4B9 /* ViewController.m */,
+				16D6E4491C8C5D8F00B7A4B9 /* PlayViewController.h */,
+				16D6E44A1C8C5D8F00B7A4B9 /* PlayViewController.m */,
 				16E86CF11CFDC3E9007580C4 /* ResultViewController.h */,
 				16E86CF21CFDC3E9007580C4 /* ResultViewController.m */,
 				16A1A41E1CF57DAC0013E3F8 /* HistoryViewController.h */,
@@ -246,8 +253,6 @@
 				16A1A4251CF57E020013E3F8 /* SettingsViewController.m */,
 				167578BA1D7163F8001308E1 /* TypePickerViewController.h */,
 				167578BB1D7163F8001308E1 /* TypePickerViewController.m */,
-				16D6E4491C8C5D8F00B7A4B9 /* PlayViewController.h */,
-				16D6E44A1C8C5D8F00B7A4B9 /* PlayViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -444,6 +449,7 @@
 				16E86CEA1CF59458007580C4 /* ResultItem.m in Sources */,
 				16D6E42C1C8C587300B7A4B9 /* ViewController.m in Sources */,
 				1656BF1D1D7ECE5300689B8D /* MoreViewController.m in Sources */,
+				16DB22001D8030F100081CFC /* History.m in Sources */,
 				167578BC1D7163F8001308E1 /* TypePickerViewController.m in Sources */,
 				169136411D7F1FF5001BB375 /* WordGuessingGame.m in Sources */,
 				16D6E4291C8C587300B7A4B9 /* AppDelegate.m in Sources */,

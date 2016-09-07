@@ -19,4 +19,6 @@
 //错误数
 @property NSInteger failNumber;
 
+
+
 @end
