@@ -72,7 +72,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <switch opaque="NO" tag="3000" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iO7-hi-cyb">
+                                                <switch opaque="NO" tag="3000" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="iO7-hi-cyb">
                                                     <rect key="frame" x="-25" y="-15" width="51" height="31"/>
                                                 </switch>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="60s" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yrg-nI-7v7">
@@ -384,11 +384,11 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Settings" id="lac-Oc-10o"/>
                     <connections>
-                        <outlet property="longDuration" destination="OvW-eq-GOM" id="2Bm-FX-flh"/>
-                        <outlet property="mediumDuration" destination="mbu-JD-GNL" id="yfO-j0-sf4"/>
-                        <outlet property="notify" destination="tiT-eH-Ibo" id="4fG-p5-48W"/>
-                        <outlet property="shortDuration" destination="iO7-hi-cyb" id="cbj-wi-zdp"/>
-                        <outlet property="testDuration" destination="2Ek-YY-GTM" id="C6A-Ud-sGW"/>
+                        <outlet property="longDurationSwitch" destination="OvW-eq-GOM" id="s1I-dZ-Di1"/>
+                        <outlet property="mediumDurationSwitch" destination="mbu-JD-GNL" id="gp0-of-6Ch"/>
+                        <outlet property="notificationSwitch" destination="tiT-eH-Ibo" id="HsC-XA-O5g"/>
+                        <outlet property="shortDurationSwitch" destination="iO7-hi-cyb" id="KFr-op-Mnt"/>
+                        <outlet property="testDurationSwitch" destination="2Ek-YY-GTM" id="XUm-1U-FYf"/>
                         <outlet property="typeLabel" destination="bz6-Wt-SnQ" id="uhl-iZ-xFP"/>
                         <segue destination="d3v-7m-LyH" kind="show" identifier="PickType" id="8hN-yK-Dll"/>
                     </connections>
@@ -606,58 +606,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yHS-2f-etf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1681.5" y="1107"/>
-        </scene>
-        <!--Detail-->
-        <scene sceneID="5t3-kW-7Z8">
-            <objects>
-                <tableViewController id="6hY-Xy-4R3" customClass="ResultDetailViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="pGP-QO-eyi">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="detailDisclosureButton" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ResultDetailCell" textLabel="lzi-Fy-gXJ" detailTextLabel="Fwl-WY-Vcq" style="IBUITableViewCellStyleValue1" id="kVh-D2-ZEz">
-                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="kVh-D2-ZEz" id="bXa-g1-Qlo">
-                                    <rect key="frame" x="0.0" y="0.0" width="533" height="43.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="lzi-Fy-gXJ">
-                                            <rect key="frame" x="15" y="12" width="33.5" height="20.5"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                            <nil key="highlightedColor"/>
-                                            <variation key="widthClass=compact">
-                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                            </variation>
-                                        </label>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Fwl-WY-Vcq">
-                                            <rect key="frame" x="489" y="12" width="44" height="20.5"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
-                                            <nil key="highlightedColor"/>
-                                            <variation key="widthClass=compact">
-                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                            </variation>
-                                        </label>
-                                    </subviews>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <sections/>
-                        <connections>
-                            <outlet property="dataSource" destination="6hY-Xy-4R3" id="xAf-zX-vs8"/>
-                            <outlet property="delegate" destination="6hY-Xy-4R3" id="Mdx-cf-sko"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Detail" id="8dv-uY-QHQ"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="KaW-oM-oX7" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3544.5" y="463"/>
         </scene>
         <!--Meaning View Controller-->
         <scene sceneID="Ise-Rg-xc4">
@@ -1129,7 +1077,7 @@
                                     </mask>
                                 </variation>
                                 <connections>
-                                    <segue destination="e1k-jW-4if" kind="show" id="L6P-7c-cGq"/>
+                                    <segue destination="e1k-jW-4if" kind="show" id="ODS-9o-OH0"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -1204,7 +1152,7 @@
         <image name="pause" width="200" height="200"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="L6P-7c-cGq"/>
+        <segue reference="ODS-9o-OH0"/>
         <segue reference="Bis-UI-Qo3"/>
     </inferredMetricsTieBreakers>
 </document>

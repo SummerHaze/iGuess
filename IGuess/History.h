@@ -10,9 +10,18 @@
 
 @interface History : NSObject
 
+/**
+ *  <#Description#>
+ *
+ *  @return <#return value description#>
+ */
 - (NSMutableArray *)sortResultsByRound;
 
+/**
+ *  <#Description#>
+ *
+ *  @return <#return value description#>
+ */
 - (NSMutableArray *)countResults;
-
 
 @end

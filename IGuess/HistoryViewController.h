@@ -7,9 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ResultDetailViewController.h"
 
-@interface HistoryViewController : UITableViewController <ResultDetailViewControllerDelegate>
+@interface HistoryViewController : UITableViewController
 
 
 @end

@@ -53,24 +53,9 @@
     //  Dispose of any resources that can be recreated.
 }
 
-
-
-//#pragma mark - ResultViewControllerDelegate delegate
-//- (NSMutableArray *)getItems:(ResultDetailViewController *)controller
-//{
-//    return items;
-//}
-
 #pragma mark - Event response
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-//    if ([segue.identifier isEqualToString:@"ShowDetail"]) {
-//        ResultViewController *controller = segue.destinationViewController;
-//        controller.hidesBottomBarWhenPushed = YES;
-//        controller.delegate = self;
-//        controller.index = sender;
-//    }
-    
     if ([segue.identifier isEqualToString:@"ShowDetail"]) {
         ResultViewController *controller = (ResultViewController *)segue.destinationViewController;
         controller.results = sender;

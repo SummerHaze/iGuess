@@ -99,7 +99,7 @@
     
     if (results != nil) {
         for (ResultDetailItem *item in results){
-            DDLogDebug(@"当前保存的猜词结果为: %@", item);
+            DDLogDebug(@"当前保存的词条为: %@，结果为:%@", item.name, item.result);
             if (![db executeUpdate:sql withArgumentsInArray:@[item.result,
                                                               item.wordId,
                                                               [NSNumber numberWithInteger:item.round],

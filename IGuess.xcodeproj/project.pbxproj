@@ -9,10 +9,10 @@
 /* Begin PBXBuildFile section */
 		1656BF1D1D7ECE5300689B8D /* MoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1656BF1C1D7ECE5300689B8D /* MoreViewController.m */; };
 		167578BC1D7163F8001308E1 /* TypePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 167578BB1D7163F8001308E1 /* TypePickerViewController.m */; };
+		1677271F1D81048800F38060 /* Setting.m in Sources */ = {isa = PBXBuildFile; fileRef = 1677271E1D81048800F38060 /* Setting.m */; };
 		169136411D7F1FF5001BB375 /* WordGuessingGame.m in Sources */ = {isa = PBXBuildFile; fileRef = 169136401D7F1FF5001BB375 /* WordGuessingGame.m */; };
 		169136461D7F242E001BB375 /* DBOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 169136451D7F242E001BB375 /* DBOperation.m */; };
 		16A1A4201CF57DAC0013E3F8 /* HistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16A1A41F1CF57DAC0013E3F8 /* HistoryViewController.m */; };
-		16A1A4231CF57DD30013E3F8 /* ResultDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16A1A4221CF57DD30013E3F8 /* ResultDetailViewController.m */; };
 		16A1A4261CF57E020013E3F8 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16A1A4251CF57E020013E3F8 /* SettingsViewController.m */; };
 		16B965BB1D6EC5DC004F42FF /* MeaningViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16B965BA1D6EC5DC004F42FF /* MeaningViewController.m */; };
 		16C0574E1D65BADA002C1CB8 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 16C0574D1D65BADA002C1CB8 /* libPods.a */; };
@@ -47,14 +47,14 @@
 		1656BF1C1D7ECE5300689B8D /* MoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoreViewController.m; sourceTree = "<group>"; };
 		167578BA1D7163F8001308E1 /* TypePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TypePickerViewController.h; sourceTree = "<group>"; };
 		167578BB1D7163F8001308E1 /* TypePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TypePickerViewController.m; sourceTree = "<group>"; };
+		1677271D1D81048800F38060 /* Setting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Setting.h; sourceTree = "<group>"; };
+		1677271E1D81048800F38060 /* Setting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Setting.m; sourceTree = "<group>"; };
 		1691363F1D7F1FF5001BB375 /* WordGuessingGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WordGuessingGame.h; sourceTree = "<group>"; };
 		169136401D7F1FF5001BB375 /* WordGuessingGame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WordGuessingGame.m; sourceTree = "<group>"; };
 		169136441D7F242E001BB375 /* DBOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBOperation.h; sourceTree = "<group>"; };
 		169136451D7F242E001BB375 /* DBOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBOperation.m; sourceTree = "<group>"; };
 		16A1A41E1CF57DAC0013E3F8 /* HistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryViewController.h; sourceTree = "<group>"; };
 		16A1A41F1CF57DAC0013E3F8 /* HistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryViewController.m; sourceTree = "<group>"; };
-		16A1A4211CF57DD30013E3F8 /* ResultDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResultDetailViewController.h; sourceTree = "<group>"; };
-		16A1A4221CF57DD30013E3F8 /* ResultDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResultDetailViewController.m; sourceTree = "<group>"; };
 		16A1A4241CF57E020013E3F8 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		16A1A4251CF57E020013E3F8 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		16B965B91D6EC5DC004F42FF /* MeaningViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeaningViewController.h; sourceTree = "<group>"; };
@@ -221,6 +221,8 @@
 				169136401D7F1FF5001BB375 /* WordGuessingGame.m */,
 				16DB21FE1D8030F100081CFC /* History.h */,
 				16DB21FF1D8030F100081CFC /* History.m */,
+				1677271D1D81048800F38060 /* Setting.h */,
+				1677271E1D81048800F38060 /* Setting.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -243,8 +245,6 @@
 				16E86CF21CFDC3E9007580C4 /* ResultViewController.m */,
 				16A1A41E1CF57DAC0013E3F8 /* HistoryViewController.h */,
 				16A1A41F1CF57DAC0013E3F8 /* HistoryViewController.m */,
-				16A1A4211CF57DD30013E3F8 /* ResultDetailViewController.h */,
-				16A1A4221CF57DD30013E3F8 /* ResultDetailViewController.m */,
 				16B965B91D6EC5DC004F42FF /* MeaningViewController.h */,
 				16B965BA1D6EC5DC004F42FF /* MeaningViewController.m */,
 				1656BF1B1D7ECE5300689B8D /* MoreViewController.h */,
@@ -445,6 +445,7 @@
 			files = (
 				16E86CED1CF59471007580C4 /* ResultDetailItem.m in Sources */,
 				169136461D7F242E001BB375 /* DBOperation.m in Sources */,
+				1677271F1D81048800F38060 /* Setting.m in Sources */,
 				16D6E44B1C8C5D8F00B7A4B9 /* PlayViewController.m in Sources */,
 				16E86CEA1CF59458007580C4 /* ResultItem.m in Sources */,
 				16D6E42C1C8C587300B7A4B9 /* ViewController.m in Sources */,
@@ -454,7 +455,6 @@
 				169136411D7F1FF5001BB375 /* WordGuessingGame.m in Sources */,
 				16D6E4291C8C587300B7A4B9 /* AppDelegate.m in Sources */,
 				16A1A4201CF57DAC0013E3F8 /* HistoryViewController.m in Sources */,
-				16A1A4231CF57DD30013E3F8 /* ResultDetailViewController.m in Sources */,
 				16E86CF31CFDC3E9007580C4 /* ResultViewController.m in Sources */,
 				16D6E4261C8C587300B7A4B9 /* main.m in Sources */,
 				16B965BB1D6EC5DC004F42FF /* MeaningViewController.m in Sources */,

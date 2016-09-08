@@ -9,7 +9,6 @@
 #import "ResultViewController.h"
 #import "FMDatabase.h"
 #import "ResultDetailItem.h"
-#import "ResultDetailViewController.h"
 #import "PlayViewController.h"
 #import "MeaningViewController.h"
 

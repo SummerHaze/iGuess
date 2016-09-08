@@ -138,8 +138,6 @@ static const NSInteger JISUANJI_COUNTS = 132;
 
 // 保存一个词条的猜词结果
 - (void)saveSingleResult:(NSString *)name result:(NSString *)result {
-//    NSMutableDictionary *singleRecord = [NSMutableDictionary dictionary];
-    
     // 要用毫秒时间戳形式存储游戏时间，否则点击过快可能造成两次的时间相同，添加进字典失败
     NSDate *dat = [NSDate dateWithTimeIntervalSinceNow:0];
     NSTimeInterval interval = [dat timeIntervalSince1970]*1000;
@@ -150,10 +148,6 @@ static const NSInteger JISUANJI_COUNTS = 132;
     item.round = self.round;
     item.name = name;
     item.result = result;
-//    [singleRecord setObject:timestamp forKey:@"id"]; //猜词词条时间戳
-//    [singleRecord setObject:[NSString stringWithFormat:@"%ld",(long)self.round] forKey:@"round"];
-//    [singleRecord setObject:name forKey:@"name"];
-//    [singleRecord setObject:result forKey:@"result"];
     
     [tmpResults addObject:item];
 }
@@ -172,7 +166,7 @@ static const NSInteger JISUANJI_COUNTS = 132;
 
 
 - (void)saveRound {
-    NSString *path = [self dataFilePath];
+    NSString *path = [self plistFilePath];
     NSNumber *duration;
     
     // 先把duration拿出来，再跟round组成字典存进去。解决writeToFile覆盖导致设置duration后round置0的问题
@@ -203,7 +197,7 @@ static const NSInteger JISUANJI_COUNTS = 132;
 }
 
 - (void)loadDuration {
-    NSString *path = [self dataFilePath];
+    NSString *path = [self plistFilePath];
     if ([[NSFileManager defaultManager]fileExistsAtPath:path]) {
         NSDictionary *settingsBefore=[NSKeyedUnarchiver unarchiveObjectWithFile:path];
         self.duration = [[settingsBefore objectForKey:@"duration"] intValue];
@@ -214,7 +208,7 @@ static const NSInteger JISUANJI_COUNTS = 132;
 }
 
 - (void)loadRound {
-    NSString *path = [self dataFilePath];
+    NSString *path = [self plistFilePath];
     if ([[NSFileManager defaultManager]fileExistsAtPath:path]) {
         NSDictionary *settingsBefore=[NSKeyedUnarchiver unarchiveObjectWithFile:path];
         self.round = [[settingsBefore objectForKey:@"round"] intValue] + 1;
@@ -242,7 +236,8 @@ static const NSInteger JISUANJI_COUNTS = 132;
     return documentDirectory;
 }
 
-- (NSString *)dataFilePath {
+- (NSString *)plistFilePath {
+//    DDLogVerbose(@"plistFilePath : %@",[[self documentsDirectory]stringByAppendingPathComponent:@"Settings.plist"]);
     return [[self documentsDirectory]stringByAppendingPathComponent:@"Settings.plist"];
 }
 

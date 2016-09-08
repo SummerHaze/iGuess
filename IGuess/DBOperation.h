@@ -13,7 +13,7 @@
 /**
  *  从词库DB中查询并获取词条
  *
- *  @param DBName           DB名称，DB保存在project bundle中
+ *  @param DBName           DB名称，保存在project bundle中
  *  @param sql              query sql
  *  @param totalWordsCounts 待查询的table item总数
  *  @param initItemCounts   一次查询取出的词条数。没必要一次全部取出
@@ -23,15 +23,12 @@
 - (NSMutableArray *)getWordsFromDB:(NSString *)DBName sql:(NSString *)sql totalWordsCounts:(int)totalWordsCounts initItemCounts:(int)initItemCounts;
 
 /**
- *  <#Description#>
+ *  从结果DB中读取猜词结果
  *
- *  @param DBName          <#DBName description#>
- *  @param saveResultsToDB <#saveResultsToDB description#>
- *  @param DBName          <#DBName description#>
- *  @param sql             <#sql description#>
- *  @param results         <#results description#>
+ *  @param DBName DB名称，保存在project bundle中
+ *  @param sql    insert sql
  *
- *  @return <#return value description#>
+ *  @return 猜词结果数据，其中存放ResultDetailItem对象
  */
 - (NSMutableArray *)getResultsFromDB:(NSString *)DBName sql:(NSString *)sql;
 
@@ -40,7 +37,7 @@
  *
  *  @param DBName  DB名称，DB存储在project沙盒中
  *  @param sql     insert sql
- *  @param results 待存储的猜词结果，item结构与DB相同
+ *  @param results 待存储的猜词结果，其中的item结构与DB Schema一致，否则报错
  */
 - (void)saveResultsToDB:(NSString *)DBName sql:(NSString *)sql results:(NSArray *)results;
 
