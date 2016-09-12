@@ -33,14 +33,18 @@
 - (NSMutableArray *)getResultsFromDB:(NSString *)DBName sql:(NSString *)sql;
 
 /**
- *  存储猜词结果到数据库
+ *  存储猜词结果到results.db
  *
- *  @param DBName  DB名称，DB存储在project沙盒中
  *  @param sql     insert sql
- *  @param results 待存储的猜词结果，其中的item结构与DB Schema一致，否则报错
+ *  @param results 待存储的猜词结果，其中的item结构与results.db schema一致，否则报错
  */
-- (void)saveResultsToDB:(NSString *)DBName sql:(NSString *)sql results:(NSArray *)results;
+- (void)saveToResults:(NSString *)sql results:(NSArray *)results;
 
-
+/**
+ *  <#Description#>
+ *
+ *  @param sql       <#sql description#>
+ */
+- (void)deleteFromResults:(NSString *)sql;
 
 @end

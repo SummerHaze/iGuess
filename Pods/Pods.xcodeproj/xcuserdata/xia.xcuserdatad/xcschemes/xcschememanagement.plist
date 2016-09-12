@@ -24,10 +24,30 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>ZLSwipeableView.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>pop.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>12E2BC28C62976C425F4B71C2723F0B1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>27E0A6622CD03BAE1E3142784991A558</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>397A71E676DE799FAE14074B5CCE1F17</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -42,7 +62,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>CC88B353F805DF9E2D388A09D82DD31B</key>
+		<key>A738F524C6B5A901A526FC43CFE0B0D9</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -43,13 +43,12 @@
     NSFileManager *fm = [NSFileManager defaultManager];
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
-    NSString *name = [NSString stringWithFormat:@"%@.db",DBName];
-    NSString *dbPath = [documentsDirectory stringByAppendingPathComponent:name];
+    NSString *dbPath = [documentsDirectory stringByAppendingPathComponent:@"results.db"];
     
     // 游戏开始时切换至history界面，无results.db，此时也要复制之
     if (![fm fileExistsAtPath:dbPath]) {
         NSError *error;
-        NSString *resourcePath = [[NSBundle mainBundle]pathForResource:DBName ofType:@"db"];
+        NSString *resourcePath = [[NSBundle mainBundle]pathForResource:@"results" ofType:@"db"];
         [fm copyItemAtPath:resourcePath toPath:dbPath error:&error];
     }
     
@@ -76,40 +75,66 @@
     
 }
 
-- (void)saveResultsToDB:(NSString *)DBName sql:(NSString *)sql results:(NSArray *)results {
+- (void)saveToResults:(NSString *)sql results:(NSArray *)results {
     // 将DB从工程目录拷贝到document目录，否则只读不可写
     NSFileManager *fm = [NSFileManager defaultManager];
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
-    NSString *name = [NSString stringWithFormat:@"%@.db", DBName];
-    NSString *dbPath = [documentsDirectory stringByAppendingPathComponent:name];
-    NSString *resourcePath = [[NSBundle mainBundle]pathForResource:DBName ofType:@"db"];
+    NSString *dbPath = [documentsDirectory stringByAppendingPathComponent:@"results.db"];
+    NSString *resourcePath = [[NSBundle mainBundle]pathForResource:@"results" ofType:@"db"];
     NSError *error;
     
     if (![fm fileExistsAtPath:dbPath]) {
         [fm copyItemAtPath:resourcePath toPath:dbPath error:&error];
     }
     
-    DDLogVerbose(@"数据库%@保存路径: %@", name, dbPath);
     FMDatabase *db = [FMDatabase databaseWithPath:dbPath];
     if (![db open]) {
-        DDLogError(@"打开数据库%@失败", name);
+        DDLogError(@"打开results.db失败");
         return;
     }
     
     if (results != nil) {
         for (ResultDetailItem *item in results){
-            DDLogDebug(@"当前保存的词条为: %@，结果为:%@", item.name, item.result);
-            if (![db executeUpdate:sql withArgumentsInArray:@[item.result,
-                                                              item.wordId,
-                                                              [NSNumber numberWithInteger:item.round],
-                                                              item.name]]) {
-                DDLogError(@"保存一轮猜词结果到%@失败", name);
+            DDLogDebug(@"保存词条: %@，结果:%@", item.name, item.result);
+//            NSError *error;
+            if (![db executeUpdate:sql
+              withArgumentsInArray:@[item.result, item.wordId,[NSNumber numberWithInteger:item.round],item.name]]) {
+                DDLogError(@"保存结果失败");
                 return;
             };
         }
     }
     
+    [db close];
+}
+
+- (void)deleteFromResults:(NSString *)sql {
+    // 将DB从工程目录拷贝到document目录，否则只读不可写
+    NSFileManager *fm = [NSFileManager defaultManager];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *dbPath = [documentsDirectory stringByAppendingPathComponent:@"results.db"];
+    NSString *resourcePath = [[NSBundle mainBundle]pathForResource:@"results" ofType:@"db"];
+    NSError *error;
+    
+    if (![fm fileExistsAtPath:dbPath]) {
+        [fm copyItemAtPath:resourcePath toPath:dbPath error:&error];
+    }
+    
+    FMDatabase *db = [FMDatabase databaseWithPath:dbPath];
+    if (![db open]) {
+        DDLogError(@"打开results.db失败");
+        return;
+    }
+
+    if (![db executeUpdate:sql]) {
+        DDLogError(@"删除条目失败");
+        return;
+    } else {
+        DDLogDebug(@"删除条目成功");
+    };
+
     [db close];
 }
 

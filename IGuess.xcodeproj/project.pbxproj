@@ -10,13 +10,13 @@
 		1656BF1D1D7ECE5300689B8D /* MoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1656BF1C1D7ECE5300689B8D /* MoreViewController.m */; };
 		167578BC1D7163F8001308E1 /* TypePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 167578BB1D7163F8001308E1 /* TypePickerViewController.m */; };
 		1677271F1D81048800F38060 /* Setting.m in Sources */ = {isa = PBXBuildFile; fileRef = 1677271E1D81048800F38060 /* Setting.m */; };
+		167727271D82693D00F38060 /* ResultDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 167727261D82693D00F38060 /* ResultDetailCell.m */; };
 		169136411D7F1FF5001BB375 /* WordGuessingGame.m in Sources */ = {isa = PBXBuildFile; fileRef = 169136401D7F1FF5001BB375 /* WordGuessingGame.m */; };
 		169136461D7F242E001BB375 /* DBOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 169136451D7F242E001BB375 /* DBOperation.m */; };
 		16A1A4201CF57DAC0013E3F8 /* HistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16A1A41F1CF57DAC0013E3F8 /* HistoryViewController.m */; };
 		16A1A4261CF57E020013E3F8 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16A1A4251CF57E020013E3F8 /* SettingsViewController.m */; };
 		16B965BB1D6EC5DC004F42FF /* MeaningViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16B965BA1D6EC5DC004F42FF /* MeaningViewController.m */; };
 		16C0574E1D65BADA002C1CB8 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 16C0574D1D65BADA002C1CB8 /* libPods.a */; };
-		16D388D81D76F0D400E9A34B /* results.db in Resources */ = {isa = PBXBuildFile; fileRef = 16D388D71D76F0D400E9A34B /* results.db */; };
 		16D388DC1D770B6A00E9A34B /* words.db in Resources */ = {isa = PBXBuildFile; fileRef = 16D388DB1D770B6A00E9A34B /* words.db */; };
 		16D6E4261C8C587300B7A4B9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 16D6E4251C8C587300B7A4B9 /* main.m */; };
 		16D6E4291C8C587300B7A4B9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 16D6E4281C8C587300B7A4B9 /* AppDelegate.m */; };
@@ -30,6 +30,9 @@
 		16E86CEA1CF59458007580C4 /* ResultItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 16E86CE91CF59458007580C4 /* ResultItem.m */; };
 		16E86CED1CF59471007580C4 /* ResultDetailItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 16E86CEC1CF59471007580C4 /* ResultDetailItem.m */; };
 		16E86CF31CFDC3E9007580C4 /* ResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16E86CF21CFDC3E9007580C4 /* ResultViewController.m */; };
+		16F7A7071D829D4F00DB773D /* results.db in Resources */ = {isa = PBXBuildFile; fileRef = 16F7A7061D829D4F00DB773D /* results.db */; };
+		16F7A70A1D82B5D800DB773D /* NoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16F7A7091D82B5D800DB773D /* NoteViewController.m */; };
+		16F7A70D1D86583B00DB773D /* CardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 16F7A70C1D86583B00DB773D /* CardView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +52,8 @@
 		167578BB1D7163F8001308E1 /* TypePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TypePickerViewController.m; sourceTree = "<group>"; };
 		1677271D1D81048800F38060 /* Setting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Setting.h; sourceTree = "<group>"; };
 		1677271E1D81048800F38060 /* Setting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Setting.m; sourceTree = "<group>"; };
+		167727251D82693D00F38060 /* ResultDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResultDetailCell.h; sourceTree = "<group>"; };
+		167727261D82693D00F38060 /* ResultDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResultDetailCell.m; sourceTree = "<group>"; };
 		1691363F1D7F1FF5001BB375 /* WordGuessingGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WordGuessingGame.h; sourceTree = "<group>"; };
 		169136401D7F1FF5001BB375 /* WordGuessingGame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WordGuessingGame.m; sourceTree = "<group>"; };
 		169136441D7F242E001BB375 /* DBOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBOperation.h; sourceTree = "<group>"; };
@@ -64,7 +69,6 @@
 		16C0574D1D65BADA002C1CB8 /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "../../../../Library/Developer/Xcode/DerivedData/IGuess-dblsfizdxbnydbgcxsdiqvtzgupg/Build/Products/Debug-iphonesimulator/libPods.a"; sourceTree = "<group>"; };
 		16C0574F1D65BB0E002C1CB8 /* libCocoaLumberjack.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libCocoaLumberjack.a; path = "Pods/../build/Debug-iphoneos/libCocoaLumberjack.a"; sourceTree = "<group>"; };
 		16C057511D65BBEE002C1CB8 /* libCocoaLumberjack.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libCocoaLumberjack.a; path = "Pods/../build/Debug-iphoneos/libCocoaLumberjack.a"; sourceTree = "<group>"; };
-		16D388D71D76F0D400E9A34B /* results.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = results.db; sourceTree = SOURCE_ROOT; };
 		16D388DB1D770B6A00E9A34B /* words.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = words.db; sourceTree = SOURCE_ROOT; };
 		16D6E4211C8C587300B7A4B9 /* 猜猜看.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "猜猜看.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		16D6E4251C8C587300B7A4B9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -89,6 +93,11 @@
 		16E86CEC1CF59471007580C4 /* ResultDetailItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResultDetailItem.m; sourceTree = "<group>"; };
 		16E86CF11CFDC3E9007580C4 /* ResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResultViewController.h; sourceTree = "<group>"; };
 		16E86CF21CFDC3E9007580C4 /* ResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResultViewController.m; sourceTree = "<group>"; };
+		16F7A7061D829D4F00DB773D /* results.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = results.db; sourceTree = SOURCE_ROOT; };
+		16F7A7081D82B5D800DB773D /* NoteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteViewController.h; sourceTree = "<group>"; };
+		16F7A7091D82B5D800DB773D /* NoteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteViewController.m; sourceTree = "<group>"; };
+		16F7A70B1D86583B00DB773D /* CardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardView.h; sourceTree = "<group>"; };
+		16F7A70C1D86583B00DB773D /* CardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardView.m; sourceTree = "<group>"; };
 		2206315ADB707D51AAEC53FA /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		F3C308B55594A4CC27920719 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCE807C8E6A2B1AC26D9F0B4 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -133,8 +142,8 @@
 		1691363A1D7EEF3B001BB375 /* DB */ = {
 			isa = PBXGroup;
 			children = (
+				16F7A7061D829D4F00DB773D /* results.db */,
 				16D388DB1D770B6A00E9A34B /* words.db */,
-				16D388D71D76F0D400E9A34B /* results.db */,
 			);
 			name = DB;
 			sourceTree = "<group>";
@@ -223,6 +232,8 @@
 				16DB21FF1D8030F100081CFC /* History.m */,
 				1677271D1D81048800F38060 /* Setting.h */,
 				1677271E1D81048800F38060 /* Setting.m */,
+				167727251D82693D00F38060 /* ResultDetailCell.h */,
+				167727261D82693D00F38060 /* ResultDetailCell.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -230,6 +241,8 @@
 		16E11D0D1D7EEB390076308F /* View */ = {
 			isa = PBXGroup;
 			children = (
+				16F7A70B1D86583B00DB773D /* CardView.h */,
+				16F7A70C1D86583B00DB773D /* CardView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -241,10 +254,10 @@
 				16D6E42B1C8C587300B7A4B9 /* ViewController.m */,
 				16D6E4491C8C5D8F00B7A4B9 /* PlayViewController.h */,
 				16D6E44A1C8C5D8F00B7A4B9 /* PlayViewController.m */,
-				16E86CF11CFDC3E9007580C4 /* ResultViewController.h */,
-				16E86CF21CFDC3E9007580C4 /* ResultViewController.m */,
 				16A1A41E1CF57DAC0013E3F8 /* HistoryViewController.h */,
 				16A1A41F1CF57DAC0013E3F8 /* HistoryViewController.m */,
+				16E86CF11CFDC3E9007580C4 /* ResultViewController.h */,
+				16E86CF21CFDC3E9007580C4 /* ResultViewController.m */,
 				16B965B91D6EC5DC004F42FF /* MeaningViewController.h */,
 				16B965BA1D6EC5DC004F42FF /* MeaningViewController.m */,
 				1656BF1B1D7ECE5300689B8D /* MoreViewController.h */,
@@ -253,6 +266,8 @@
 				16A1A4251CF57E020013E3F8 /* SettingsViewController.m */,
 				167578BA1D7163F8001308E1 /* TypePickerViewController.h */,
 				167578BB1D7163F8001308E1 /* TypePickerViewController.m */,
+				16F7A7081D82B5D800DB773D /* NoteViewController.h */,
+				16F7A7091D82B5D800DB773D /* NoteViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -377,7 +392,7 @@
 				16D6E4311C8C587300B7A4B9 /* Assets.xcassets in Resources */,
 				16D388DC1D770B6A00E9A34B /* words.db in Resources */,
 				16D6E42F1C8C587300B7A4B9 /* Main.storyboard in Resources */,
-				16D388D81D76F0D400E9A34B /* results.db in Resources */,
+				16F7A7071D829D4F00DB773D /* results.db in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -445,12 +460,14 @@
 			files = (
 				16E86CED1CF59471007580C4 /* ResultDetailItem.m in Sources */,
 				169136461D7F242E001BB375 /* DBOperation.m in Sources */,
+				167727271D82693D00F38060 /* ResultDetailCell.m in Sources */,
 				1677271F1D81048800F38060 /* Setting.m in Sources */,
 				16D6E44B1C8C5D8F00B7A4B9 /* PlayViewController.m in Sources */,
 				16E86CEA1CF59458007580C4 /* ResultItem.m in Sources */,
 				16D6E42C1C8C587300B7A4B9 /* ViewController.m in Sources */,
 				1656BF1D1D7ECE5300689B8D /* MoreViewController.m in Sources */,
 				16DB22001D8030F100081CFC /* History.m in Sources */,
+				16F7A70D1D86583B00DB773D /* CardView.m in Sources */,
 				167578BC1D7163F8001308E1 /* TypePickerViewController.m in Sources */,
 				169136411D7F1FF5001BB375 /* WordGuessingGame.m in Sources */,
 				16D6E4291C8C587300B7A4B9 /* AppDelegate.m in Sources */,
@@ -458,6 +475,7 @@
 				16E86CF31CFDC3E9007580C4 /* ResultViewController.m in Sources */,
 				16D6E4261C8C587300B7A4B9 /* main.m in Sources */,
 				16B965BB1D6EC5DC004F42FF /* MeaningViewController.m in Sources */,
+				16F7A70A1D82B5D800DB773D /* NoteViewController.m in Sources */,
 				16A1A4261CF57E020013E3F8 /* SettingsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

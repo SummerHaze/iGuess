@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ResultDetailCell.h"
 
 @class ResultViewController;
 
@@ -17,7 +18,7 @@
 //@end
 
 
-@interface ResultViewController : UITableViewController <UIApplicationDelegate>
+@interface ResultViewController : UITableViewController <UIApplicationDelegate, ResultDetailCellDelegate>
 
 @property (nonatomic) NSMutableArray *results;
 

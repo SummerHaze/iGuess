@@ -71,11 +71,6 @@
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HistoryItem" forIndexPath:indexPath];
-    
-    // 显示当次游戏轮数的label，以后可优化成日期
-    UILabel *roundLabel = (UILabel *)[cell viewWithTag:1000];
-    // 显示当次游戏统计结果的label
-    UILabel *statLabel = (UILabel *)[cell viewWithTag:1001];
 
     ResultItem *item = resultsCountedByRound[indexPath.row];
     
@@ -84,8 +79,9 @@
     [dateFormat setTimeZone:[NSTimeZone localTimeZone]];
 
     NSString *time = [dateFormat stringFromDate:item.playTime];
-    roundLabel.text = [NSString stringWithFormat:@"%@",time];
-    statLabel.text = [NSString stringWithFormat:@"PASS: %ld,  FAIL: %ld",(long)item.passNumber,(long)item.failNumber];
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@",time];
+    cell.textLabel.text = [NSString stringWithFormat:@"PASS: %ld,  FAIL: %ld",(long)item.passNumber,(long)item.failNumber];
+    cell.textLabel.textColor = [UIColor blueColor];
     return cell;
 }
 

@@ -129,7 +129,7 @@ static const NSInteger JISUANJI_COUNTS = 132;
     }
     
     DBOperation *operation = [[DBOperation alloc]init];
-    [operation saveResultsToDB:@"results" sql:sql results:tmpResults];
+    [operation saveToResults:sql results:tmpResults];
     
     self.results = [[NSMutableArray alloc]init];
     [self.results addObjectsFromArray:tmpResults];
