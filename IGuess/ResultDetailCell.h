@@ -20,12 +20,9 @@
 
 @interface ResultDetailCell : UITableViewCell
 
-@property (nonatomic) IBOutlet UIButton *addButton;
+@property (nonatomic) NSNumber *isAdded;
 @property (nonatomic) IBOutlet UILabel *resultLabel;
-
+@property (nonatomic) IBOutlet UIButton *addButton;
 @property (nonatomic, weak)id <ResultDetailCellDelegate> delegate;
-
-- (IBAction)addWordToNote:(id)sender;
-
 
 @end

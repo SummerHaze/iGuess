@@ -15,6 +15,9 @@
 
 @property (nonatomic) UITableView *tableView;
 
+
+- (IBAction)addWordToNote:(id)sender;
+
 @end
 
 @implementation ResultDetailCell
@@ -42,18 +45,22 @@
     ResultDetailCell *cell = (ResultDetailCell *)[view superview];
     
     ResultDetailItem *item = [self.delegate getResultDetailItem:cell];
-    
     DBOperation *operation = [[DBOperation alloc]init];
+    
     if ([self.addButton.currentTitle isEqual: @"＋"]) {
+        self.isAdded = @1;
         [self.addButton setTitle:@"V" forState:UIControlStateNormal];
         [operation saveToResults:@"INSERT INTO notes (result,id,round,name) VALUES(:result,:id,:round,:name);" results:@[item]];
-        
+    
     } else {
+        self.isAdded = @0;
         [self.addButton setTitle:@"＋" forState:UIControlStateNormal];
         NSString *sql = [NSString stringWithFormat:@"DELETE FROM notes WHERE ROUND=%ld and NAME=\"%@\"",(long)item.round, item.name];
         [operation deleteFromResults:sql];
     }
     
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:self.isAdded forKey:item.name];
 }
 
 @end

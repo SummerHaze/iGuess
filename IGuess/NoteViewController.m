@@ -98,6 +98,7 @@
 
 #pragma mark - ZLSwipeableViewDataSource
 - (UIView *)nextViewForSwipeableView:(ZLSwipeableView *)swipeableView {
+    // 用index控制当前显示的词语
     if (index < [words count]) {
         CardView *card = [[CardView alloc] initWithFrame:swipeableView.bounds];
         ResultDetailItem *item = words[index];

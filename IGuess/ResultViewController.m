@@ -55,6 +55,17 @@
 //    UILabel *addButton = (UIButton *)[cell viewWithTag:2001];
     
     ResultDetailItem *item = self.results[indexPath.row];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSNumber *added = [defaults objectForKey:item.name];
+    
+    if (added.intValue == 1) {
+        DDLogInfo(@"该词条已添加进生词本");
+        [cell.addButton setTitle:@"V" forState:UIControlStateNormal];
+    } else if (added.intValue == 0) {
+        [cell.addButton setTitle:@"＋" forState:UIControlStateNormal];
+    }
+
     cell.resultLabel.text = [NSString stringWithFormat:@"%@     %@", item.name, item.result.uppercaseString];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     

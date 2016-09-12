@@ -10,6 +10,11 @@
 
 @interface CardView : UIView
 
+/**
+ *  设置卡片上显示的词语
+ *
+ *  @param note 词语
+ */
 - (void)setLabel:(NSString *)note;
 
 @end
