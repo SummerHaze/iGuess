@@ -43,7 +43,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     resultsSortedByRound = [self.history sortResultsByRound];
-    resultsCountedByRound = [self.history countResults];
+    resultsCountedByRound = [self.history countResults:resultsSortedByRound];
     [self.tableView reloadData];
  
 }

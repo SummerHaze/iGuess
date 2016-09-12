@@ -119,14 +119,14 @@ static const NSInteger JISUANJI_COUNTS = 132;
 
 // 保存一轮所有的词条的猜词结果
 - (void)saveResultsToDB{
-    NSString *sql;
-    if ([type isEqualToString: @"成语"]) {
-        sql = @"INSERT INTO chengyuResult (result,id,round,name) VALUES(:result,:id,:round,:name);";
-    } else if ([type isEqualToString: @"计算机"]) {
-        sql = @"INSERT INTO jisuanjiResult (result,id,round,name) VALUES(:result,:id,:round,:name);";
-    } else if ([type isEqualToString: @"布袋戏"]) {
-        sql = @"INSERT INTO budaixiResult (result,id,round,name) VALUES(:result,:id,:round,:name);";
-    }
+    NSString *sql = @"INSERT INTO results (result,id,round,name) VALUES(:result,:id,:round,:name);";
+//    if ([type isEqualToString: @"成语"]) {
+//        sql = @"INSERT INTO chengyuResult (result,id,round,name) VALUES(:result,:id,:round,:name);";
+//    } else if ([type isEqualToString: @"计算机"]) {
+//        sql = @"INSERT INTO jisuanjiResult (result,id,round,name) VALUES(:result,:id,:round,:name);";
+//    } else if ([type isEqualToString: @"布袋戏"]) {
+//        sql = @"INSERT INTO budaixiResult (result,id,round,name) VALUES(:result,:id,:round,:name);";
+//    }
     
     DBOperation *operation = [[DBOperation alloc]init];
     [operation saveToResults:sql results:tmpResults];

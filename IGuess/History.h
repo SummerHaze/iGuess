@@ -22,6 +22,6 @@
  *
  *  @return <#return value description#>
  */
-- (NSMutableArray *)countResults;
+- (NSMutableArray *)countResults:(NSMutableArray *)resultsSortedByRound;
 
 @end

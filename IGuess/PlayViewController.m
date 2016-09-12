@@ -209,36 +209,34 @@
 #pragma mark - Event response
 - (IBAction)guessRight {
     [self.game guessRight];
+    [self slideToShow];
     self.puzzleLabel.text = [self.game getNextPuzzle];
 
 };
 
 - (IBAction)guessWrong {
     [self.game guessWrong];
+    [self slideToShow];
     self.puzzleLabel.text = [self.game getNextPuzzle];
 };
 
-//- (void)goToNextPuzzle {
-//    //    NSInteger offset = 300;
-//    //    if ( puzzleString != nil) {
-//    //        // label由左横滑进屏幕
-//    //        CGPoint puzzleCenter = self.puzzleLabel.center;
-//    //        puzzleCenter.x -= offset;
-//    //        self.puzzleLabel.center = puzzleCenter;
-//    //
-//    //        puzzleCenter.x += offset;
-//    //        [UIView animateWithDuration:0.5
-//    //                         animations:^{
-//    //                             self.puzzleLabel.center = puzzleCenter;
-//    //                         }
-//    //                         completion:nil];
-//    //    }
-//    
-//    NSString *puzzleString;
-//    puzzleString = [self.game.puzzles objectAtIndex:self.game.guessedWordsCounts];
-//    self.game.guessedWordsCounts += 1;
-//    
-//}
+- (void)slideToShow {
+    NSInteger offset = 300;
+    if (self.puzzleLabel.text != nil) {
+        // label由左横滑进屏幕
+        CGPoint puzzleCenter = self.puzzleLabel.center;
+        puzzleCenter.x -= offset;
+        self.puzzleLabel.center = puzzleCenter;
+
+        puzzleCenter.x += offset;
+        [UIView animateWithDuration:0.5
+                         animations:^{
+                             self.puzzleLabel.center = puzzleCenter;
+                         }
+                         completion:nil];
+    }
+    
+}
 
 - (IBAction)pauseOrPlay {
     if ([self.controlButton.currentBackgroundImage isEqual: pauseImage]) {

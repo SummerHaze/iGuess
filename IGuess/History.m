@@ -14,25 +14,25 @@
 @implementation History
 
 
-- (NSString *)loadType {
-    // 加载词库
-    NSString *type;
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    type = [defaults stringForKey:@"type"];
-    DDLogVerbose(@"history页面加载词库类型为: %@", type);
-    return type;
-}
+//- (NSString *)loadType {
+//    // 加载词库
+//    NSString *type;
+//    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+//    type = [defaults stringForKey:@"type"];
+//    DDLogVerbose(@"history加载词库类型: %@", type);
+//    return type;
+//}
 
 - (NSMutableArray *)getResultsFromDB {
-    NSString *sql;
-    NSString *type = [self loadType];
-    if ([type isEqualToString: @"成语"]) {
-        sql = [NSString stringWithFormat:@"SELECT * FROM chengyuResult"];
-    } else if ([type isEqualToString: @"计算机"]) {
-        sql = [NSString stringWithFormat:@"SELECT * FROM jisuanjiResult"];
-    } else if ([type isEqualToString: @"布袋戏"]) {
-        sql = [NSString stringWithFormat:@"SELECT * FROM budaixiResult"];
-    }
+    NSString *sql = @"SELECT * FROM results";
+//    NSString *type = [self loadType];
+//    if ([type isEqualToString: @"成语"]) {
+//        sql = [NSString stringWithFormat:@"SELECT * FROM chengyuResult"];
+//    } else if ([type isEqualToString: @"计算机"]) {
+//        sql = [NSString stringWithFormat:@"SELECT * FROM jisuanjiResult"];
+//    } else if ([type isEqualToString: @"布袋戏"]) {
+//        sql = [NSString stringWithFormat:@"SELECT * FROM budaixiResult"];
+//    }
     
     NSMutableArray *results = [[NSMutableArray alloc]init];
     DBOperation *operation = [[DBOperation alloc]init];
@@ -66,8 +66,8 @@
 }
 
 // 统计每轮的游戏数据，用以显示在history list中
-- (NSMutableArray *)countResults {
-    NSMutableArray *resultsSortedByRound = [self sortResultsByRound];
+- (NSMutableArray *)countResults:(NSMutableArray *)resultsSortedByRound {
+//    NSMutableArray *resultsSortedByRound = [self sortResultsByRound];
     ResultDetailItem *idetail = [[ResultDetailItem alloc]init];
     NSMutableArray *resultsCountedByRound = [[NSMutableArray alloc]init];
     for (int i=0; i<[resultsSortedByRound count]; i++) {
