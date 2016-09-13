@@ -38,7 +38,7 @@ static const NSInteger JISUANJI_COUNTS = 132;
     self.results = [NSMutableArray arrayWithCapacity:INIT_ITEM_COUNTS];
     tmpResults = [NSMutableArray arrayWithCapacity:INIT_ITEM_COUNTS];
 
-    DDLogError(@"游戏初始化成功");
+    DDLogError(@"初始化成功");
 }
 
 // 获取下一个词条
@@ -81,7 +81,7 @@ static const NSInteger JISUANJI_COUNTS = 132;
     } else if ([type isEqualToString: @"布袋戏"]) {
         totalWordsCounts = BUDAIXI_COUNTS;
     } else {
-        DDLogError(@"play页面加载的词库类型有误，类型为: %@", type);
+        DDLogError(@"play >>> 加载 >>> 词库: %@", type);
     }
     
     if (totalWordsCounts > INIT_ITEM_COUNTS) {
@@ -109,7 +109,7 @@ static const NSInteger JISUANJI_COUNTS = 132;
     } else if ([type isEqualToString: @"布袋戏"]) {
         query = [NSString stringWithFormat:@"SELECT * FROM budaixi where ID in %@",IDs];
     } else {
-        DDLogError(@"play页面加载的词库类型有误，类型为: %@", type);
+        DDLogError(@"play >>> 加载 >>> 词库: %@", type);
     }
     
     DBOperation *operation = [[DBOperation alloc]init];
@@ -120,13 +120,6 @@ static const NSInteger JISUANJI_COUNTS = 132;
 // 保存一轮所有的词条的猜词结果
 - (void)saveResultsToDB{
     NSString *sql = @"INSERT INTO results (result,id,round,name) VALUES(:result,:id,:round,:name);";
-//    if ([type isEqualToString: @"成语"]) {
-//        sql = @"INSERT INTO chengyuResult (result,id,round,name) VALUES(:result,:id,:round,:name);";
-//    } else if ([type isEqualToString: @"计算机"]) {
-//        sql = @"INSERT INTO jisuanjiResult (result,id,round,name) VALUES(:result,:id,:round,:name);";
-//    } else if ([type isEqualToString: @"布袋戏"]) {
-//        sql = @"INSERT INTO budaixiResult (result,id,round,name) VALUES(:result,:id,:round,:name);";
-//    }
     
     DBOperation *operation = [[DBOperation alloc]init];
     [operation saveToResults:sql results:tmpResults];
@@ -204,7 +197,7 @@ static const NSInteger JISUANJI_COUNTS = 132;
     } else {
         self.duration = TMP_DURATION;
     }
-    DDLogVerbose(@"play页面加载游戏的时长为: %ld", (long)self.duration);
+    DDLogVerbose(@"play >>> 加载 >>> 时长: %ld", (long)self.duration);
 }
 
 - (void)loadRound {
@@ -215,18 +208,18 @@ static const NSInteger JISUANJI_COUNTS = 132;
     } else {
         self.round = 1;
     }
-    DDLogVerbose(@"加载游戏的轮数为: %d", self.round);
+    DDLogVerbose(@"play >>> 加载 >>> 轮数: %d", self.round);
 }
 
 - (void)loadType {
     // 加载词库
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     type = [defaults stringForKey:@"type"];
-    DDLogVerbose(@"play页面加载词库类型为: %@", type);
+    DDLogVerbose(@"play >>> 加载 >>> 词库: %@", type);
     if (type == nil) {
         type = @"成语";
         [defaults setObject:type forKey:@"type"];
-        DDLogVerbose(@"play页面加载词库类型为空，默认成语");
+        DDLogVerbose(@"play >>> 加载 >>> 类型为空，默认成语");
     }
 }
 

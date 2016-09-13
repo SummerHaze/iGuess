@@ -23,14 +23,13 @@
 - (NSMutableArray *)getWordsFromDB:(NSString *)DBName sql:(NSString *)sql totalWordsCounts:(int)totalWordsCounts initItemCounts:(int)initItemCounts;
 
 /**
- *  从结果DB中读取猜词结果
+ *  从results.db中读取猜词结果
  *
- *  @param DBName DB名称，保存在project bundle中
- *  @param sql    insert sql
+ *  @param sql  query sql
  *
- *  @return 猜词结果数据，其中存放ResultDetailItem对象
+ *  @return     猜词结果，ResultDetailItem对象数组
  */
-- (NSMutableArray *)getResultsFromDB:(NSString *)DBName sql:(NSString *)sql;
+- (NSMutableArray *)getResultsFromDB:(NSString *)sql;
 
 /**
  *  存储猜词结果到results.db
@@ -41,9 +40,9 @@
 - (void)saveToResults:(NSString *)sql results:(NSArray *)results;
 
 /**
- *  <#Description#>
+ *  从results.db中删除词条
  *
- *  @param sql       <#sql description#>
+ *  @param sql       delete sql
  */
 - (void)deleteFromResults:(NSString *)sql;
 

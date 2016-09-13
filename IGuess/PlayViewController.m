@@ -13,7 +13,7 @@
 
 @interface PlayViewController ()
 
-@property (nonatomic, strong) WordGuessingGame *game;  //与controller对应的model
+@property (nonatomic, strong) WordGuessingGame *game;
 
 @property (nonatomic, weak) IBOutlet UIButton *controlButton;
 @property (nonatomic, weak) IBOutlet UIButton *passButton;
@@ -36,17 +36,24 @@
 
 #pragma mark - Life cycle
 - (id)initWithCoder:(NSCoder *)aDecoder {
+    DDLogDebug(@"initWithCoder");
     if ((self = [super initWithCoder:aDecoder])) {
         self.hidesBottomBarWhenPushed = YES;
     }
     return self;
 }
 
+- (void)awakeFromNib {
+    DDLogDebug(@"awakeFromNib");
+}
+
 - (void)viewDidLoad {
+    DDLogDebug(@"viewDidLoad");
     [super viewDidLoad];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    DDLogDebug(@"viewWillAppear");
     [super viewWillAppear:animated];
     
     [self.navigationController setNavigationBarHidden:YES animated:NO];
@@ -62,6 +69,7 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
+    DDLogDebug(@"viewDidAppear");
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(applicationDidEnterBackground)
                                                  name:UIApplicationDidEnterBackgroundNotification
@@ -77,8 +85,13 @@
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
+    DDLogDebug(@"viewWillDisappear");
     [super viewWillDisappear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:NO];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    DDLogDebug(@"viewDidDisappear");
 }
 
 - (void)didReceiveMemoryWarning {
@@ -86,6 +99,7 @@
 }
 
 - (void)dealloc {
+    DDLogDebug(@"dealloc");
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -93,32 +107,32 @@
 - (void)applicationDidEnterBackground {
     if ([_controlButton.currentBackgroundImage isEqual: pauseImage] ) {
         //切换后台前，游戏未暂停
-        DDLogDebug(@"游戏进行时切后台，暂停");
+        DDLogDebug(@"进行时切后台，暂停");
         self.countDownLabel.text = [NSString stringWithFormat:@"%d", self.countDownLabel.text.intValue + 1];
         [self pauseCountDown];
     } else {
-        DDLogDebug(@"游戏暂停时切后台，不做处理");
+        DDLogDebug(@"暂停时切后台，不做处理");
     }
 }
 
 - (void)applicationDidEnterForeground {
     if ([_controlButton.currentBackgroundImage isEqual: pauseImage]) {
-        DDLogDebug(@"游戏恢复前台，继续");
+        DDLogDebug(@"恢复前台，继续");
         self.countDownLabel.text = [NSString stringWithFormat:@"%d", self.countDownLabel.text.intValue + 1];
         [self resumeCountDown];
         
     } else {
-        DDLogDebug(@"游戏恢复前台，保持暂停");
+        DDLogDebug(@"恢复前台，保持暂停");
     }
 }
 
 - (void)applicationWillTerminate {
     [self.game stopGame];
     self.puzzleLabel.text = nil;
-    DDLogDebug(@"游戏过程中被异常终止，保存结果成功");
+    DDLogDebug(@"过程中被异常终止，保存结果成功");
 }
 
-#pragma mark - WordGuessingGame lazy load
+#pragma mark - WordGuessingGame lazy loading
 - (WordGuessingGame *)game {
     if (!_game) {
         _game = [[WordGuessingGame alloc]init];

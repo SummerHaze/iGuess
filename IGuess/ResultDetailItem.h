@@ -10,13 +10,24 @@
 
 @interface ResultDetailItem : NSObject
 
-//词语名字
+/**
+ *  词条名称
+ */
 @property (nonatomic) NSString *name;
-//词语ID
+
+/**
+ *  词条ID
+ */
 @property (nonatomic) NSString *wordId;
-//词语轮数
+
+/**
+ *  猜词轮数
+ */
 @property NSInteger round;
-//猜词结果
+
+/**
+ *  猜词结果
+ */
 @property (nonatomic, weak) NSString *result;
 
 

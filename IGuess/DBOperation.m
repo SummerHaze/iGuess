@@ -38,7 +38,7 @@
     
 }
 
-- (NSMutableArray *)getResultsFromDB:(NSString *)DBName sql:(NSString *)sql {
+- (NSMutableArray *)getResultsFromDB:(NSString *)sql {
     // 从数据库里读取数据，存储到results里
     NSFileManager *fm = [NSFileManager defaultManager];
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -49,12 +49,13 @@
     if (![fm fileExistsAtPath:dbPath]) {
         NSError *error;
         NSString *resourcePath = [[NSBundle mainBundle]pathForResource:@"results" ofType:@"db"];
+        DDLogDebug(@"bundle路径为: %@", resourcePath);
         [fm copyItemAtPath:resourcePath toPath:dbPath error:&error];
     }
     
     FMDatabase *db = [FMDatabase databaseWithPath:dbPath];
     if (![db open]) {
-        DDLogVerbose(@"%@打开失败", DBName);
+        DDLogVerbose(@"%@打开results.db失败");
         return nil;
     }
 

@@ -10,13 +10,24 @@
 
 @interface ResultItem : NSObject
 
-//游戏的轮数
+/**
+ *  游戏轮数
+ */
 @property NSInteger round;
-//游戏时间
+
+/**
+ *  游戏时间
+ */
 @property NSDate *playTime;
-//正确数
+
+/**
+ *  正确数
+ */
 @property NSInteger passNumber;
-//错误数
+
+/**
+ *  错误数
+ */
 @property NSInteger failNumber;
 
 

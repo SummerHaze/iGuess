@@ -13,26 +13,8 @@
 
 @implementation History
 
-
-//- (NSString *)loadType {
-//    // 加载词库
-//    NSString *type;
-//    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-//    type = [defaults stringForKey:@"type"];
-//    DDLogVerbose(@"history加载词库类型: %@", type);
-//    return type;
-//}
-
 - (NSMutableArray *)getResultsFromDB {
     NSString *sql = @"SELECT * FROM results";
-//    NSString *type = [self loadType];
-//    if ([type isEqualToString: @"成语"]) {
-//        sql = [NSString stringWithFormat:@"SELECT * FROM chengyuResult"];
-//    } else if ([type isEqualToString: @"计算机"]) {
-//        sql = [NSString stringWithFormat:@"SELECT * FROM jisuanjiResult"];
-//    } else if ([type isEqualToString: @"布袋戏"]) {
-//        sql = [NSString stringWithFormat:@"SELECT * FROM budaixiResult"];
-//    }
     
     NSMutableArray *results = [[NSMutableArray alloc]init];
     DBOperation *operation = [[DBOperation alloc]init];
