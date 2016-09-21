@@ -60,10 +60,10 @@
 - (void)initVideoInputHeight:(NSInteger)cy width:(NSInteger)cx {
     //录制视频的一些配置，分辨率，编码方式等等
     NSDictionary* settings = [NSDictionary dictionaryWithObjectsAndKeys:
-                              AVVideoCodecH264, AVVideoCodecKey,
-                              [NSNumber numberWithInteger: cx], AVVideoWidthKey,
-                              [NSNumber numberWithInteger: cy], AVVideoHeightKey,
-                              nil];
+                                AVVideoCodecH264, AVVideoCodecKey,
+                                [NSNumber numberWithInteger: cx], AVVideoWidthKey,
+                                [NSNumber numberWithInteger: cy], AVVideoHeightKey,
+                                nil];
     //初始化视频写入类
     _videoInput = [AVAssetWriterInput assetWriterInputWithMediaType:AVMediaTypeVideo outputSettings:settings];
     //表明输入是否应该调整其处理为实时数据源的数据
@@ -96,9 +96,10 @@
 }
 
 //通过这个方法写入数据
-- (BOOL)encodeFrame:(CMSampleBufferRef) sampleBuffer isVideo:(BOOL)isVideo {
+- (BOOL)encodeFrame:(CMSampleBufferRef)sampleBuffer isVideo:(BOOL)isVideo {
     //数据是否准备写入
     if (CMSampleBufferDataIsReady(sampleBuffer)) {
+//        DDLogDebug(@"writer status: %ld", (long)_writer.status);
         //写入状态为未知,保证视频先写入
         if (_writer.status == AVAssetWriterStatusUnknown && isVideo) {
             //获取开始写入的CMTime
@@ -120,7 +121,7 @@
                 [_videoInput appendSampleBuffer:sampleBuffer];
                 return YES;
             }
-        }else {
+        } else {
             //音频输入是否准备接受更多的媒体数据
             if (_audioInput.readyForMoreMediaData) {
                 //拼接数据

@@ -53,6 +53,7 @@
     self.isPaused = NO;
     self.isDisconnected = NO;
     [self.recordSession startRunning];
+
 }
 
 //关闭录制
@@ -108,6 +109,7 @@
             self.isCapturing = NO;
             dispatch_async(_captureQueue, ^{
                 [self.videoEncoder finishWithCompletionHandler:^{
+                    DDLogError(@"finish writing");
                     self.isCapturing = NO;
                     self.videoEncoder = nil;
                     self.startTime = CMTimeMake(0, 0);
@@ -119,10 +121,9 @@
                     }
                     [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
                         [PHAssetChangeRequest creationRequestForAssetFromVideoAtFileURL:url];}
-                                                      completionHandler:^(BOOL success, NSError * _Nullable error) {
-                                                         NSLog(@"保存成功");
+                                                      completionHandler:^(BOOL success, NSError * _Nullable error) { NSLog(@"视频保存成功");
                     }];
-                    [self movieToImageHandler:handler];
+//                    [self movieToImageHandler:handler]; // 获取视频第一帧图片
                 }];
             });
         }
@@ -165,7 +166,7 @@
         }
     };
     [generator generateCGImagesAsynchronouslyForTimes:
-     [NSArray arrayWithObject:[NSValue valueWithCMTime:thumbTime]] completionHandler:generatorHandler];
+    [NSArray arrayWithObject:[NSValue valueWithCMTime:thumbTime]] completionHandler:generatorHandler];
 }
 
 //捕获到的视频呈现的layer
@@ -196,14 +197,16 @@
         if ([_recordSession canAddOutput:self.videoOutput]) {
             [_recordSession addOutput:self.videoOutput];
             //设置视频的分辨率
-            _cx = 720;
-            _cy = 1280;
+            // 此处设置的分辨率，影响视频输出流的尺寸
+            _cx = 1280;
+            _cy = 720;
         }
         //添加音频输出
         if ([_recordSession canAddOutput:self.audioOutput]) {
             [_recordSession addOutput:self.audioOutput];
         }
         //设置视频录制的方向
+        DDLogDebug(@"support video orientation : %d", self.videoConnection.isVideoOrientationSupported);
         self.videoConnection.videoOrientation = AVCaptureVideoOrientationPortrait;
     }
     return _recordSession;
@@ -282,23 +285,23 @@
 
 
 //切换前后置摄像头
-- (void)changeCameraInputDeviceisFront:(BOOL)isFront {
-    if (isFront) {
-        [self.recordSession stopRunning];
-        [self.recordSession removeInput:self.backCameraInput];
-        if ([self.recordSession canAddInput:self.frontCameraInput]) {
-            [self changeCameraAnimation];
-            [self.recordSession addInput:self.frontCameraInput];
-        }
-    }else {
-        [self.recordSession stopRunning];
-        [self.recordSession removeInput:self.frontCameraInput];
-        if ([self.recordSession canAddInput:self.backCameraInput]) {
-            [self changeCameraAnimation];
-            [self.recordSession addInput:self.backCameraInput];
-        }
-    }
-}
+//- (void)changeCameraInputDeviceisFront:(BOOL)isFront {
+//    if (isFront) {
+//        [self.recordSession stopRunning];
+//        [self.recordSession removeInput:self.backCameraInput];
+//        if ([self.recordSession canAddInput:self.frontCameraInput]) {
+//            [self changeCameraAnimation];
+//            [self.recordSession addInput:self.frontCameraInput];
+//        }
+//    }else {
+//        [self.recordSession stopRunning];
+//        [self.recordSession removeInput:self.frontCameraInput];
+//        if ([self.recordSession canAddInput:self.backCameraInput]) {
+//            [self changeCameraAnimation];
+//            [self.recordSession addInput:self.backCameraInput];
+//        }
+//    }
+//}
 
 //用来返回是前置摄像头还是后置摄像头
 - (AVCaptureDevice *)cameraWithPosition:(AVCaptureDevicePosition) position {
@@ -347,7 +350,7 @@
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection {
     BOOL isVideo = YES;
     @synchronized(self) {
-        if (!self.isCapturing  || self.isPaused) {
+        if (!self.isCapturing || self.isPaused) {
             return;
         }
         if (captureOutput != self.videoOutput) {
@@ -357,33 +360,34 @@
         if ((self.videoEncoder == nil) && !isVideo) {
             CMFormatDescriptionRef fmt = CMSampleBufferGetFormatDescription(sampleBuffer);
             [self setAudioFormat:fmt];
+            
             NSString *videoName = [self getUploadFile_type:@"video" fileType:@"mp4"];
             self.videoPath = [[self getVideoCachePath] stringByAppendingPathComponent:videoName];
             self.videoEncoder = [XZVideoEncoder encoderForPath:self.videoPath Height:_cy width:_cx channels:_channels samples:_samplerate];
         }
-        //判断是否中断录制过
-        if (self.isDisconnected) {
-            if (isVideo) {
-                return;
-            }
-            self.isDisconnected = NO;
-            // 计算暂停的时间
-            CMTime pts = CMSampleBufferGetPresentationTimeStamp(sampleBuffer);
-            CMTime last = isVideo ? _lastVideo : _lastAudio;
-            if (last.flags & kCMTimeFlags_Valid) {
-                if (_timeOffset.flags & kCMTimeFlags_Valid) {
-                    pts = CMTimeSubtract(pts, _timeOffset);
-                }
-                CMTime offset = CMTimeSubtract(pts, last);
-                if (_timeOffset.value == 0) {
-                    _timeOffset = offset;
-                }else {
-                    _timeOffset = CMTimeAdd(_timeOffset, offset);
-                }
-            }
-            _lastVideo.flags = 0;
-            _lastAudio.flags = 0;
-        }
+//        //判断是否中断录制过
+//        if (self.isDisconnected) {
+//            if (isVideo) {
+//                return;
+//            }
+//            self.isDisconnected = NO;
+//            // 计算暂停的时间
+//            CMTime pts = CMSampleBufferGetPresentationTimeStamp(sampleBuffer);
+//            CMTime last = isVideo ? _lastVideo : _lastAudio;
+//            if (last.flags & kCMTimeFlags_Valid) {
+//                if (_timeOffset.flags & kCMTimeFlags_Valid) {
+//                    pts = CMTimeSubtract(pts, _timeOffset);
+//                }
+//                CMTime offset = CMTimeSubtract(pts, last);
+//                if (_timeOffset.value == 0) {
+//                    _timeOffset = offset;
+//                }else {
+//                    _timeOffset = CMTimeAdd(_timeOffset, offset);
+//                }
+//            }
+//            _lastVideo.flags = 0;
+//            _lastAudio.flags = 0;
+//        }
         // 增加sampleBuffer的引用计时,这样我们可以释放这个或修改这个数据，防止在修改时被释放
         CFRetain(sampleBuffer);
         if (_timeOffset.value > 0) {
@@ -391,39 +395,39 @@
             //根据得到的timeOffset调整
             sampleBuffer = [self adjustTime:sampleBuffer by:_timeOffset];
         }
-        // 记录暂停上一次录制的时间
-        CMTime pts = CMSampleBufferGetPresentationTimeStamp(sampleBuffer);
-        CMTime dur = CMSampleBufferGetDuration(sampleBuffer);
-        if (dur.value > 0) {
-            pts = CMTimeAdd(pts, dur);
-        }
-        if (isVideo) {
-            _lastVideo = pts;
-        }else {
-            _lastAudio = pts;
-        }
+//        // 记录暂停上一次录制的时间
+//        CMTime pts = CMSampleBufferGetPresentationTimeStamp(sampleBuffer);
+//        CMTime dur = CMSampleBufferGetDuration(sampleBuffer);
+//        if (dur.value > 0) {
+//            pts = CMTimeAdd(pts, dur);
+//        }
+//        if (isVideo) {
+//            _lastVideo = pts;
+//        } else {
+//            _lastAudio = pts;
+//        }
     }
-    CMTime dur = CMSampleBufferGetPresentationTimeStamp(sampleBuffer);
-    if (self.startTime.value == 0) {
-        self.startTime = dur;
-    }
-    CMTime sub = CMTimeSubtract(dur, self.startTime);
-    self.currentRecordTime = CMTimeGetSeconds(sub);
-    if (self.currentRecordTime > self.maxRecordTime) {
-        if (self.currentRecordTime - self.maxRecordTime < 0.1) {
-            if ([self.delegate respondsToSelector:@selector(recordProgress:)]) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self.delegate recordProgress:self.currentRecordTime/self.maxRecordTime];
-                });
-            }
-        }
-        return;
-    }
-    if ([self.delegate respondsToSelector:@selector(recordProgress:)]) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.delegate recordProgress:self.currentRecordTime/self.maxRecordTime];
-        });
-    }
+//    CMTime dur = CMSampleBufferGetPresentationTimeStamp(sampleBuffer);
+//    if (self.startTime.value == 0) {
+//        self.startTime = dur;
+//    }
+//    CMTime sub = CMTimeSubtract(dur, self.startTime);
+//    self.currentRecordTime = CMTimeGetSeconds(sub);
+//    if (self.currentRecordTime > self.maxRecordTime) {
+//        if (self.currentRecordTime - self.maxRecordTime < 0.1) {
+//            if ([self.delegate respondsToSelector:@selector(recordProgress:)]) {
+//                dispatch_async(dispatch_get_main_queue(), ^{
+//                    [self.delegate recordProgress:self.currentRecordTime/self.maxRecordTime];
+//                });
+//            }
+//        }
+//        return;
+//    }
+//    if ([self.delegate respondsToSelector:@selector(recordProgress:)]) {
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            [self.delegate recordProgress:self.currentRecordTime/self.maxRecordTime];
+//        });
+//    }
     // 进行数据编码
     [self.videoEncoder encodeFrame:sampleBuffer isVideo:isVideo];
     CFRelease(sampleBuffer);
@@ -453,9 +457,9 @@
     NSTimeInterval now = [[NSDate date] timeIntervalSince1970];
     NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"HHmmss"];
-    NSDate * NowDate = [NSDate dateWithTimeIntervalSince1970:now];
+    NSDate *NowDate = [NSDate dateWithTimeIntervalSince1970:now];
     ;
-    NSString * timeStr = [formatter stringFromDate:NowDate];
+    NSString *timeStr = [formatter stringFromDate:NowDate];
     NSString *fileName = [NSString stringWithFormat:@"%@_%@.%@",type,timeStr,fileType];
     return fileName;
 }
@@ -476,23 +480,21 @@
     return sout;
 }
 
-
-
 #pragma mark - 切换动画
-- (void)changeCameraAnimation {
-    CATransition *changeAnimation = [CATransition animation];
-    changeAnimation.delegate = self;
-    changeAnimation.duration = 0.45;
-    changeAnimation.type = @"oglFlip";
-    changeAnimation.subtype = kCATransitionFromRight;
-    changeAnimation.timingFunction = UIViewAnimationCurveEaseInOut;
-    [self.previewLayer addAnimation:changeAnimation forKey:@"changeAnimation"];
-}
-
-- (void)animationDidStart:(CAAnimation *)anim {
-    self.videoConnection.videoOrientation = AVCaptureVideoOrientationPortrait;
-    [self.recordSession startRunning];
-}
+//- (void)changeCameraAnimation {
+//    CATransition *changeAnimation = [CATransition animation];
+//    changeAnimation.delegate = self;
+//    changeAnimation.duration = 0.45;
+//    changeAnimation.type = @"oglFlip";
+//    changeAnimation.subtype = kCATransitionFromRight;
+//    changeAnimation.timingFunction = UIViewAnimationCurveEaseInOut;
+//    [self.previewLayer addAnimation:changeAnimation forKey:@"changeAnimation"];
+//}
+//
+//- (void)animationDidStart:(CAAnimation *)animated {
+//    self.videoConnection.videoOrientation = AVCaptureVideoOrientationPortrait;
+//    [self.recordSession startRunning];
+//}
 
 
 

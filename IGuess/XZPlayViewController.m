@@ -103,11 +103,14 @@
         [self initVideoAnimation];
         // 启动视频录制
         if (_videoEngine == nil) {
+            // 此处的尺寸，仅影响preview layer的frame，与视频文件尺寸无关
             CGRect videoFrame = CGRectMake(0, 50, 375, 200);
             [self.videoEngine previewLayer].frame = videoFrame;
             [self.view.layer insertSublayer:[self.videoEngine previewLayer] atIndex:0];
         }
+
         [self.videoEngine startUp];
+        [self.videoEngine startCapture];
     }
 
     [self startCountDown];
@@ -224,8 +227,12 @@
         // 倒计时结束，停止游戏，显示结果
         [self stopCountDown];
         [self.game stopGame];
-        [self.videoEngine shutdown];
+        
         [self saveVideo];
+//        [self.videoEngine shutdown];
+//        [self.videoEngine pauseCapture];
+//        [self.videoEngine stopCaptureHandler:nil];
+//        [self.videoEngine shutdown];
         
         NSInteger passCount = 0;
         NSInteger failCount = 0;
@@ -347,12 +354,13 @@
 
 #pragma mark - 视频录制相关
 - (void)saveVideo {
-    [self.videoEngine stopCaptureHandler:nil];
-//    if (_videoEngine.videoPath.length > 0) {
-//        [self.videoEngine stopCaptureHandler:nil];
-//    }else {
-//        DDLogError(@"请先录制视频");
-//    }
+//    [self.videoEngine stopCaptureHandler:nil];
+    DDLogDebug(@"videoPath: %@", _videoEngine.videoPath);
+    if (_videoEngine.videoPath.length > 0) {
+        [self.videoEngine stopCaptureHandler:nil];
+    }else {
+        DDLogError(@"请先录制视频");
+    }
 }
 
 //#pragma mark - Apple相册选择代理
