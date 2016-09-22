@@ -28,8 +28,9 @@
 }
 
 //WCLRecordEncoder遍历构造器的
-+ (XZVideoEncoder*)encoderForPath:(NSString*) path Height:(NSInteger) cy width:(NSInteger) cx channels: (int) ch samples:(Float64) rate {
-    XZVideoEncoder* enc = [XZVideoEncoder alloc];
++ (XZVideoEncoder*)encoderForPath:(NSString*)path Height:(NSInteger)cy width:(NSInteger)cx channels:(int)ch samples:(Float64)rate
+{
+    XZVideoEncoder *enc = [XZVideoEncoder alloc];
     return [enc initPath:path Height:cy width:cx channels:ch samples:rate];
 }
 
@@ -40,16 +41,16 @@
         self.path = path;
         //先把路径下的文件给删除掉，保证录制的文件是最新的
         [[NSFileManager defaultManager] removeItemAtPath:self.path error:nil];
-        NSURL* url = [NSURL fileURLWithPath:self.path];
+        NSURL *url = [NSURL fileURLWithPath:self.path];
         //初始化写入媒体类型为MP4类型
         _writer = [AVAssetWriter assetWriterWithURL:url fileType:AVFileTypeMPEG4 error:nil];
         //使其更适合在网络上播放
         _writer.shouldOptimizeForNetworkUse = YES;
-        //初始化视频输出
+        //初始化视频输入
         [self initVideoInputHeight:cy width:cx];
         //确保采集到rate和ch
         if (rate != 0 && ch != 0) {
-            //初始化音频输出
+            //初始化音频输入
             [self initAudioInputChannels:ch samples:rate];
         }
     }
@@ -95,11 +96,10 @@
     [_writer finishWritingWithCompletionHandler: handler];
 }
 
-//通过这个方法写入数据
+//写入数据
 - (BOOL)encodeFrame:(CMSampleBufferRef)sampleBuffer isVideo:(BOOL)isVideo {
     //数据是否准备写入
     if (CMSampleBufferDataIsReady(sampleBuffer)) {
-//        DDLogDebug(@"writer status: %ld", (long)_writer.status);
         //写入状态为未知,保证视频先写入
         if (_writer.status == AVAssetWriterStatusUnknown && isVideo) {
             //获取开始写入的CMTime

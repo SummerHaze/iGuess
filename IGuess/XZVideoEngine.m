@@ -130,44 +130,44 @@
     }
 }
 
-// 将mov文件转为MP4文件
-- (void)changeMovToMp4:(NSURL *)mediaURL dataBlock:(void (^)(UIImage *movieImage))handler {
-    AVAsset *video = [AVAsset assetWithURL:mediaURL];
-    AVAssetExportSession *exportSession = [AVAssetExportSession exportSessionWithAsset:video presetName:AVAssetExportPreset1280x720];
-    exportSession.shouldOptimizeForNetworkUse = YES;
-    exportSession.outputFileType = AVFileTypeMPEG4;
-    NSString * basePath=[self getVideoCachePath];
-    
-    self.videoPath = [basePath stringByAppendingPathComponent:[self getUploadFile_type:@"video" fileType:@"mp4"]];
-    exportSession.outputURL = [NSURL fileURLWithPath:self.videoPath];
-    [exportSession exportAsynchronouslyWithCompletionHandler:^{
-        [self movieToImageHandler:handler];
-    }];
-}
-
-#pragma mark - private方法
-//获取视频第一帧的图片
-- (void)movieToImageHandler:(void (^)(UIImage *movieImage))handler {
-    NSURL *url = [NSURL fileURLWithPath:self.videoPath];
-    AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:url options:nil];
-    AVAssetImageGenerator *generator = [[AVAssetImageGenerator alloc] initWithAsset:asset];
-    generator.appliesPreferredTrackTransform = TRUE;
-    CMTime thumbTime = CMTimeMakeWithSeconds(0, 60);
-    generator.apertureMode = AVAssetImageGeneratorApertureModeEncodedPixels;
-    AVAssetImageGeneratorCompletionHandler generatorHandler =
-    ^(CMTime requestedTime, CGImageRef im, CMTime actualTime, AVAssetImageGeneratorResult result, NSError *error){
-        if (result == AVAssetImageGeneratorSucceeded) {
-            UIImage *thumbImg = [UIImage imageWithCGImage:im];
-            if (handler) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    handler(thumbImg);
-                });
-            }
-        }
-    };
-    [generator generateCGImagesAsynchronouslyForTimes:
-    [NSArray arrayWithObject:[NSValue valueWithCMTime:thumbTime]] completionHandler:generatorHandler];
-}
+//// 将mov文件转为MP4文件
+//- (void)changeMovToMp4:(NSURL *)mediaURL dataBlock:(void (^)(UIImage *movieImage))handler {
+//    AVAsset *video = [AVAsset assetWithURL:mediaURL];
+//    AVAssetExportSession *exportSession = [AVAssetExportSession exportSessionWithAsset:video presetName:AVAssetExportPreset1280x720];
+//    exportSession.shouldOptimizeForNetworkUse = YES;
+//    exportSession.outputFileType = AVFileTypeMPEG4;
+//    NSString * basePath=[self getVideoCacheDir];
+//    
+//    self.videoPath = [basePath stringByAppendingPathComponent:[self getFileName:@"video" format:@"mp4"]];
+//    exportSession.outputURL = [NSURL fileURLWithPath:self.videoPath];
+//    [exportSession exportAsynchronouslyWithCompletionHandler:^{
+//        [self movieToImageHandler:handler];
+//    }];
+//}
+//
+//#pragma mark - private方法
+////获取视频第一帧的图片
+//- (void)movieToImageHandler:(void (^)(UIImage *movieImage))handler {
+//    NSURL *url = [NSURL fileURLWithPath:self.videoPath];
+//    AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:url options:nil];
+//    AVAssetImageGenerator *generator = [[AVAssetImageGenerator alloc] initWithAsset:asset];
+//    generator.appliesPreferredTrackTransform = TRUE;
+//    CMTime thumbTime = CMTimeMakeWithSeconds(0, 60);
+//    generator.apertureMode = AVAssetImageGeneratorApertureModeEncodedPixels;
+//    AVAssetImageGeneratorCompletionHandler generatorHandler =
+//    ^(CMTime requestedTime, CGImageRef im, CMTime actualTime, AVAssetImageGeneratorResult result, NSError *error){
+//        if (result == AVAssetImageGeneratorSucceeded) {
+//            UIImage *thumbImg = [UIImage imageWithCGImage:im];
+//            if (handler) {
+//                dispatch_async(dispatch_get_main_queue(), ^{
+//                    handler(thumbImg);
+//                });
+//            }
+//        }
+//    };
+//    [generator generateCGImagesAsynchronouslyForTimes:
+//    [NSArray arrayWithObject:[NSValue valueWithCMTime:thumbTime]] completionHandler:generatorHandler];
+//}
 
 //捕获到的视频呈现的layer
 - (AVCaptureVideoPreviewLayer *)previewLayer {
@@ -185,11 +185,11 @@
 - (AVCaptureSession *)recordSession {
     if (_recordSession == nil) {
         _recordSession = [[AVCaptureSession alloc] init];
-        //添加后置摄像头的输出
+        //添加后置摄像头的输入
         if ([_recordSession canAddInput:self.backCameraInput]) {
             [_recordSession addInput:self.backCameraInput];
         }
-        //添加后置麦克风的输出
+        //添加后置麦克风的输入
         if ([_recordSession canAddInput:self.audioMicInput]) {
             [_recordSession addInput:self.audioMicInput];
         }
@@ -255,11 +255,13 @@
 - (AVCaptureVideoDataOutput *)videoOutput {
     if (_videoOutput == nil) {
         _videoOutput = [[AVCaptureVideoDataOutput alloc] init];
+        // 设置delegate，在captureQueue中调用captureOutput获取frame。queue必须是serial queue，保证frame的有序传递
         [_videoOutput setSampleBufferDelegate:self queue:self.captureQueue];
-        NSDictionary* setcapSettings = [NSDictionary dictionaryWithObjectsAndKeys:
-                                        [NSNumber numberWithInt:kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange], kCVPixelBufferPixelFormatTypeKey,
+        // 设置硬件解码器输出格式，提高转码效率
+        NSDictionary* capSettings = [NSDictionary dictionaryWithObjectsAndKeys:
+                                        [NSNumber numberWithInt:kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange],kCVPixelBufferPixelFormatTypeKey,
                                         nil];
-        _videoOutput.videoSettings = setcapSettings;
+        _videoOutput.videoSettings = capSettings;
     }
     return _videoOutput;
 }
@@ -361,8 +363,8 @@
             CMFormatDescriptionRef fmt = CMSampleBufferGetFormatDescription(sampleBuffer);
             [self setAudioFormat:fmt];
             
-            NSString *videoName = [self getUploadFile_type:@"video" fileType:@"mp4"];
-            self.videoPath = [[self getVideoCachePath] stringByAppendingPathComponent:videoName];
+            NSString *videoFileName = [self getFileName:@"video" format:@"mp4"];
+            self.videoPath = [[self getVideoCacheDir] stringByAppendingPathComponent:videoFileName];
             self.videoEncoder = [XZVideoEncoder encoderForPath:self.videoPath Height:_cy width:_cx channels:_channels samples:_samplerate];
         }
 //        //判断是否中断录制过
@@ -441,26 +443,40 @@
     
 }
 
-//获得视频存放地址
-- (NSString *)getVideoCachePath {
-    NSString *videoCache = [NSTemporaryDirectory() stringByAppendingPathComponent:@"videos"] ;
+//获得视频存放文件夹
+- (NSString *)getVideoCacheDir {
+    NSString *videoCacheDir = [NSTemporaryDirectory() stringByAppendingPathComponent:@"videos"] ;
     BOOL isDir = NO;
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    BOOL existed = [fileManager fileExistsAtPath:videoCache isDirectory:&isDir];
-    if ( !(isDir == YES && existed == YES) ) {
-        [fileManager createDirectoryAtPath:videoCache withIntermediateDirectories:YES attributes:nil error:nil];
+    
+      // summ 很奇怪，为什么要判断videos下面是否有文件？先注释掉
+//    // 该existed仅能表示videoCacheDir中是否有文件或文件夹，路径本身是否是文件夹的判断结果，存储在isDir中
+//    BOOL existed = [fileManager fileExistsAtPath:videoCacheDir isDirectory:&isDir];
+//    // 本身不是文件夹，或目录下没有文件和文件夹，则创建videos文件夹
+//    if ( !(isDir == YES && existed == YES) ) {
+//        [fileManager createDirectoryAtPath:videoCacheDir withIntermediateDirectories:YES attributes:nil error:nil];
+//    };
+    
+    // 仅判断路径本身不是文件夹，否则创建
+    if (isDir == NO) {
+        [fileManager createDirectoryAtPath:videoCacheDir withIntermediateDirectories:YES attributes:nil error:nil];
     };
-    return videoCache;
+    
+    return videoCacheDir;
 }
 
-- (NSString *)getUploadFile_type:(NSString *)type fileType:(NSString *)fileType {
+- (NSString *)getFileName:(NSString *)type format:(NSString *)format {
+    // 当前时间戳
     NSTimeInterval now = [[NSDate date] timeIntervalSince1970];
-    NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"HHmmss"];
+    // 当前时间
     NSDate *NowDate = [NSDate dateWithTimeIntervalSince1970:now];
-    ;
+    // 按照formatter格式，格式化时间
     NSString *timeStr = [formatter stringFromDate:NowDate];
-    NSString *fileName = [NSString stringWithFormat:@"%@_%@.%@",type,timeStr,fileType];
+    // 保存的文件名
+    NSString *fileName = [NSString stringWithFormat:@"%@_%@.%@",type,timeStr,format];
+    
     return fileName;
 }
 

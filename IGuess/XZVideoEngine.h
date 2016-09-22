@@ -40,6 +40,6 @@
 //继续录制
 - (void) resumeCapture;
 //将mov的视频转成mp4
-- (void) changeMovToMp4:(NSURL *)mediaURL dataBlock:(void (^)(UIImage *movieImage))handler;
+//- (void) changeMovToMp4:(NSURL *)mediaURL dataBlock:(void (^)(UIImage *movieImage))handler;
 
 @end
