@@ -11,14 +11,18 @@
 #import "XZWordGuessingGame.h"
 #import "XZResultDetailItem.h"
 #import "XZVideoViewController.h"
-#import <AVFoundation/AVFoundation.h>
 #import "XZVideoEngine.h"
+#import "XZCountDownView.h"
 #import <AVKit/AVKit.h>
+#import <AVFoundation/AVFoundation.h>
 #import <MobileCoreServices/MobileCoreServices.h>
+
 
 @interface XZPlayViewController ()
 
 @property (nonatomic, strong) XZWordGuessingGame *game;
+@property (nonatomic, strong) XZVideoEngine      *videoEngine;
+@property (nonatomic, strong) XZCountDownView    *countDownView;
 
 @property (nonatomic, weak) IBOutlet UIButton *controlButton;
 @property (nonatomic, weak) IBOutlet UIButton *passButton;
@@ -32,9 +36,7 @@
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *passTopConstraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *failTopConstraint;
 
-@property (strong, nonatomic) AVCaptureVideoPreviewLayer *previewLayer;//捕获到的视频呈现的layer
-@property (strong, nonatomic) XZVideoEngine         *videoEngine;
-
+@property (nonatomic, strong) AVCaptureVideoPreviewLayer *previewLayer;//捕获到的视频呈现的layer
 
 - (IBAction)guessRight;
 - (IBAction)guessWrong;
@@ -44,9 +46,11 @@
 
 @implementation XZPlayViewController
 {
-    NSTimer *timer;
+    NSTimer *gameTimer;
+    NSTimer *coverTimer;
     UIImage *pauseImage;
     UIImage *playImage;
+    NSInteger second;
 }
 
 #pragma mark - Life cycle
@@ -65,6 +69,13 @@
 - (void)viewDidLoad {
 //    DDLogDebug(@"viewDidLoad");
     [super viewDidLoad];
+    
+    // 添加自定义倒计时view
+    self.countDownView.frame = self.view.frame;
+    [self.view addSubview:self.countDownView];
+    
+    DDLogDebug(@"current thread: %@", [NSThread currentThread]);
+//    DDLogDebug(@"main thread: %@", [NSThread mainThread]);
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -80,7 +91,7 @@
     [self.game startGame];
     self.puzzleLabel.text = [self.game getNextPuzzle];
     self.countDownLabel.text = [NSString stringWithFormat:@"%d", self.game.duration + 1];
-    
+
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -97,6 +108,13 @@
                                              selector:@selector(applicationWillTerminate)
                                                  name:UIApplicationWillTerminateNotification
                                                object:nil];
+    
+    // 倒计时蒙版阻塞3s
+    second = 3;
+    [self startCoverCountDown];
+    [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow: 3.0f]];
+    [self.countDownView removeFromSuperview];
+    
     // 动画调整布局，添加摄像头layer
     if (self.game.record.boolValue == 1) {
         // 布局动画
@@ -113,7 +131,7 @@
         [self.videoEngine startCapture];
     }
 
-    [self startCountDown];
+    [self startGameCountDown];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -142,7 +160,7 @@
         //切换后台前，游戏未暂停
         DDLogDebug(@"进行时切后台，暂停");
         self.countDownLabel.text = [NSString stringWithFormat:@"%d", self.countDownLabel.text.intValue + 1];
-        [self pauseCountDown];
+        [self pauseCountDown:gameTimer];
         
         // 此处应加上视频的暂停录制
         
@@ -155,7 +173,7 @@
     if ([_controlButton.currentBackgroundImage isEqual: pauseImage]) {
         DDLogDebug(@"恢复前台，继续");
         self.countDownLabel.text = [NSString stringWithFormat:@"%d", self.countDownLabel.text.intValue + 1];
-        [self resumeCountDown];
+        [self resumeCountDown:gameTimer];
         
         // 此处应加上视频的恢复录制
         
@@ -187,20 +205,44 @@
     return _game;
 }
 
-#pragma mark - Alert view
-// 倒计时开始
-- (void)startCountDown {
-    NSTimeInterval interval = 1;
-    timer = [NSTimer scheduledTimerWithTimeInterval:interval
-                                              target:self
-                                            selector:@selector(updateCountDown)
-                                            userInfo:nil
-                                             repeats:YES];
-    [timer setFireDate:[NSDate distantPast]];
+- (XZCountDownView *)countDownView {
+    if (!_countDownView) {
+        _countDownView = [[XZCountDownView alloc]init];
+    }
+    return _countDownView;
 }
 
+#pragma mark - Alert view
+// 蒙版倒计时开始
+- (void)startCoverCountDown {
+    NSTimeInterval interval = 1;
+    if (coverTimer == nil) {
+        coverTimer = [NSTimer scheduledTimerWithTimeInterval:interval
+                                                 target:self
+                                               selector:@selector(updateCoverCountDown)
+                                               userInfo:nil
+                                                repeats:YES];
+    }
+    [coverTimer setFireDate:[NSDate distantPast]];
+}
+
+
+// 游戏倒计时开始
+- (void)startGameCountDown {
+    NSTimeInterval interval = 1;
+    if (gameTimer == nil) {
+        gameTimer = [NSTimer scheduledTimerWithTimeInterval:interval
+                                                 target:self
+                                               selector:@selector(updateGameCountDown)
+                                               userInfo:nil
+                                                repeats:YES];
+    }
+    [gameTimer setFireDate:[NSDate distantPast]];
+}
+
+
 // 倒计时结束，释放定时器
-- (void)stopCountDown {
+- (void)stopCountDown:(NSTimer *)timer {
     if ([timer isValid] == YES) {
         [timer invalidate];
         timer = nil;
@@ -208,31 +250,42 @@
 }
 
 // 暂停游戏
-- (void)pauseCountDown {
-    [timer setFireDate:[NSDate distantFuture]];
+- (void)pauseCountDown:(NSTimer *)timer {
+    [gameTimer setFireDate:[NSDate distantFuture]];
     DDLogVerbose(@"暂停成功");
     
 }
 
 // 暂停后恢复游戏
-- (void)resumeCountDown {
+- (void)resumeCountDown:(NSTimer *)timer {
     [timer setFireDate:[NSDate date]];
     DDLogVerbose(@"恢复成功");
+    
+
 }
 
-// 倒计时结束后，强制弹框结束游戏
-- (void)updateCountDown {
+- (void)updateCoverCountDown {
+    if (second < 1) {
+        [self stopCountDown:coverTimer];
+    } else {
+        [self.countDownView setText:[NSString stringWithFormat:@"%ld", (long)second]];
+        second --;
+    }
+}
+
+// 游戏倒计时处理
+- (void)updateGameCountDown {
     int count = self.countDownLabel.text.intValue;
     if (--count < 0) {
         // 倒计时结束，停止游戏，显示结果
-        [self stopCountDown];
+        [self stopCountDown:gameTimer];
         [self.game stopGame];
         
-        [self saveVideo];
-//        [self.videoEngine shutdown];
-//        [self.videoEngine pauseCapture];
-//        [self.videoEngine stopCaptureHandler:nil];
-//        [self.videoEngine shutdown];
+        // 停止视频录制，保存
+        if (self.game.record.boolValue == 1) {
+            [self saveVideo];
+            [self.videoEngine shutdown];
+        }
         
         NSInteger passCount = 0;
         NSInteger failCount = 0;
@@ -251,18 +304,19 @@
         UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"再来一轮"
                                                          style:UIAlertActionStyleCancel
                                                        handler:^(UIAlertAction *action)
-                                                             {
-                                                                 [self.game startGame];
-                                                                 self.puzzleLabel.text = [self.game getNextPuzzle];
-                                                                 self.countDownLabel.text = [NSString stringWithFormat:@"%d", self.game.duration + 1];
-                                                                 [self startCountDown];
-                                                            }];
+                                 {
+                                     [self.game startGame];
+                                     self.puzzleLabel.text = [self.game getNextPuzzle];
+                                     self.countDownLabel.text = [NSString stringWithFormat:@"%d", self.game.duration + 1];
+//                                         timerType = @"game";
+                                     [self startGameCountDown];
+                                 }];
         UIAlertAction *confirm = [UIAlertAction actionWithTitle:@"查看结果"
                                                           style:UIAlertActionStyleDefault
                                                         handler:^(UIAlertAction *action)
-                                                            {
-                                                                [self performSegueWithIdentifier:@"ShowDetailToo" sender:self.game.results];
-                                                            }];
+                                  {
+                                      [self performSegueWithIdentifier:@"ShowDetailToo" sender:self.game.results];
+                                  }];
         [alertController addAction:cancel];
         [alertController addAction:confirm];
         [self presentViewController:alertController animated:NO completion:nil];
@@ -296,10 +350,10 @@
 - (IBAction)pauseOrPlay {
     if ([self.controlButton.currentBackgroundImage isEqual: pauseImage]) {
         [self.controlButton setBackgroundImage:playImage forState:UIControlStateNormal];
-        [self pauseCountDown];
+        [self pauseCountDown:gameTimer];
     } else if ([self.controlButton.currentBackgroundImage isEqual: playImage]) {
         [self.controlButton setBackgroundImage:pauseImage forState:UIControlStateNormal];
-        [self resumeCountDown];
+        [self resumeCountDown:gameTimer];
     }
 }
 
@@ -355,7 +409,7 @@
 #pragma mark - 视频录制相关
 - (void)saveVideo {
 //    [self.videoEngine stopCaptureHandler:nil];
-    DDLogDebug(@"videoPath: %@", _videoEngine.videoPath);
+//    DDLogDebug(@"videoPath: %@", _videoEngine.videoPath);
     if (_videoEngine.videoPath.length > 0) {
         [self.videoEngine stopCaptureHandler:nil];
     }else {

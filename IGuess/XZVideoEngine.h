@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVCaptureVideoPreviewLayer.h>
+#import <Photos/Photos.h>
 
 @protocol XZVideoEngineDelegate <NSObject>
 

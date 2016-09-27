@@ -16,6 +16,7 @@
 		169136461D7F242E001BB375 /* XZDBOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 169136451D7F242E001BB375 /* XZDBOperation.m */; };
 		16A1A4201CF57DAC0013E3F8 /* XZHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16A1A41F1CF57DAC0013E3F8 /* XZHistoryViewController.m */; };
 		16A1A4261CF57E020013E3F8 /* XZSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16A1A4251CF57E020013E3F8 /* XZSettingsViewController.m */; };
+		16B5042B1D991E79002CE833 /* XZCountDownView.m in Sources */ = {isa = PBXBuildFile; fileRef = 16B5042A1D991E79002CE833 /* XZCountDownView.m */; };
 		16B965BB1D6EC5DC004F42FF /* XZMeaningViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16B965BA1D6EC5DC004F42FF /* XZMeaningViewController.m */; };
 		16C0574E1D65BADA002C1CB8 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 16C0574D1D65BADA002C1CB8 /* libPods.a */; };
 		16D388DC1D770B6A00E9A34B /* words.db in Resources */ = {isa = PBXBuildFile; fileRef = 16D388DB1D770B6A00E9A34B /* words.db */; };
@@ -68,6 +69,8 @@
 		16A1A41F1CF57DAC0013E3F8 /* XZHistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZHistoryViewController.m; sourceTree = "<group>"; };
 		16A1A4241CF57E020013E3F8 /* XZSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZSettingsViewController.h; sourceTree = "<group>"; };
 		16A1A4251CF57E020013E3F8 /* XZSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZSettingsViewController.m; sourceTree = "<group>"; };
+		16B504291D991E79002CE833 /* XZCountDownView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZCountDownView.h; sourceTree = "<group>"; };
+		16B5042A1D991E79002CE833 /* XZCountDownView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZCountDownView.m; sourceTree = "<group>"; };
 		16B965B91D6EC5DC004F42FF /* XZMeaningViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZMeaningViewController.h; sourceTree = "<group>"; };
 		16B965BA1D6EC5DC004F42FF /* XZMeaningViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZMeaningViewController.m; sourceTree = "<group>"; };
 		16C0574A1D65AAFA002C1CB8 /* IGuess-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IGuess-Prefix.pch"; sourceTree = "<group>"; };
@@ -259,6 +262,8 @@
 				167727261D82693D00F38060 /* XZResultDetailCell.m */,
 				16F7A70B1D86583B00DB773D /* XZCardView.h */,
 				16F7A70C1D86583B00DB773D /* XZCardView.m */,
+				16B504291D991E79002CE833 /* XZCountDownView.h */,
+				16B5042A1D991E79002CE833 /* XZCountDownView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -479,6 +484,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				16D562031D8946200067D283 /* XZVideoEngine.m in Sources */,
+				16B5042B1D991E79002CE833 /* XZCountDownView.m in Sources */,
 				16E86CED1CF59471007580C4 /* XZResultDetailItem.m in Sources */,
 				169136461D7F242E001BB375 /* XZDBOperation.m in Sources */,
 				167727271D82693D00F38060 /* XZResultDetailCell.m in Sources */,

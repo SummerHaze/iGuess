@@ -84,7 +84,6 @@
 - (void) pauseCapture {
     @synchronized(self) {
         if (self.isCapturing) {
-            //            NSLog(@"暂停录制");
             self.isPaused = YES;
             self.isDisconnected = YES;
         }
@@ -109,20 +108,23 @@
             self.isCapturing = NO;
             dispatch_async(_captureQueue, ^{
                 [self.videoEncoder finishWithCompletionHandler:^{
-                    DDLogError(@"finish writing");
                     self.isCapturing = NO;
                     self.videoEncoder = nil;
-                    self.startTime = CMTimeMake(0, 0);
-                    self.currentRecordTime = 0;
-                    if ([self.delegate respondsToSelector:@selector(recordProgress:)]) {
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            [self.delegate recordProgress:self.currentRecordTime/self.maxRecordTime];
-                        });
-                    }
-                    [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
+//                    self.startTime = CMTimeMake(0, 0);
+//                    self.currentRecordTime = 0;
+//                    if ([self.delegate respondsToSelector:@selector(recordProgress:)]) {
+//                        dispatch_async(dispatch_get_main_queue(), ^{
+//                            [self.delegate recordProgress:self.currentRecordTime/self.maxRecordTime];
+//                        });
+//                    }
+                    
+                    // 相册操作
+                    [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^ {
+                        // 请求创建Asset
                         [PHAssetChangeRequest creationRequestForAssetFromVideoAtFileURL:url];}
-                                                      completionHandler:^(BOOL success, NSError * _Nullable error) { NSLog(@"视频保存成功");
-                    }];
+                                                      completionHandler:^(BOOL success, NSError * _Nullable error) {
+                                                          NSLog(@"视频保存成功");}
+                     ];
 //                    [self movieToImageHandler:handler]; // 获取视频第一帧图片
                 }];
             });
