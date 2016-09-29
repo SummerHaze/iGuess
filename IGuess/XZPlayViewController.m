@@ -51,6 +51,7 @@
     UIImage *pauseImage;
     UIImage *playImage;
     NSInteger second;
+    NSInteger tmpCount;
 }
 
 #pragma mark - Life cycle
@@ -159,20 +160,14 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-//切后台，或进程异常退出保护
+// 切后台，或进程异常退出保护
 - (void)applicationDidEnterBackground {
     if ([_controlButton.currentBackgroundImage isEqual: pauseImage] ) {
-        //切换后台前，游戏未暂停
+        // 切换后台前，游戏未暂停
         [self pauseCountDown:gameTimer];
-        
+        tmpCount = self.countDownLabel.text.intValue;
         DDLogDebug(@"进行时切后台，暂停");
-//        if (self.countDownLabel.text.intValue + 1 < 10) {
-//        NSAttributedString *text = [[NSAttributedString alloc]initWithString:[NSString stringWithFormat:@"%d", self.countDownLabel.text.intValue + 1]
-//                                                                  attributes:@{NSForegroundColorAttributeName:[UIColor redColor]}];
-//        self.countDownLabel.attributedText = text;
-//        } else {
-//            self.countDownLabel.text = [NSString stringWithFormat:@"%d", self.countDownLabel.text.intValue + 1];
-//        }
+        
         // 此处应加上视频的暂停录制
         
     } else {
@@ -183,7 +178,8 @@
 - (void)applicationDidEnterForeground {
     if ([_controlButton.currentBackgroundImage isEqual: pauseImage]) {
         DDLogDebug(@"恢复前台，继续");
-        
+        // 恢复倒计时label数据
+        self.countDownLabel.text = [NSString stringWithFormat:@"%ld", (long)tmpCount];
         [self resumeCountDown:gameTimer];
         
         if (self.countDownLabel.text.intValue < 10) {
@@ -193,7 +189,6 @@
         } else {
             self.countDownLabel.text = [NSString stringWithFormat:@"%d", self.countDownLabel.text.intValue];
         }
-        
         
         // 此处应加上视频的恢复录制
         
@@ -236,7 +231,7 @@
 // 蒙版倒计时开始
 - (void)startCoverCountDown {
     NSTimeInterval interval = 1;
-    if (coverTimer == nil) {
+    if (![gameTimer isValid]) {
         coverTimer = [NSTimer scheduledTimerWithTimeInterval:interval
                                                  target:self
                                                selector:@selector(updateCoverCountDown)
@@ -250,7 +245,7 @@
 // 游戏倒计时开始
 - (void)startGameCountDown {
     NSTimeInterval interval = 1;
-    if (gameTimer == nil) {
+    if (![gameTimer isValid]) {
         gameTimer = [NSTimer scheduledTimerWithTimeInterval:interval
                                                  target:self
                                                selector:@selector(updateGameCountDown)
@@ -271,17 +266,14 @@
 
 // 暂停游戏
 - (void)pauseCountDown:(NSTimer *)timer {
-    [gameTimer setFireDate:[NSDate distantFuture]];
+    [timer setFireDate:[NSDate distantFuture]];
     DDLogVerbose(@"暂停成功");
-    
 }
 
 // 暂停后恢复游戏
 - (void)resumeCountDown:(NSTimer *)timer {
-    [timer setFireDate:[NSDate date]];
+    [timer setFireDate:[NSDate dateWithTimeIntervalSinceNow:1.0f]];
     DDLogVerbose(@"恢复成功");
-    
-
 }
 
 - (void)updateCoverCountDown {
@@ -317,6 +309,7 @@
             }
         }
         
+        // 游戏结束强制弹框
         UIAlertController *alertController =
         [UIAlertController alertControllerWithTitle:@"游戏结束！"
                                             message:[NSString stringWithFormat:@"PASS: %ld\n FAIL: %ld",(long)passCount, (long)failCount]
@@ -328,7 +321,6 @@
                                      [self.game startGame];
                                      self.puzzleLabel.text = [self.game getNextPuzzle];
                                      self.countDownLabel.text = [NSString stringWithFormat:@"%d", self.game.duration + 1];
-//                                         timerType = @"game";
                                      [self startGameCountDown];
                                  }];
         UIAlertAction *confirm = [UIAlertAction actionWithTitle:@"查看结果"
@@ -340,7 +332,6 @@
         [alertController addAction:cancel];
         [alertController addAction:confirm];
         [self presentViewController:alertController animated:NO completion:nil];
-        
     } else {
         // 倒计时未结束，仅更新countDownLabel
         if (count <= 10) {
