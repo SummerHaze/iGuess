@@ -74,7 +74,7 @@
     self.countDownView.frame = self.view.frame;
     [self.view addSubview:self.countDownView];
     
-    DDLogDebug(@"current thread: %@", [NSThread currentThread]);
+//    DDLogDebug(@"current thread: %@", [NSRunLoop currentRunLoop]);
 //    DDLogDebug(@"main thread: %@", [NSThread mainThread]);
 }
 
@@ -90,8 +90,7 @@
     // 准备启动游戏
     [self.game startGame];
     self.puzzleLabel.text = [self.game getNextPuzzle];
-    self.countDownLabel.text = [NSString stringWithFormat:@"%d", self.game.duration + 1];
-
+    self.countDownLabel.text = nil;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -113,6 +112,10 @@
     second = 3;
     [self startCoverCountDown];
     [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow: 3.0f]];
+//    for (int i=0; i<3; i++) {
+//        sleep(1);
+//        [self.countDownView setText:[NSString stringWithFormat:@"%d",3-i]];
+//    }
     [self.countDownView removeFromSuperview];
     
     // 动画调整布局，添加摄像头layer
@@ -131,7 +134,9 @@
         [self.videoEngine startCapture];
     }
 
+    self.countDownLabel.text = [NSString stringWithFormat:@"%d", self.game.duration+1];
     [self startGameCountDown];
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -158,10 +163,16 @@
 - (void)applicationDidEnterBackground {
     if ([_controlButton.currentBackgroundImage isEqual: pauseImage] ) {
         //切换后台前，游戏未暂停
-        DDLogDebug(@"进行时切后台，暂停");
-        self.countDownLabel.text = [NSString stringWithFormat:@"%d", self.countDownLabel.text.intValue + 1];
         [self pauseCountDown:gameTimer];
         
+        DDLogDebug(@"进行时切后台，暂停");
+//        if (self.countDownLabel.text.intValue + 1 < 10) {
+//        NSAttributedString *text = [[NSAttributedString alloc]initWithString:[NSString stringWithFormat:@"%d", self.countDownLabel.text.intValue + 1]
+//                                                                  attributes:@{NSForegroundColorAttributeName:[UIColor redColor]}];
+//        self.countDownLabel.attributedText = text;
+//        } else {
+//            self.countDownLabel.text = [NSString stringWithFormat:@"%d", self.countDownLabel.text.intValue + 1];
+//        }
         // 此处应加上视频的暂停录制
         
     } else {
@@ -172,8 +183,17 @@
 - (void)applicationDidEnterForeground {
     if ([_controlButton.currentBackgroundImage isEqual: pauseImage]) {
         DDLogDebug(@"恢复前台，继续");
-        self.countDownLabel.text = [NSString stringWithFormat:@"%d", self.countDownLabel.text.intValue + 1];
+        
         [self resumeCountDown:gameTimer];
+        
+        if (self.countDownLabel.text.intValue < 10) {
+            NSAttributedString *text = [[NSAttributedString alloc]initWithString:[NSString stringWithFormat:@"%d", self.countDownLabel.text.intValue]
+                                                                      attributes:@{NSForegroundColorAttributeName:[UIColor redColor]}];
+            self.countDownLabel.attributedText = text;
+        } else {
+            self.countDownLabel.text = [NSString stringWithFormat:@"%d", self.countDownLabel.text.intValue];
+        }
+        
         
         // 此处应加上视频的恢复录制
         
@@ -237,7 +257,7 @@
                                                userInfo:nil
                                                 repeats:YES];
     }
-    [gameTimer setFireDate:[NSDate distantPast]];
+    [gameTimer setFireDate:[NSDate date]];
 }
 
 
