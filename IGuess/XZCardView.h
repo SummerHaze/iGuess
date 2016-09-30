@@ -8,13 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
+@class XZCardView;
+
+@protocol XZCardViewDelegate <NSObject>
+
+- (void)showMeaningWebview:(XZCardView *)cardView;
+
+@end
+
 @interface XZCardView : UIView
 
-/**
- *  设置卡片上显示的词语
- *
- *  @param note 词语
- */
-- (void)setLabel:(NSString *)note;
+@property (nonatomic, weak) id <XZCardViewDelegate> delegate;
+
+- (void)setLabel:(NSString *)note; // 设置卡片上显示的词语
 
 @end

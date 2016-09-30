@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "ZLSwipeableView.h"
+#import "XZCardView.h"
 
-@interface XZNoteViewController: UIViewController <ZLSwipeableViewDataSource, ZLSwipeableViewDelegate>
+@interface XZNoteViewController: UIViewController <ZLSwipeableViewDataSource, ZLSwipeableViewDelegate, XZCardViewDelegate>
 
 @property (nonatomic, strong) ZLSwipeableView *swipeableView;
 

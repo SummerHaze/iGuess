@@ -62,7 +62,8 @@ typedef NS_ENUM(NSUInteger, ZLSwipeableViewDirection) {
          didSwipeView:(UIView *)view
           inDirection:(ZLSwipeableViewDirection)direction;
 
-- (void)swipeableView:(ZLSwipeableView *)swipeableView didCancelSwipe:(UIView *)view;
+- (void)swipeableView:(ZLSwipeableView *)swipeableView
+       didCancelSwipe:(UIView *)view;
 
 - (void)swipeableView:(ZLSwipeableView *)swipeableView
   didStartSwipingView:(UIView *)view
@@ -94,7 +95,6 @@ typedef NS_ENUM(NSUInteger, ZLSwipeableViewDirection) {
 
 // data source
 @property (nonatomic, weak) IBOutlet id<ZLSwipeableViewDataSource> dataSource;
-
 @property (nonatomic) NSUInteger numberOfActiveViews;
 
 // delegate

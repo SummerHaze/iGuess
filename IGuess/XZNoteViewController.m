@@ -10,15 +10,23 @@
 #import "XZCardView.h"
 #import "XZDBOperation.h"
 #import "XZResultDetailItem.h"
+#import "XZMeaningViewController.h"
+#import "Masonry.h"
 
 @interface XZNoteViewController()
+
+@property (nonatomic, strong) XZCardView *cardView;
+@property (nonatomic, strong) UILabel *guideLabel;
 
 @end
 
 @implementation XZNoteViewController
 {
     NSMutableArray *words;
-    int index;
+    NSMutableArray *indexRandomArray;
+    NSMutableArray *tmpArray;
+    NSInteger number;
+    XZDBOperation *operation;
 }
 
 #pragma mark - Life cycle
@@ -27,6 +35,27 @@
         self.hidesBottomBarWhenPushed = YES;
     }
     return self;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    // 页面底部指示label
+    self.guideLabel = [[UILabel alloc]init];
+    [self.view addSubview:self.guideLabel];
+    
+    self.guideLabel.text = @"手势：向左滑出——展示下个，向上滑出——删除词条";
+    self.guideLabel.font = [UIFont fontWithName:@"Arial" size:13];
+    self.guideLabel.textAlignment = NSTextAlignmentCenter;
+    self.guideLabel.numberOfLines = 1;
+//    self.guideLabel.backgroundColor = [UIColor orangeColor];
+    [self.guideLabel setTextColor:[UIColor grayColor]];
+    
+    [self.guideLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(self.view.mas_bottom);
+        make.left.equalTo(self.view.mas_left);
+        make.right.equalTo(self.view.mas_right);
+        make.height.equalTo(@44);
+    }];
+    
 }
 
 - (void)viewDidLoad {
@@ -39,6 +68,8 @@
     self.swipeableView.dataSource = self;
     self.swipeableView.delegate = self;
     self.swipeableView.translatesAutoresizingMaskIntoConstraints = NO;
+    // 暂时只开放左滑和上滑
+    self.swipeableView.allowedDirection = ZLSwipeableViewDirectionLeft | ZLSwipeableViewDirectionUp;
     
     NSDictionary *metrics = @{};
     
@@ -56,9 +87,14 @@
     
     // 读取note中词条
     NSString *sql = @"SELECT * FROM notes";
-    XZDBOperation *operation = [[XZDBOperation alloc]init];
+    operation = [[XZDBOperation alloc]init];
     words = [operation getResultsFromDB:sql];
-    index = 0;
+    
+    // 乱序后的卡片数组
+    indexRandomArray = [self getIndexRandomArray:words];
+    tmpArray = [NSMutableArray arrayWithArray:indexRandomArray];
+    number = 0;
+
 }
 
 - (void)viewDidLayoutSubviews {
@@ -69,6 +105,21 @@
 - (void)swipeableView:(ZLSwipeableView *)swipeableView
          didSwipeView:(UIView *)view
           inDirection:(ZLSwipeableViewDirection)direction {
+    // 记录当前显示的词条index
+    number += 1;
+    
+    // 上滑删除
+    if (direction == ZLSwipeableViewDirectionUp) {
+        XZResultDetailItem *item = tmpArray[number - 1];
+        
+        // 把生词从db中删掉
+        NSString *sql = [NSString stringWithFormat:@"DELETE FROM notes WHERE ROUND=%ld and NAME=\"%@\"",(long)item.round, item.name];
+        [operation deleteFromResults:sql];
+        
+        // 把生词在defaults里置0
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setObject:@0 forKey:item.name];        
+    }
     NSLog(@"did swipe in direction: %zd", direction);
 }
 
@@ -98,17 +149,36 @@
 
 #pragma mark - ZLSwipeableViewDataSource
 - (UIView *)nextViewForSwipeableView:(ZLSwipeableView *)swipeableView {
-    // 用index控制当前显示的词语
-    if (index < [words count]) {
-        XZCardView *card = [[XZCardView alloc] initWithFrame:swipeableView.bounds];
-        XZResultDetailItem *item = words[index];
-        [card setLabel:item.name];
-        index ++;
-        return card;
-    } else {
-        return  nil;
+    int index = 0;
+    self.cardView = [[XZCardView alloc] initWithFrame:swipeableView.bounds];
+    self.cardView.delegate = self;
+    if ([indexRandomArray count] > 0) {
+        XZResultDetailItem *item = indexRandomArray[index];
+        [self.cardView setLabel:item.name];
+        [indexRandomArray removeObjectAtIndex:index];
     }
-    
+    return self.cardView;
+}
+
+// 卡片顺序随机出
+- (NSMutableArray *)getIndexRandomArray:(NSMutableArray *)array {
+    NSMutableArray *newArr = [NSMutableArray new];
+    NSInteger initCounts = [words count];
+    for (int i=0; i<initCounts; i++) {
+        NSInteger count = [words count];
+        int index = arc4random() % count;
+        [newArr addObject:array[index]];
+        [array removeObjectAtIndex:index];
+    }
+    return newArr;
+}
+
+#pragma mark - XZCardView Delegate
+- (void)showMeaningWebview:(XZCardView *)cardView; {
+    XZResultDetailItem *item = tmpArray[number];
+    XZMeaningViewController *controller = [[XZMeaningViewController alloc]init];
+    [controller setName:item.name];
+    [self.navigationController pushViewController:controller animated:NO];
 }
 
 @end
