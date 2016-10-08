@@ -47,14 +47,14 @@
     XZResultDetailItem *item = [self.delegate getResultDetailItem:cell];
     XZDBOperation *operation = [[XZDBOperation alloc]init];
     
-    if ([self.addButton.currentTitle isEqual: @"＋"]) {
+    if ([self.addButton.currentBackgroundImage isEqual: [UIImage imageNamed:@"add"]]) {
         self.isAdded = @1;
-        [self.addButton setTitle:@"V" forState:UIControlStateNormal];
+        [cell.addButton setBackgroundImage:[UIImage imageNamed:@"added"] forState:UIControlStateNormal];
         [operation saveToResults:@"INSERT INTO notes (result,id,round,name) VALUES(:result,:id,:round,:name);" results:@[item]];
     
     } else {
         self.isAdded = @0;
-        [self.addButton setTitle:@"＋" forState:UIControlStateNormal];
+        [cell.addButton setBackgroundImage:[UIImage imageNamed:@"add"] forState:UIControlStateNormal];
         NSString *sql = [NSString stringWithFormat:@"DELETE FROM notes WHERE ROUND=%ld and NAME=\"%@\"",(long)item.round, item.name];
         [operation deleteFromResults:sql];
     }

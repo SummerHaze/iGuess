@@ -37,7 +37,6 @@
 		16F7A70A1D82B5D800DB773D /* XZNoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16F7A7091D82B5D800DB773D /* XZNoteViewController.m */; };
 		16F7A70D1D86583B00DB773D /* XZCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 16F7A70C1D86583B00DB773D /* XZCardView.m */; };
 		16F7A70F1D88EB2F00DB773D /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16F7A70E1D88EB2F00DB773D /* AVFoundation.framework */; };
-		16F7A74F1D89229D00DB773D /* XZVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16F7A74E1D89229D00DB773D /* XZVideoViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -110,8 +109,6 @@
 		16F7A70B1D86583B00DB773D /* XZCardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZCardView.h; sourceTree = "<group>"; };
 		16F7A70C1D86583B00DB773D /* XZCardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZCardView.m; sourceTree = "<group>"; };
 		16F7A70E1D88EB2F00DB773D /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		16F7A74D1D89229D00DB773D /* XZVideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZVideoViewController.h; sourceTree = "<group>"; };
-		16F7A74E1D89229D00DB773D /* XZVideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZVideoViewController.m; sourceTree = "<group>"; };
 		2206315ADB707D51AAEC53FA /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		F3C308B55594A4CC27920719 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCE807C8E6A2B1AC26D9F0B4 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -289,8 +286,6 @@
 				167578BB1D7163F8001308E1 /* XZTypePickerViewController.m */,
 				16F7A7081D82B5D800DB773D /* XZNoteViewController.h */,
 				16F7A7091D82B5D800DB773D /* XZNoteViewController.m */,
-				16F7A74D1D89229D00DB773D /* XZVideoViewController.h */,
-				16F7A74E1D89229D00DB773D /* XZVideoViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -497,7 +492,6 @@
 				16DB22001D8030F100081CFC /* XZHistory.m in Sources */,
 				16F7A70D1D86583B00DB773D /* XZCardView.m in Sources */,
 				167578BC1D7163F8001308E1 /* XZTypePickerViewController.m in Sources */,
-				16F7A74F1D89229D00DB773D /* XZVideoViewController.m in Sources */,
 				169136411D7F1FF5001BB375 /* XZWordGuessingGame.m in Sources */,
 				16D6E4291C8C587300B7A4B9 /* AppDelegate.m in Sources */,
 				16A1A4201CF57DAC0013E3F8 /* XZHistoryViewController.m in Sources */,

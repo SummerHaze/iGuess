@@ -24,6 +24,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.tableView.tableFooterView=[[UIView alloc]init];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -61,12 +62,20 @@
     
     if (added.intValue == 1) {
         DDLogInfo(@"该词条已添加进生词本");
-        [cell.addButton setTitle:@"V" forState:UIControlStateNormal];
+        [cell.addButton setBackgroundImage:[UIImage imageNamed:@"added"] forState:UIControlStateNormal];
     } else if (added.intValue == 0) {
-        [cell.addButton setTitle:@"＋" forState:UIControlStateNormal];
+        [cell.addButton setBackgroundImage:[UIImage imageNamed:@"add"] forState:UIControlStateNormal];
     }
 
-    cell.resultLabel.text = [NSString stringWithFormat:@"%@     %@", item.name, item.result.uppercaseString];
+    if ([item.result isEqualToString: @"fail"]) {
+        NSAttributedString *text = [[NSAttributedString alloc]initWithString:[NSString stringWithFormat:@"%@     %@", item.name, item.result.uppercaseString]
+                                                                  attributes:@{NSForegroundColorAttributeName:[UIColor redColor]}];
+        
+        cell.resultLabel.attributedText = text;
+    } else {
+        cell.resultLabel.text = [NSString stringWithFormat:@"%@     %@", item.name, item.result.uppercaseString];
+    }
+    
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     return cell;

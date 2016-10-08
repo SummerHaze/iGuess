@@ -14,6 +14,13 @@
 
 @implementation XZMeaningViewController
 
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    if ((self = [super initWithCoder:aDecoder])) {
+        self.hidesBottomBarWhenPushed = YES;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     

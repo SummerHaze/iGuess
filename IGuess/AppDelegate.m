@@ -20,6 +20,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
+    DDLogDebug(@"enter didFinishLaunchingWithOptions callback");
     // 初始化CocoaLumberjack
     [DDLog addLogger:[DDASLLogger sharedInstance]];
     [DDLog addLogger:[DDTTYLogger sharedInstance]];
@@ -28,16 +29,16 @@
     // 设置DEBUG级别的日志的颜色为蓝色
     [[DDTTYLogger sharedInstance] setForegroundColor:[UIColor yellowColor] backgroundColor:nil forFlag:DDLogFlagDebug];
     [[DDTTYLogger sharedInstance] setForegroundColor:[UIColor redColor] backgroundColor:nil forFlag:DDLogFlagError];
-    
-    
+    // 初始化fileLogger
     DDFileLogger *fileLogger = [[DDFileLogger alloc] init];
     fileLogger.rollingFrequency = 60 * 60 * 24; // 24 hour rolling
     fileLogger.logFileManager.maximumNumberOfLogFiles = 7;
-    
     [DDLog addLogger:fileLogger];
+    DDLogDebug(@"init ddlog successfully");
     
     // 初始化Bugly
     [Bugly startWithAppId:@"900049207"];
+    DDLogDebug(@"init bugly successfully");
     
     DDLogError(@"App启动成功");
 

@@ -37,6 +37,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.tableView.tableFooterView=[[UIView alloc]init];
 //    [self.history countResults];
 
 }
@@ -79,9 +80,16 @@
     [dateFormat setTimeZone:[NSTimeZone localTimeZone]];
 
     NSString *time = [dateFormat stringFromDate:item.playTime];
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@",time];
-    cell.textLabel.text = [NSString stringWithFormat:@"PASS: %ld,  FAIL: %ld",(long)item.passNumber,(long)item.failNumber];
-    cell.textLabel.textColor = [UIColor blueColor];
+    
+    UILabel *textLabel = (UILabel *)[cell viewWithTag:3000];
+    UILabel *detailTextLabel = (UILabel *)[cell viewWithTag:3001];
+    UIButton *roundButton = (UIButton *)[cell viewWithTag:3002];
+    
+    detailTextLabel.text = [NSString stringWithFormat:@"%@",time];
+    textLabel.text = [NSString stringWithFormat:@"PASS: %ld,  FAIL: %ld",(long)item.passNumber,(long)item.failNumber];
+//    textLabel.textColor = [UIColor blueColor];
+    [roundButton setTitle:[NSString stringWithFormat:@"%ld", (indexPath.row+1)] forState:UIControlStateNormal];
+    
     return cell;
 }
 
