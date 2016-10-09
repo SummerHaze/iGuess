@@ -10,7 +10,6 @@
 #import "XZResultViewController.h"
 #import "XZWordGuessingGame.h"
 #import "XZResultDetailItem.h"
-#import "XZVideoViewController.h"
 #import "XZVideoEngine.h"
 #import "XZCountDownView.h"
 #import <AVKit/AVKit.h>
