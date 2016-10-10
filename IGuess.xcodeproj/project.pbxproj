@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		160474A31DAB7374008CB4BD /* XZHistoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 160474A21DAB7374008CB4BD /* XZHistoryCell.m */; };
 		1656BF1D1D7ECE5300689B8D /* XZMoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1656BF1C1D7ECE5300689B8D /* XZMoreViewController.m */; };
 		166B59651D90D97A002CED9D /* XZVideoEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 166B59641D90D97A002CED9D /* XZVideoEncoder.m */; };
 		167578BC1D7163F8001308E1 /* XZTypePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 167578BB1D7163F8001308E1 /* XZTypePickerViewController.m */; };
@@ -50,6 +51,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		160474A11DAB7374008CB4BD /* XZHistoryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZHistoryCell.h; sourceTree = "<group>"; };
+		160474A21DAB7374008CB4BD /* XZHistoryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZHistoryCell.m; sourceTree = "<group>"; };
 		1656BF1B1D7ECE5300689B8D /* XZMoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZMoreViewController.h; sourceTree = "<group>"; };
 		1656BF1C1D7ECE5300689B8D /* XZMoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZMoreViewController.m; sourceTree = "<group>"; };
 		166B59631D90D97A002CED9D /* XZVideoEncoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZVideoEncoder.h; sourceTree = "<group>"; };
@@ -261,6 +264,8 @@
 				16F7A70C1D86583B00DB773D /* XZCardView.m */,
 				16B504291D991E79002CE833 /* XZCountDownView.h */,
 				16B5042A1D991E79002CE833 /* XZCountDownView.m */,
+				160474A11DAB7374008CB4BD /* XZHistoryCell.h */,
+				160474A21DAB7374008CB4BD /* XZHistoryCell.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -496,6 +501,7 @@
 				16D6E4291C8C587300B7A4B9 /* AppDelegate.m in Sources */,
 				16A1A4201CF57DAC0013E3F8 /* XZHistoryViewController.m in Sources */,
 				16E86CF31CFDC3E9007580C4 /* XZResultViewController.m in Sources */,
+				160474A31DAB7374008CB4BD /* XZHistoryCell.m in Sources */,
 				16D6E4261C8C587300B7A4B9 /* main.m in Sources */,
 				16B965BB1D6EC5DC004F42FF /* XZMeaningViewController.m in Sources */,
 				16F7A70A1D82B5D800DB773D /* XZNoteViewController.m in Sources */,

@@ -12,6 +12,7 @@ PODS:
     - FMDB/standard (= 2.6.2)
   - FMDB/standard (2.6.2)
   - Masonry (1.0.1)
+  - MBProgressHUD (1.0.0)
   - pop (1.0.9)
   - ZLSwipeableView (0.0.8)
 
@@ -20,6 +21,7 @@ DEPENDENCIES:
   - CocoaLumberjack (~> 2.3.0)
   - FMDB (~> 2.6.2)
   - Masonry (~> 1.0.1)
+  - MBProgressHUD (~> 1.0.0)
   - pop (~> 1.0.9)
   - ZLSwipeableView (~> 0.0.8)
 
@@ -28,6 +30,7 @@ SPEC CHECKSUMS:
   CocoaLumberjack: 97fab7ee5f507fe54445cca7ea80f926729cfd15
   FMDB: 854a0341b4726e53276f2a8996f06f1b80f9259a
   Masonry: a1a931a0d08870ed8ae415a2ea5ea68ebcac77df
+  MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
   pop: f667631a5108a2e60d9e8797c9b32ddaf2080bce
   ZLSwipeableView: df385760ff4838935cdbcb62878ac5acd7355949
 

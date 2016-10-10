@@ -36,14 +36,18 @@
  *
  *  @param sql     insert sql
  *  @param results 待存储的猜词结果，其中的item结构与results.db schema一致，否则报错
+ *
+ *  @return YES：保存成功，NO：保存失败
  */
-- (void)saveToResults:(NSString *)sql results:(NSArray *)results;
+- (BOOL)saveToResults:(NSString *)sql results:(NSArray *)results;
 
 /**
  *  从results.db中删除词条
  *
- *  @param sql       delete sql
+ *  @param sql delete sql
+ *
+ *  @return YES：删除成功，NO：删除失败
  */
-- (void)deleteFromResults:(NSString *)sql;
+- (BOOL)deleteFromResults:(NSString *)sql;
 
 @end

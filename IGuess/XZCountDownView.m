@@ -23,7 +23,7 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
         self.backgroundColor = [UIColor grayColor];
-        self.alpha = 0.9;
+        self.alpha = 1;
         
         UILabel *countLabel = [[UILabel alloc]init];
         countLabel.textAlignment = NSTextAlignmentCenter;

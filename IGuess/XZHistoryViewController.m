@@ -11,7 +11,7 @@
 #import "FMDatabase.h"
 #import "XZResultDetailItem.h"
 #import "XZResultViewController.h"
-
+#import "XZHistoryCell.h"
 #import "XZHistory.h"
 
 @interface XZHistoryViewController ()
@@ -71,8 +71,10 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HistoryItem" forIndexPath:indexPath];
+    XZHistoryCell *cell = (XZHistoryCell *)[tableView dequeueReusableCellWithIdentifier:@"HistoryItem" forIndexPath:indexPath];
 
+
+//    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     XZResultItem *item = resultsCountedByRound[indexPath.row];
     
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc]init];
@@ -80,15 +82,11 @@
     [dateFormat setTimeZone:[NSTimeZone localTimeZone]];
 
     NSString *time = [dateFormat stringFromDate:item.playTime];
-    
-    UILabel *textLabel = (UILabel *)[cell viewWithTag:3000];
-    UILabel *detailTextLabel = (UILabel *)[cell viewWithTag:3001];
-    UIButton *roundButton = (UIButton *)[cell viewWithTag:3002];
-    
-    detailTextLabel.text = [NSString stringWithFormat:@"%@",time];
-    textLabel.text = [NSString stringWithFormat:@"PASS: %ld,  FAIL: %ld",(long)item.passNumber,(long)item.failNumber];
-//    textLabel.textColor = [UIColor blueColor];
-    [roundButton setTitle:[NSString stringWithFormat:@"%ld", (indexPath.row+1)] forState:UIControlStateNormal];
+
+    cell.roundLabel.text = [NSString stringWithFormat:@"%ld", (indexPath.row+1)];
+    cell.timeLabel.text = [NSString stringWithFormat:@"%@",time];
+    cell.passLabel.text = [NSString stringWithFormat:@"%ld",(long)item.passNumber];
+    cell.failLabel.text = [NSString stringWithFormat:@"%ld",(long)item.failNumber];
     
     return cell;
 }
@@ -98,5 +96,6 @@
 {
     [self performSegueWithIdentifier:@"ShowDetail" sender:resultsSortedByRound[indexPath.row]];
 }
+
 
 @end

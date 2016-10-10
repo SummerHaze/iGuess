@@ -73,9 +73,6 @@
     // 添加自定义倒计时view
     self.countDownView.frame = self.view.frame;
     [self.view addSubview:self.countDownView];
-    
-//    DDLogDebug(@"current thread: %@", [NSRunLoop currentRunLoop]);
-//    DDLogDebug(@"main thread: %@", [NSThread mainThread]);
 }
 
 - (void)viewWillAppear:(BOOL)animated {

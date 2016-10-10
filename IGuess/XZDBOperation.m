@@ -55,7 +55,7 @@
     
     FMDatabase *db = [FMDatabase databaseWithPath:dbPath];
     if (![db open]) {
-        DDLogVerbose(@"%@打开results.db失败");
+        DDLogVerbose(@"打开results.db失败");
         return nil;
     }
 
@@ -76,7 +76,7 @@
     
 }
 
-- (void)saveToResults:(NSString *)sql results:(NSArray *)results {
+- (BOOL)saveToResults:(NSString *)sql results:(NSArray *)results {
     // 将DB从工程目录拷贝到document目录，否则只读不可写
     NSFileManager *fm = [NSFileManager defaultManager];
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -92,7 +92,7 @@
     FMDatabase *db = [FMDatabase databaseWithPath:dbPath];
     if (![db open]) {
         DDLogError(@"打开results.db失败");
-        return;
+        return NO;
     }
     
     if (results != nil) {
@@ -102,15 +102,17 @@
             if (![db executeUpdate:sql
               withArgumentsInArray:@[item.result, item.wordId,[NSNumber numberWithInteger:item.round],item.name]]) {
                 DDLogError(@"保存结果失败");
-                return;
+                return NO;
             };
         }
     }
     
     [db close];
+    
+    return YES;
 }
 
-- (void)deleteFromResults:(NSString *)sql {
+- (BOOL)deleteFromResults:(NSString *)sql {
     // 将DB从工程目录拷贝到document目录，否则只读不可写
     NSFileManager *fm = [NSFileManager defaultManager];
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -126,17 +128,19 @@
     FMDatabase *db = [FMDatabase databaseWithPath:dbPath];
     if (![db open]) {
         DDLogError(@"打开results.db失败");
-        return;
+        return NO;
     }
 
     if (![db executeUpdate:sql]) {
         DDLogError(@"删除条目失败");
-        return;
+        return NO;
     } else {
         DDLogDebug(@"删除条目成功");
+        return YES;
     };
 
     [db close];
+    return YES;
 }
 
 @end
