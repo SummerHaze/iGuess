@@ -20,6 +20,7 @@
 #pragma mark – life cycle
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.tableView.tableFooterView=[[UIView alloc]init];
     _types = @[@"成语", @"计算机", @"布袋戏"];
 }
 

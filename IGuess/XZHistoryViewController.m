@@ -38,15 +38,11 @@
 {
     [super viewDidLoad];
     self.tableView.tableFooterView=[[UIView alloc]init];
-//    [self.history countResults];
-
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    resultsSortedByRound = [self.history sortResultsByRound];
-    resultsCountedByRound = [self.history countResults:resultsSortedByRound];
+//    DDLogDebug(@"viewWillAppear 被调用了");
     [self.tableView reloadData];
- 
 }
 
 - (void)didReceiveMemoryWarning {
@@ -65,30 +61,62 @@
 
 #pragma mark - Table view data source
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [resultsSortedByRound count];
+//    DDLogDebug(@"numberOfRowsInSection 被调用了");
+    resultsSortedByRound = [self.history sortResultsByRound];
+    resultsCountedByRound = [self.history countResults:resultsSortedByRound];
+    NSInteger count = [resultsSortedByRound count];
+    
+    if (!count) {
+        // 没有结果显示占位图
+        DDLogInfo(@"history >>> no results");
+        UIImageView *imageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"placeholder"]];
+        imageView.frame = CGRectMake(tableView.center.x-127/2, tableView.center.y-130, 127, 118);
+        imageView.contentMode = UIViewContentModeScaleAspectFit;
+        [self.tableView addSubview:imageView];
+    } else {
+        // 有结果，显示结果，移除占位图
+        DDLogInfo(@"history >>> results exist");
+        for (UIView *view in [tableView subviews]) {
+            if ([view isKindOfClass:[UIImageView class]]) {
+                [view removeFromSuperview];
+            }
+        }
+    }
+    
+    return count;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView
-         cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     XZHistoryCell *cell = (XZHistoryCell *)[tableView dequeueReusableCellWithIdentifier:@"HistoryItem" forIndexPath:indexPath];
-
-
-//    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    XZResultItem *item = resultsCountedByRound[indexPath.row];
     
-    NSDateFormatter *dateFormat = [[NSDateFormatter alloc]init];
-    [dateFormat setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-    [dateFormat setTimeZone:[NSTimeZone localTimeZone]];
+    if ([resultsSortedByRound count]) {
+        // results数据库有数据，展示结果列表
+        XZResultItem *item = resultsCountedByRound[indexPath.row];
+        
+        NSDateFormatter *dateFormat = [[NSDateFormatter alloc]init];
+        [dateFormat setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+        [dateFormat setTimeZone:[NSTimeZone localTimeZone]];
+        
+        NSString *time = [dateFormat stringFromDate:item.playTime];
+        
+        cell.roundLabel.text = [NSString stringWithFormat:@"%ld", (indexPath.row+1)];
+        cell.timeLabel.text = [NSString stringWithFormat:@"%@",time];
+        cell.passLabel.text = [NSString stringWithFormat:@"%ld",(long)item.passNumber];
+        cell.failLabel.text = [NSString stringWithFormat:@"%ld",(long)item.failNumber];
+        
+        return cell;
+        
+    } else {
+        // 数据为空展示占位图
+        cell.backgroundColor=[UIColor clearColor];
+        
+        UIImageView *imageView = [[UIImageView alloc]initWithFrame:self.view.bounds];
+        [imageView setImage: [UIImage imageNamed:@"placeholder"]];
+        self.tableView.backgroundView = imageView;
+        
+        return cell;
+    }
 
-    NSString *time = [dateFormat stringFromDate:item.playTime];
-
-    cell.roundLabel.text = [NSString stringWithFormat:@"%ld", (indexPath.row+1)];
-    cell.timeLabel.text = [NSString stringWithFormat:@"%@",time];
-    cell.passLabel.text = [NSString stringWithFormat:@"%ld",(long)item.passNumber];
-    cell.failLabel.text = [NSString stringWithFormat:@"%ld",(long)item.failNumber];
-    
-    return cell;
 }
 
 #pragma mark – Table view delegate
