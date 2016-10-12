@@ -68,12 +68,10 @@
         }
         
         [hud hideAnimated:YES afterDelay:0.8];
-        
-        
     } else {
         self.isAdded = @0;
         [cell.addButton setBackgroundImage:[UIImage imageNamed:@"add"] forState:UIControlStateNormal];
-        NSString *sql = [NSString stringWithFormat:@"DELETE FROM notes WHERE ROUND=%ld and NAME=\"%@\"",(long)item.round, item.name];
+        NSString *sql = [NSString stringWithFormat:@"DELETE FROM notes WHERE NAME=\"%@\"", item.name];
         BOOL deleteResult = [operation deleteFromResults:sql];
         
         // hud提示删除成功
@@ -90,9 +88,6 @@
         
         [hud hideAnimated:YES afterDelay:0.8];
     }
-    
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:self.isAdded forKey:item.name];
 }
 
 

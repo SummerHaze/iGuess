@@ -99,24 +99,14 @@
         
         NSString *time = [dateFormat stringFromDate:item.playTime];
         
-        cell.roundLabel.text = [NSString stringWithFormat:@"%ld", (indexPath.row+1)];
+        cell.roundLabel.text = [NSString stringWithFormat:@"%d", (indexPath.row+1)];
         cell.timeLabel.text = [NSString stringWithFormat:@"%@",time];
         cell.passLabel.text = [NSString stringWithFormat:@"%ld",(long)item.passNumber];
         cell.failLabel.text = [NSString stringWithFormat:@"%ld",(long)item.failNumber];
-        
         return cell;
-        
     } else {
-        // 数据为空展示占位图
-        cell.backgroundColor=[UIColor clearColor];
-        
-        UIImageView *imageView = [[UIImageView alloc]initWithFrame:self.view.bounds];
-        [imageView setImage: [UIImage imageNamed:@"placeholder"]];
-        self.tableView.backgroundView = imageView;
-        
-        return cell;
+        return nil;
     }
-
 }
 
 #pragma mark – Table view delegate

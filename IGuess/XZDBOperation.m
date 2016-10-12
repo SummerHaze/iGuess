@@ -97,7 +97,7 @@
     
     if (results != nil) {
         for (XZResultDetailItem *item in results){
-            DDLogDebug(@"保存词条: %@，结果:%@", item.name, item.result);
+            DDLogDebug(@"添加到数据库，词条: %@，结果:%@", item.name, item.result);
 //            NSError *error;
             if (![db executeUpdate:sql
               withArgumentsInArray:@[item.result, item.wordId,[NSNumber numberWithInteger:item.round],item.name]]) {
@@ -132,11 +132,10 @@
     }
 
     if (![db executeUpdate:sql]) {
-        DDLogError(@"删除条目失败");
+        DDLogError(@"删除数据库条目失败");
         return NO;
     } else {
-        DDLogDebug(@"删除条目成功");
-        return YES;
+        DDLogDebug(@"删除数据库条目成功");
     };
 
     [db close];

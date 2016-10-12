@@ -115,10 +115,6 @@
         // 把生词从db中删掉
         NSString *sql = [NSString stringWithFormat:@"DELETE FROM notes WHERE ROUND=%ld and NAME=\"%@\"",(long)item.round, item.name];
         [operation deleteFromResults:sql];
-        
-        // 把生词在defaults里置0
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        [defaults setObject:@0 forKey:item.name];        
     }
     NSLog(@"did swipe in direction: %zd", direction);
 }

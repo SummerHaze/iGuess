@@ -27,13 +27,11 @@
 @property (nonatomic, weak) IBOutlet UIButton *passButton;
 @property (nonatomic, weak) IBOutlet UIButton *failButton;
 @property (nonatomic, weak) IBOutlet UILabel *countDownLabel;
-@property (nonatomic, weak) IBOutlet UILabel *daojishiLabel;
 @property (nonatomic, weak) IBOutlet UILabel *puzzleLabel;
 
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *topConstraint;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *puzzleTopConstraint;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *passTopConstraint;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *failTopConstraint;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *passBottomConstraint;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *failBottomConstraint;
 
 @property (nonatomic, strong) AVCaptureVideoPreviewLayer *previewLayer;//捕获到的视频呈现的layer
 
@@ -119,6 +117,7 @@
     if (self.game.record.boolValue == 1) {
         // 布局动画
         [self initVideoAnimation];
+//        self.puzzleLabel.font = [UIFont fontWithName:@"Arial" size:40];
         // 启动视频录制
         if (_videoEngine == nil) {
             // 此处的尺寸，仅影响preview layer的frame，与视频文件尺寸无关
@@ -308,7 +307,7 @@
         // 游戏结束强制弹框
         UIAlertController *alertController =
         [UIAlertController alertControllerWithTitle:@"游戏结束！"
-                                            message:[NSString stringWithFormat:@"PASS: %ld\n FAIL: %ld",(long)passCount, (long)failCount]
+                                            message:[NSString stringWithFormat:@"PASS: %ld\n FAIL: %ld\n 如有录制视频,请在本地相册查看",(long)passCount, (long)failCount]
                                      preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"再来一轮"
                                                          style:UIAlertActionStyleCancel
@@ -380,9 +379,8 @@
 //    NSInteger offset = 200;
     
     self.topConstraint.constant += 200;
-    self.puzzleTopConstraint.constant -= 30;
-    self.passTopConstraint.constant -= 40;
-    self.failTopConstraint.constant -= 40;
+    self.passBottomConstraint.constant -= 40;
+    self.failBottomConstraint.constant -= 40;
     
     [UIView animateWithDuration: 0.5
                           delay: 0
