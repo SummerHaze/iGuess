@@ -10,18 +10,18 @@
 #import "XZTypePickerViewController.h"
 #import "XZSetting.h"
 
+
 @interface XZSettingsViewController ()
 
-@property (nonatomic,retain) IBOutlet UISwitch *testDurationSwitch;  // 10s开关
-@property (nonatomic,retain) IBOutlet UISwitch *shortDurationSwitch;  // 60s开关
-@property (nonatomic,retain) IBOutlet UISwitch *mediumDurationSwitch; // 120s开关
-@property (nonatomic,retain) IBOutlet UISwitch *longDurationSwitch;   // 180s开关
-@property (nonatomic,retain) IBOutlet UISwitch *notificationSwitch;   // 通知开关
-@property (nonatomic,retain) IBOutlet UISwitch *recordSwitch;         // 录制视频开关
-@property (nonatomic,  weak) IBOutlet UILabel *typeLabel;
+@property (nonatomic, weak) IBOutlet UISwitch *testDurationSwitch;   // 10s开关
+@property (nonatomic, weak) IBOutlet UISwitch *shortDurationSwitch;  // 60s开关
+@property (nonatomic, weak) IBOutlet UISwitch *mediumDurationSwitch; // 120s开关
+@property (nonatomic, weak) IBOutlet UISwitch *longDurationSwitch;   // 180s开关
+@property (nonatomic, weak) IBOutlet UISwitch *notificationSwitch;   // 通知开关
+@property (nonatomic, weak) IBOutlet UISwitch *recordSwitch;         // 录制视频开关
+@property (nonatomic, weak) IBOutlet UILabel *typeLabel;
 
 @property (nonatomic, strong) XZSetting *setting;
-
 
 @end
 
@@ -158,7 +158,6 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-
 #pragma mark - Table view delegate
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 1 && indexPath.row == 0) {
@@ -172,8 +171,7 @@
     }
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
     if (section == 0) {
         return @"PLAY DURATION";
     } else if (section == 1){

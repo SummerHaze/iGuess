@@ -8,10 +8,12 @@
 
 #import "XZMoreViewController.h"
 #import "XZDBOperation.h"
+#import "XZShareView.h"
 
 @interface XZMoreViewController ()
 
 @property (nonatomic, weak) IBOutlet UILabel *countLabel;
+@property (nonatomic, strong) XZShareView *shareView;
 
 @end
 
@@ -35,6 +37,50 @@
     return [words count];
 }
 
+- (XZShareView *)shareView {
+    if (!_shareView) {
+        _shareView = [[XZShareView alloc]init];
+//        [_shareView setBackgroundColor:[UIColor lightGrayColor]];
+//        [_shareView setAlpha:0.5];
+    }
+    return _shareView;
+}
 
+#pragma mark - Table view delegate
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 2 && indexPath.row == 1) {
+        shareType = 0; // 分享App
+        
+//        self.tabBarController.tabBar.hidden = YES;
+//        CGRect rectStatus = [[UIApplication sharedApplication] statusBarFrame];
+        
+        [[UIApplication sharedApplication].keyWindow addSubview:self.shareView];
+//        [tableView addSubview:self.shareView];
+        
+        NSInteger shareViewHeight = self.view.frame.size.height;
+//        NSInteger shareViewHeight = self.view.frame.size.height - self.navigationController.navigationBar.frame.size.height- rectStatus.size.height;
+        
+        self.shareView.frame = CGRectMake(self.view.frame.origin.x,
+                                          self.view.frame.origin.y + shareViewHeight,
+                                          self.view.frame.size.width,
+                                          shareViewHeight
+                                          );
+        
+        [UIView animateWithDuration: 1
+                              delay: 0
+             usingSpringWithDamping: 0.7
+              initialSpringVelocity: 2
+                            options: UIViewAnimationOptionCurveEaseInOut | UIViewAnimationOptionAllowUserInteraction
+                         animations: ^{
+                             self.shareView.frame = CGRectMake(self.view.frame.origin.x,
+                                                               self.view.frame.origin.y,
+                                                               self.view.frame.size.width,
+                                                               shareViewHeight);
+                         } completion: nil];
+        
+        
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    }
+}
 
 @end

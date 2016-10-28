@@ -41,7 +41,6 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-//    DDLogDebug(@"viewWillAppear 被调用了");
     [self.tableView reloadData];
 }
 
@@ -61,7 +60,6 @@
 
 #pragma mark - Table view data source
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-//    DDLogDebug(@"numberOfRowsInSection 被调用了");
     resultsSortedByRound = [self.history sortResultsByRound];
     resultsCountedByRound = [self.history countResults:resultsSortedByRound];
     NSInteger count = [resultsSortedByRound count];
@@ -99,10 +97,10 @@
         
         NSString *time = [dateFormat stringFromDate:item.playTime];
         
-        cell.roundLabel.text = [NSString stringWithFormat:@"%d", (indexPath.row+1)];
-        cell.timeLabel.text = [NSString stringWithFormat:@"%@",time];
-        cell.passLabel.text = [NSString stringWithFormat:@"%ld",(long)item.passNumber];
-        cell.failLabel.text = [NSString stringWithFormat:@"%ld",(long)item.failNumber];
+        cell.roundLabel.text = [NSString stringWithFormat:@"%ld", (indexPath.row+1)];
+        cell.timeLabel.text = [NSString stringWithFormat:@"%@", time];
+        cell.passLabel.text = [NSString stringWithFormat:@"%ld", (long)item.passNumber];
+        cell.failLabel.text = [NSString stringWithFormat:@"%ld", (long)item.failNumber];
         return cell;
     } else {
         return nil;

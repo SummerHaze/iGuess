@@ -8,8 +8,7 @@
 
 #import "AppDelegate.h"
 #import "Bugly/Bugly.h"
-//#import <CocoaLumberjack/CocoaLumberjack.h>
-
+#import "WXApi.h"
 
 @interface AppDelegate ()
 
@@ -39,6 +38,9 @@
     // 初始化Bugly
     [Bugly startWithAppId:@"900049207"];
     DDLogDebug(@"init bugly successfully");
+    
+    // 初始化weixin
+    [WXApi registerApp:@"wxb7484f41729744a1"];
     
     DDLogError(@"App启动成功");
 

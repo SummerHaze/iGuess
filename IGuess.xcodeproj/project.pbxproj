@@ -8,7 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		160474A31DAB7374008CB4BD /* XZHistoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 160474A21DAB7374008CB4BD /* XZHistoryCell.m */; };
+		16485C541DC398EF00F35398 /* UIImage+WaterMark.m in Sources */ = {isa = PBXBuildFile; fileRef = 16485C531DC398EF00F35398 /* UIImage+WaterMark.m */; };
 		1656BF1D1D7ECE5300689B8D /* XZMoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1656BF1C1D7ECE5300689B8D /* XZMoreViewController.m */; };
+		1663B98F1DC1E2CA00D97CCA /* XZAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1663B98E1DC1E2CA00D97CCA /* XZAboutViewController.m */; };
+		1663B9941DC2074E00D97CCA /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1663B9911DC2074E00D97CCA /* libWeChatSDK.a */; };
+		1663B9961DC207EE00D97CCA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1663B9951DC207EE00D97CCA /* SystemConfiguration.framework */; };
+		1663B9981DC2082500D97CCA /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1663B9971DC2082500D97CCA /* CoreTelephony.framework */; };
+		1663B99A1DC208B800D97CCA /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1663B9991DC208B800D97CCA /* libz.tbd */; };
+		1663B99D1DC21FCC00D97CCA /* XZShareView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1663B99C1DC21FCC00D97CCA /* XZShareView.m */; };
 		166B59651D90D97A002CED9D /* XZVideoEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 166B59641D90D97A002CED9D /* XZVideoEncoder.m */; };
 		167578BC1D7163F8001308E1 /* XZTypePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 167578BB1D7163F8001308E1 /* XZTypePickerViewController.m */; };
 		1677271F1D81048800F38060 /* XZSetting.m in Sources */ = {isa = PBXBuildFile; fileRef = 1677271E1D81048800F38060 /* XZSetting.m */; };
@@ -53,8 +60,20 @@
 /* Begin PBXFileReference section */
 		160474A11DAB7374008CB4BD /* XZHistoryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZHistoryCell.h; sourceTree = "<group>"; };
 		160474A21DAB7374008CB4BD /* XZHistoryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZHistoryCell.m; sourceTree = "<group>"; };
+		16485C521DC398EF00F35398 /* UIImage+WaterMark.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+WaterMark.h"; sourceTree = "<group>"; };
+		16485C531DC398EF00F35398 /* UIImage+WaterMark.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+WaterMark.m"; sourceTree = "<group>"; };
 		1656BF1B1D7ECE5300689B8D /* XZMoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZMoreViewController.h; sourceTree = "<group>"; };
 		1656BF1C1D7ECE5300689B8D /* XZMoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZMoreViewController.m; sourceTree = "<group>"; };
+		1663B98D1DC1E2CA00D97CCA /* XZAboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZAboutViewController.h; sourceTree = "<group>"; };
+		1663B98E1DC1E2CA00D97CCA /* XZAboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZAboutViewController.m; sourceTree = "<group>"; };
+		1663B9911DC2074E00D97CCA /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
+		1663B9921DC2074E00D97CCA /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
+		1663B9931DC2074E00D97CCA /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
+		1663B9951DC207EE00D97CCA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		1663B9971DC2082500D97CCA /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		1663B9991DC208B800D97CCA /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		1663B99B1DC21FCC00D97CCA /* XZShareView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZShareView.h; sourceTree = "<group>"; };
+		1663B99C1DC21FCC00D97CCA /* XZShareView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZShareView.m; sourceTree = "<group>"; };
 		166B59631D90D97A002CED9D /* XZVideoEncoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZVideoEncoder.h; sourceTree = "<group>"; };
 		166B59641D90D97A002CED9D /* XZVideoEncoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZVideoEncoder.m; sourceTree = "<group>"; };
 		167578BA1D7163F8001308E1 /* XZTypePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZTypePickerViewController.h; sourceTree = "<group>"; };
@@ -122,8 +141,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1663B99A1DC208B800D97CCA /* libz.tbd in Frameworks */,
+				1663B9981DC2082500D97CCA /* CoreTelephony.framework in Frameworks */,
+				1663B9961DC207EE00D97CCA /* SystemConfiguration.framework in Frameworks */,
 				16F7A70F1D88EB2F00DB773D /* AVFoundation.framework in Frameworks */,
 				16C0574E1D65BADA002C1CB8 /* libPods.a in Frameworks */,
+				1663B9941DC2074E00D97CCA /* libWeChatSDK.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -140,6 +163,7 @@
 		163E0E531D7EEB9D000A6E42 /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				1663B9901DC2073D00D97CCA /* weixin */,
 				163E0E541D7EEBA4000A6E42 /* LocalService */,
 			);
 			name = Service;
@@ -154,8 +178,20 @@
 				166B59641D90D97A002CED9D /* XZVideoEncoder.m */,
 				16D562011D8946200067D283 /* XZVideoEngine.h */,
 				16D562021D8946200067D283 /* XZVideoEngine.m */,
+				16485C521DC398EF00F35398 /* UIImage+WaterMark.h */,
+				16485C531DC398EF00F35398 /* UIImage+WaterMark.m */,
 			);
 			name = LocalService;
+			sourceTree = "<group>";
+		};
+		1663B9901DC2073D00D97CCA /* weixin */ = {
+			isa = PBXGroup;
+			children = (
+				1663B9911DC2074E00D97CCA /* libWeChatSDK.a */,
+				1663B9921DC2074E00D97CCA /* WXApi.h */,
+				1663B9931DC2074E00D97CCA /* WXApiObject.h */,
+			);
+			name = weixin;
 			sourceTree = "<group>";
 		};
 		1691363A1D7EEF3B001BB375 /* DB */ = {
@@ -165,13 +201,6 @@
 				16D388DB1D770B6A00E9A34B /* words.db */,
 			);
 			name = DB;
-			sourceTree = "<group>";
-		};
-		1691363B1D7EEF53001BB375 /* Image */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Image;
 			sourceTree = "<group>";
 		};
 		16D6E4181C8C587300B7A4B9 = {
@@ -266,6 +295,8 @@
 				16B5042A1D991E79002CE833 /* XZCountDownView.m */,
 				160474A11DAB7374008CB4BD /* XZHistoryCell.h */,
 				160474A21DAB7374008CB4BD /* XZHistoryCell.m */,
+				1663B99B1DC21FCC00D97CCA /* XZShareView.h */,
+				1663B99C1DC21FCC00D97CCA /* XZShareView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -291,6 +322,8 @@
 				167578BB1D7163F8001308E1 /* XZTypePickerViewController.m */,
 				16F7A7081D82B5D800DB773D /* XZNoteViewController.h */,
 				16F7A7091D82B5D800DB773D /* XZNoteViewController.m */,
+				1663B98D1DC1E2CA00D97CCA /* XZAboutViewController.h */,
+				1663B98E1DC1E2CA00D97CCA /* XZAboutViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -298,7 +331,6 @@
 		16E11D0F1D7EEB640076308F /* Resource */ = {
 			isa = PBXGroup;
 			children = (
-				1691363B1D7EEF53001BB375 /* Image */,
 				1691363A1D7EEF3B001BB375 /* DB */,
 				16D6E4301C8C587300B7A4B9 /* Assets.xcassets */,
 			);
@@ -308,6 +340,9 @@
 		23C76219E95CB47AA1426830 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1663B9991DC208B800D97CCA /* libz.tbd */,
+				1663B9971DC2082500D97CCA /* CoreTelephony.framework */,
+				1663B9951DC207EE00D97CCA /* SystemConfiguration.framework */,
 				16F7A70E1D88EB2F00DB773D /* AVFoundation.framework */,
 				16C057511D65BBEE002C1CB8 /* libCocoaLumberjack.a */,
 				16C0574F1D65BB0E002C1CB8 /* libCocoaLumberjack.a */,
@@ -483,6 +518,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1663B99D1DC21FCC00D97CCA /* XZShareView.m in Sources */,
 				16D562031D8946200067D283 /* XZVideoEngine.m in Sources */,
 				16B5042B1D991E79002CE833 /* XZCountDownView.m in Sources */,
 				16E86CED1CF59471007580C4 /* XZResultDetailItem.m in Sources */,
@@ -496,6 +532,7 @@
 				1656BF1D1D7ECE5300689B8D /* XZMoreViewController.m in Sources */,
 				16DB22001D8030F100081CFC /* XZHistory.m in Sources */,
 				16F7A70D1D86583B00DB773D /* XZCardView.m in Sources */,
+				16485C541DC398EF00F35398 /* UIImage+WaterMark.m in Sources */,
 				167578BC1D7163F8001308E1 /* XZTypePickerViewController.m in Sources */,
 				169136411D7F1FF5001BB375 /* XZWordGuessingGame.m in Sources */,
 				16D6E4291C8C587300B7A4B9 /* AppDelegate.m in Sources */,
@@ -505,6 +542,7 @@
 				16D6E4261C8C587300B7A4B9 /* main.m in Sources */,
 				16B965BB1D6EC5DC004F42FF /* XZMeaningViewController.m in Sources */,
 				16F7A70A1D82B5D800DB773D /* XZNoteViewController.m in Sources */,
+				1663B98F1DC1E2CA00D97CCA /* XZAboutViewController.m in Sources */,
 				16A1A4261CF57E020013E3F8 /* XZSettingsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -632,6 +670,7 @@
 			baseConfigurationReference = 2206315ADB707D51AAEC53FA /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "IGuess/IGuess-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
@@ -640,6 +679,36 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
+					"$(PROJECT_DIR)/IGuess",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"CocoaLumberjack\"",
+					"-l\"FMDB\"",
+					"-l\"MBProgressHUD\"",
+					"-l\"Masonry\"",
+					"-l\"ZLSwipeableView\"",
+					"-l\"c++\"",
+					"-l\"pop\"",
+					"-l\"sqlite3\"",
+					"-l\"z\"",
+					"-framework",
+					"\"Bugly\"",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"Foundation\"",
+					"-framework",
+					"\"QuartzCore\"",
+					"-framework",
+					"\"Security\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+					"-framework",
+					"\"UIKit\"",
+					"-Objc",
+					"-all_load",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = xz.IGuess;
 				PRODUCT_NAME = "猜猜看";
@@ -651,6 +720,7 @@
 			baseConfigurationReference = FCE807C8E6A2B1AC26D9F0B4 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "IGuess/IGuess-Prefix.pch";
 				INFOPLIST_FILE = IGuess/Info.plist;
@@ -658,6 +728,36 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
+					"$(PROJECT_DIR)/IGuess",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"CocoaLumberjack\"",
+					"-l\"FMDB\"",
+					"-l\"MBProgressHUD\"",
+					"-l\"Masonry\"",
+					"-l\"ZLSwipeableView\"",
+					"-l\"c++\"",
+					"-l\"pop\"",
+					"-l\"sqlite3\"",
+					"-l\"z\"",
+					"-framework",
+					"\"Bugly\"",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"Foundation\"",
+					"-framework",
+					"\"QuartzCore\"",
+					"-framework",
+					"\"Security\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+					"-framework",
+					"\"UIKit\"",
+					"-Objc",
+					"-all_load",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = xz.IGuess;
 				PRODUCT_NAME = "猜猜看";

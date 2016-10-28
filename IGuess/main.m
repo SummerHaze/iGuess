@@ -11,7 +11,6 @@
 
 int main(int argc, char * argv[]) {
     @autoreleasepool {
-        NSLog(@"进入main函数");
         return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
     }
 }
