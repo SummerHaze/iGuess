@@ -27,6 +27,7 @@
 		16B5042B1D991E79002CE833 /* XZCountDownView.m in Sources */ = {isa = PBXBuildFile; fileRef = 16B5042A1D991E79002CE833 /* XZCountDownView.m */; };
 		16B965BB1D6EC5DC004F42FF /* XZMeaningViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16B965BA1D6EC5DC004F42FF /* XZMeaningViewController.m */; };
 		16C0574E1D65BADA002C1CB8 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 16C0574D1D65BADA002C1CB8 /* libPods.a */; };
+		16CF56591DC4D2310058CCC2 /* XZStatisticView.m in Sources */ = {isa = PBXBuildFile; fileRef = 16CF56581DC4D2310058CCC2 /* XZStatisticView.m */; };
 		16D388DC1D770B6A00E9A34B /* words.db in Resources */ = {isa = PBXBuildFile; fileRef = 16D388DB1D770B6A00E9A34B /* words.db */; };
 		16D562031D8946200067D283 /* XZVideoEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 16D562021D8946200067D283 /* XZVideoEngine.m */; };
 		16D6E4261C8C587300B7A4B9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 16D6E4251C8C587300B7A4B9 /* main.m */; };
@@ -99,6 +100,8 @@
 		16C0574D1D65BADA002C1CB8 /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "../../../../Library/Developer/Xcode/DerivedData/IGuess-dblsfizdxbnydbgcxsdiqvtzgupg/Build/Products/Debug-iphonesimulator/libPods.a"; sourceTree = "<group>"; };
 		16C0574F1D65BB0E002C1CB8 /* libCocoaLumberjack.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libCocoaLumberjack.a; path = "Pods/../build/Debug-iphoneos/libCocoaLumberjack.a"; sourceTree = "<group>"; };
 		16C057511D65BBEE002C1CB8 /* libCocoaLumberjack.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libCocoaLumberjack.a; path = "Pods/../build/Debug-iphoneos/libCocoaLumberjack.a"; sourceTree = "<group>"; };
+		16CF56571DC4D2310058CCC2 /* XZStatisticView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZStatisticView.h; sourceTree = "<group>"; };
+		16CF56581DC4D2310058CCC2 /* XZStatisticView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZStatisticView.m; sourceTree = "<group>"; };
 		16D388DB1D770B6A00E9A34B /* words.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = words.db; sourceTree = SOURCE_ROOT; };
 		16D562011D8946200067D283 /* XZVideoEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZVideoEngine.h; sourceTree = "<group>"; };
 		16D562021D8946200067D283 /* XZVideoEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZVideoEngine.m; sourceTree = "<group>"; };
@@ -297,6 +300,8 @@
 				160474A21DAB7374008CB4BD /* XZHistoryCell.m */,
 				1663B99B1DC21FCC00D97CCA /* XZShareView.h */,
 				1663B99C1DC21FCC00D97CCA /* XZShareView.m */,
+				16CF56571DC4D2310058CCC2 /* XZStatisticView.h */,
+				16CF56581DC4D2310058CCC2 /* XZStatisticView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -533,6 +538,7 @@
 				16DB22001D8030F100081CFC /* XZHistory.m in Sources */,
 				16F7A70D1D86583B00DB773D /* XZCardView.m in Sources */,
 				16485C541DC398EF00F35398 /* UIImage+WaterMark.m in Sources */,
+				16CF56591DC4D2310058CCC2 /* XZStatisticView.m in Sources */,
 				167578BC1D7163F8001308E1 /* XZTypePickerViewController.m in Sources */,
 				169136411D7F1FF5001BB375 /* XZWordGuessingGame.m in Sources */,
 				16D6E4291C8C587300B7A4B9 /* AppDelegate.m in Sources */,

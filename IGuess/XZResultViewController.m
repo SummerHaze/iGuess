@@ -15,11 +15,15 @@
 #import "XZResultDetailCell.h"
 #import "XZResultDetailItem.h"
 #import "XZShareView.h"
+#import "Masonry.h"
+#import "XZStatisticView.h"
 
 @interface XZResultViewController ()
 
 @property (nonatomic) IBOutlet UIBarButtonItem *shareBarButton;
+@property (nonatomic, weak) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) XZShareView *shareView;
+
 
 @end
 
@@ -27,8 +31,15 @@
 {
     NSArray *notes;
     NSMutableArray *words;
+    NSInteger shareViewHeight;
+    CGRect statusRect;
+    float yOffset;
+    
+    NSInteger pass;
+    NSInteger fail;
 }
 
+#pragma mark - Life cycle
 - (id)initWithCoder:(NSCoder *)aDecoder {
     if ((self = [super initWithCoder:aDecoder])) {
         self.hidesBottomBarWhenPushed = YES;
@@ -39,21 +50,59 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.tableView.tableFooterView=[[UIView alloc]init];
-    self.shareBarButton.target = self;
-    self.shareBarButton.action = @selector(share);
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    // 数据库读取
     XZDBOperation *operation = [[XZDBOperation alloc]init];
     NSString *sql = @"SELECT * FROM notes ";
     notes = [operation getResultsFromDB:sql];
+    
+    // 设置分享button action
+    self.shareBarButton.target = self;
+    self.shareBarButton.action = @selector(share);
+    
+    // 计算pass和fail词语数量
+    XZResultDetailItem *item = [[XZResultDetailItem alloc]init];
+    for (item in self.results) {
+        if ([item.result isEqualToString:@"pass"]) {
+            pass += 1;
+        } else {
+            fail += 1;
+        }
+    }
+    
+    // 给顶部的statisticView赋值
+    globalPassCounts = pass;
+    globalFailCounts = fail;
 }
+
+//- (void)viewWillLayoutSubviews {
+//    [super viewWillLayoutSubviews];
+//    if (self.view.subviews[0] != self.tableView) {
+//        //self.tableView是我们希望正常显示cell的视图
+////        DDLogDebug(@"self.tableview-wrapperview:%f, %f, %f, %f", self.tableView.subviews[0].frame.origin.x, self.tableView.subviews[0].frame.origin.y, self.tableView.subviews[0].frame.size.width, self.tableView.subviews[0].frame.size.height);
+//        self.tableView.subviews[0].frame = CGRectMake(0, -64, self.tableView.frame.size.width, self.tableView.frame.size.height);
+//    }
+//    
+//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - getter
+- (XZShareView *)shareView {
+    if (!_shareView) {
+        _shareView = [[XZShareView alloc]init];
+        //        [_shareView setBackgroundColor:[UIColor lightGrayColor]];
+        //        [_shareView setAlpha:0.5];
+    }
+    return _shareView;
+}
+
+#pragma mark - Event response
 - (IBAction)back {
     [self.navigationController popToRootViewControllerAnimated:NO];
 }
@@ -65,6 +114,39 @@
     }
 }
 
+- (void)share {
+    shareType = 1; // 分享结果详情页
+
+    [self.view addSubview:self.shareView];
+    
+//    statusRect = [[UIApplication sharedApplication] statusBarFrame];
+//    shareViewHeight = self.view.frame.size.height - self.navigationController.navigationBar.frame.size.height - statusRect.size.height;
+    
+    shareViewHeight = self.view.frame.size.height;
+//    DDLogDebug(@"tableview.x: %f,  tableview.y: %f,  tableview.height: %f", self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.view.frame.size.height);
+    
+    self.shareView.frame = CGRectMake(0,
+                                      120,
+                                      self.view.frame.size.width,
+                                      self.view.frame.size.height
+                                      );
+    
+    [UIView animateWithDuration: 1
+                          delay: 0
+         usingSpringWithDamping: 0.7
+          initialSpringVelocity: 2
+                        options: UIViewAnimationOptionCurveEaseInOut | UIViewAnimationOptionAllowUserInteraction
+                     animations: ^{
+                         self.shareView.frame = CGRectMake(0,
+                                                           0,
+                                                           self.view.frame.size.width,
+                                                           self.view.frame.size.height);}
+                     completion: nil];
+    
+//    self.tableView.scrollEnabled = NO;
+    
+}
+
 #pragma mark - Table view data source
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [self.results count];
@@ -72,6 +154,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     XZResultDetailCell *cell = (XZResultDetailCell *)[tableView dequeueReusableCellWithIdentifier:@"CurrentResult" forIndexPath:indexPath];
+    
     XZResultDetailItem *item = self.results[indexPath.row];
     NSInteger count = [notes count];
     
@@ -92,7 +175,6 @@
             }
         }
     }
-
 
     // 猜词结果展示
     if ([item.result isEqualToString: @"fail"]) {
@@ -122,47 +204,11 @@
     return item;
 }
 
-#pragma mark - Event response
-- (void)share {
-    shareType = 1; // 分享结果详情页
-    
-//    [[UIApplication sharedApplication].keyWindow addSubview:self.shareView];
-    [self.view addSubview:self.shareView];
-    
-//    NSInteger shareViewHeight = self.view.frame.size.height;
-    CGRect rectStatus = [[UIApplication sharedApplication] statusBarFrame];
-    NSInteger shareViewHeight = self.view.frame.size.height - self.navigationController.navigationBar.frame.size.height- rectStatus.size.height;
-    
-    self.shareView.frame = CGRectMake(self.view.frame.origin.x,
-                                      self.view.frame.origin.y + shareViewHeight,
-                                      self.view.frame.size.width,
-                                      shareViewHeight
-                                      );
-    
-    [UIView animateWithDuration: 1
-                          delay: 0
-         usingSpringWithDamping: 0.7
-          initialSpringVelocity: 2
-                        options: UIViewAnimationOptionCurveEaseInOut | UIViewAnimationOptionAllowUserInteraction
-                     animations: ^{
-                         self.shareView.frame = CGRectMake(self.view.frame.origin.x,
-                                                           self.view.frame.origin.y,
-                                                           self.view.frame.size.width,
-                                                           shareViewHeight);
-                     } completion: nil];
-    
-    
+#pragma mark - UIScrollView delegate
+// 滑动tableView后再点击分享，保证shareView依然在屏幕最底端
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    yOffset = scrollView.contentOffset.y;
 }
 
-
-
-- (XZShareView *)shareView {
-    if (!_shareView) {
-        _shareView = [[XZShareView alloc]init];
-//        [_shareView setBackgroundColor:[UIColor lightGrayColor]];
-//        [_shareView setAlpha:0.5];
-    }
-    return _shareView;
-}
 
 @end

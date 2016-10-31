@@ -11,6 +11,7 @@
 #import "WXApi.h"
 #import "UIImage+WaterMark.h"
 
+
 #define SCREEN_WIDTH [[UIScreen mainScreen] bounds].size.width
 #define SCREEN_HEIGHT [[UIScreen mainScreen] bounds].size.height
 
@@ -37,6 +38,8 @@ NSInteger shareType; // 0：分享App，1：分享结果详情页
     NSInteger statusBarHeight;
     NSInteger navigationBarHeight;
     NSInteger tabBarHeight;
+    
+    NSInteger backViewHeight;
     
 }
 
@@ -93,8 +96,16 @@ NSInteger shareType; // 0：分享App，1：分享结果详情页
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    const NSInteger backViewHeight = 120; // 背景view高度
+//    [self mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.bottom.equalTo(self.superview.mas_bottom);
+//        //        make.left.equalTo(self.view.mas_left);
+//        //        make.right.equalTo(self.view.mas_right);
+//        //        make.height.equalTo(@44);
+//    }];
+    
+    backViewHeight = 120; // 背景view高度
     self.backView.frame = CGRectMake(0, self.frame.size.height - backViewHeight, self.frame.size.width, backViewHeight);
+
     
     const NSInteger iconWidth = 45;  // 分享button宽度
     const NSInteger iconHeight = 45; // 分享button高度
@@ -110,14 +121,22 @@ NSInteger shareType; // 0：分享App，1：分享结果详情页
     self.line.frame = CGRectMake(0, yOffset * 2 + iconHeight, self.frame.size.width, 1);
     self.cancel.frame = CGRectMake((self.frame.size.width - 100)/2, self.line.frame.origin.y + (backViewHeight - self.line.frame.origin.y - 30)/2, 100, 30);
     
-    [self calculateHeight];
+    
+//    [self.backView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.bottom.equalTo(self.superview.mas_bottom);
+//        //        make.left.equalTo(self.view.mas_left);
+//        //        make.right.equalTo(self.view.mas_right);
+//        //        make.height.equalTo(@44);
+//    }];
+//    
+//    [self calculateHeight];
     
 }
 
 #pragma mark - Event response
 - (void)shareToWeiXinFriends {
-    _screenShotView = [[UITableView alloc]init];
     _screenShotView = (UITableView *)self.superview;
+    _screenShotView.scrollEnabled = YES;
     
     [self removeFromSuperview];
     
@@ -210,8 +229,11 @@ NSInteger shareType; // 0：分享App，1：分享结果详情页
 //                                                self.frame.size.width,
 //                                                self.frame.size.height);
 //                     } completion: nil];
+//    _screenShotView = (UITableView *)self.superview;
+//    _screenShotView.scrollEnabled = YES;
     
     [self removeFromSuperview];
+    
 //    self.tabBarController.tabBar.hidden = YES;
     
 }
@@ -319,7 +341,5 @@ NSInteger shareType; // 0：分享App，1：分享结果详情页
     
     return imageWithWaterMark;
 }
-
-
 
 @end

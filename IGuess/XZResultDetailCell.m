@@ -16,7 +16,6 @@
 
 @property (nonatomic) UITableView *tableView;
 
-
 - (IBAction)addWordToNote:(id)sender;
 
 @end
