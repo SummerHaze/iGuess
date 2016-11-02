@@ -40,12 +40,12 @@
 }
 
 #pragma mark - Life cycle
-- (id)initWithCoder:(NSCoder *)aDecoder {
-    if ((self = [super initWithCoder:aDecoder])) {
-        self.hidesBottomBarWhenPushed = YES;
-    }
-    return self;
-}
+//- (id)initWithCoder:(NSCoder *)aDecoder {
+//    if ((self = [super initWithCoder:aDecoder])) {
+//        self.hidesBottomBarWhenPushed = YES;
+//    }
+//    return self;
+//}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -76,21 +76,6 @@
     globalPassCounts = pass;
     globalFailCounts = fail;
 }
-
-//- (void)viewDidAppear:(BOOL)animated {
-//    self.screenShotView = self.tableView;
-//}
-
-
-//- (void)viewWillLayoutSubviews {
-//    [super viewWillLayoutSubviews];
-//    if (self.view.subviews[0] != self.tableView) {
-//        //self.tableView是我们希望正常显示cell的视图
-////        DDLogDebug(@"self.tableview-wrapperview:%f, %f, %f, %f", self.tableView.subviews[0].frame.origin.x, self.tableView.subviews[0].frame.origin.y, self.tableView.subviews[0].frame.size.width, self.tableView.subviews[0].frame.size.height);
-//        self.tableView.subviews[0].frame = CGRectMake(0, -64, self.tableView.frame.size.width, self.tableView.frame.size.height);
-//    }
-//    
-//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

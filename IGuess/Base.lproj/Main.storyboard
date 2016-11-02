@@ -5,7 +5,6 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
-        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
     </dependencies>
     <scenes>
         <!--Settings-->
@@ -1549,16 +1548,14 @@
                                 </connections>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="ckh-B3-NE2" secondAttribute="trailing" id="46r-7J-VQ7"/>
                             <constraint firstAttribute="trailing" secondItem="A78-fN-DSi" secondAttribute="trailing" id="BGV-V9-1va"/>
                             <constraint firstItem="ckh-B3-NE2" firstAttribute="top" secondItem="A78-fN-DSi" secondAttribute="bottom" id="FCJ-Ao-Zyr"/>
                             <constraint firstItem="ckh-B3-NE2" firstAttribute="leading" secondItem="nPW-pY-Xpa" secondAttribute="leading" id="I0x-qp-OrC"/>
+                            <constraint firstItem="ckh-B3-NE2" firstAttribute="bottom" secondItem="nPW-pY-Xpa" secondAttribute="bottomMargin" id="QFx-cB-naF"/>
                             <constraint firstItem="A78-fN-DSi" firstAttribute="top" secondItem="GaT-D3-iVl" secondAttribute="bottom" id="k1d-L9-ZGZ"/>
-                            <constraint firstItem="yI9-TN-2dI" firstAttribute="top" secondItem="ckh-B3-NE2" secondAttribute="bottom" id="l3d-C1-rMo">
-                                <variation key="widthClass=compact" constant="-44"/>
-                            </constraint>
                             <constraint firstItem="A78-fN-DSi" firstAttribute="leading" secondItem="nPW-pY-Xpa" secondAttribute="leading" id="msb-os-e0O"/>
                         </constraints>
                         <variation key="default">
@@ -1567,13 +1564,13 @@
                                 <exclude reference="ckh-B3-NE2"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="l3d-C1-rMo"/>
                                 <exclude reference="BGV-V9-1va"/>
                                 <exclude reference="k1d-L9-ZGZ"/>
                                 <exclude reference="msb-os-e0O"/>
                                 <exclude reference="46r-7J-VQ7"/>
                                 <exclude reference="FCJ-Ao-Zyr"/>
                                 <exclude reference="I0x-qp-OrC"/>
+                                <exclude reference="QFx-cB-naF"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -1582,13 +1579,13 @@
                                 <include reference="ckh-B3-NE2"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="l3d-C1-rMo"/>
                                 <include reference="BGV-V9-1va"/>
                                 <include reference="k1d-L9-ZGZ"/>
                                 <include reference="msb-os-e0O"/>
                                 <include reference="46r-7J-VQ7"/>
                                 <include reference="FCJ-Ao-Zyr"/>
                                 <include reference="I0x-qp-OrC"/>
+                                <include reference="QFx-cB-naF"/>
                             </mask>
                         </variation>
                     </view>
@@ -1599,11 +1596,9 @@
                                 <action selector="back" destination="UzG-HL-Zws" id="6Dj-n8-rr8"/>
                             </connections>
                         </barButtonItem>
-                        <rightBarButtonItems>
-                            <barButtonItem systemItem="action" id="WgR-ch-9Rm"/>
-                            <barButtonItem id="4zs-cp-Z8K"/>
-                        </rightBarButtonItems>
+                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="WgR-ch-9Rm"/>
                     </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="shareBarButton" destination="WgR-ch-9Rm" id="vcp-bW-kpL"/>
@@ -1614,80 +1609,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gHU-39-dsA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="5412" y="785"/>
-        </scene>
-        <!--Detail-bk-->
-        <scene sceneID="I5j-Lw-Ehq">
-            <objects>
-                <tableViewController storyboardIdentifier="CurrentResult" autoresizesArchivedViewToFullSize="NO" id="udb-MN-msi" userLabel="Detail-bk" customClass="XZResultViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="S9A-Gp-jWy">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="detailDisclosureButton" indentationWidth="10" reuseIdentifier="CurrentResult" id="mjK-3L-ahg" customClass="XZResultDetailCell">
-                                <rect key="frame" x="0.0" y="28" width="600" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mjK-3L-ahg" id="3V5-E0-eVx">
-                                    <rect key="frame" x="0.0" y="0.0" width="533" height="43.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <button opaque="NO" tag="2001" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jZR-dK-ms1">
-                                            <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                            <state key="normal">
-                                                <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                            </state>
-                                            <variation key="widthClass=compact" fixedFrame="YES">
-                                                <rect key="frame" x="20" y="8" width="24" height="24"/>
-                                            </variation>
-                                        </button>
-                                        <label opaque="NO" userInteractionEnabled="NO" tag="2000" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NTp-dM-XHb">
-                                            <rect key="frame" x="-42" y="-21" width="42" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                            <nil key="highlightedColor"/>
-                                            <variation key="widthClass=compact" fixedFrame="YES">
-                                                <rect key="frame" x="58" y="8" width="256" height="25"/>
-                                            </variation>
-                                        </label>
-                                    </subviews>
-                                    <variation key="default">
-                                        <mask key="subviews">
-                                            <exclude reference="jZR-dK-ms1"/>
-                                            <exclude reference="NTp-dM-XHb"/>
-                                        </mask>
-                                    </variation>
-                                    <variation key="widthClass=compact">
-                                        <mask key="subviews">
-                                            <include reference="jZR-dK-ms1"/>
-                                            <include reference="NTp-dM-XHb"/>
-                                        </mask>
-                                    </variation>
-                                </tableViewCellContentView>
-                                <color key="backgroundColor" red="0.80000001190000003" green="1" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="udb-MN-msi" id="ngT-AQ-So7"/>
-                            <outlet property="delegate" destination="udb-MN-msi" id="d9y-0T-10m"/>
-                        </connections>
-                    </tableView>
-                    <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Detail" id="F80-Nc-EMl">
-                        <barButtonItem key="leftBarButtonItem" title="Back" id="jxw-iw-HHA">
-                            <connections>
-                                <action selector="back" destination="udb-MN-msi" id="6SW-Jx-WIQ"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="YdF-AX-jLL"/>
-                    </navigationItem>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
-                    <connections>
-                        <outlet property="shareBarButton" destination="YdF-AX-jLL" id="IYf-me-bVC"/>
-                    </connections>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="gnR-M1-9h6" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="5404.5" y="38"/>
         </scene>
         <!--History-->
         <scene sceneID="1xt-er-E7T">

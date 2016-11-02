@@ -71,6 +71,7 @@ static const NSInteger JISUANJI_COUNTS = 132;
 
 #pragma mark - DBOperation
 - (int)getRandomNumber:(int)from to:(int)to {
+    // 生成[from, to]范围内的随机整数
     return (int)(from + (arc4random() % (to - from + 1)));
 }
 
@@ -110,11 +111,11 @@ static const NSInteger JISUANJI_COUNTS = 132;
     }
     
     if ([type isEqualToString: @"成语"]) {
-        query = [NSString stringWithFormat:@"SELECT * FROM chengyu where ID in %@",IDs];
+        query = [NSString stringWithFormat:@"SELECT * FROM chengyu where ID in %@ order by random()",IDs];
     } else if ([type isEqualToString: @"计算机"]) {
         query = @"SELECT * FROM jisuanji order by random()";
     } else if ([type isEqualToString: @"布袋戏"]) {
-        query = [NSString stringWithFormat:@"SELECT * FROM budaixi where ID in %@",IDs];
+        query = [NSString stringWithFormat:@"SELECT * FROM budaixi where ID in %@ order by random()",IDs];
     } else {
         DDLogError(@"play >>> 加载 >>> 词库: %@", type);
     }

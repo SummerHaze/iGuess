@@ -73,8 +73,10 @@ NSInteger shareType; // 0：分享App，1：分享结果详情页
         // button绑定事件
         self.WXFriends.enabled = YES;
         self.WXMoments.enabled = YES;
-        self.QQFriends.enabled = YES;
-        self.QZone.enabled = YES;
+        
+        // 11.2 qq互联平台的认证失败，暂时不支持
+        self.QQFriends.enabled = NO;
+        self.QZone.enabled = NO;
         self.cancel.enabled = YES;
         
         [self.WXFriends addTarget:self action:@selector(shareToWeiXinFriends) forControlEvents:UIControlEventTouchUpInside];

@@ -55,6 +55,7 @@
     if ([segue.identifier isEqualToString:@"ShowDetail"]) {
         XZResultViewController *controller = (XZResultViewController *)segue.destinationViewController;
         controller.results = sender;
+        controller.hidesBottomBarWhenPushed = YES;
     }
 }
 
