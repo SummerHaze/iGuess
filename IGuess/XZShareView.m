@@ -10,6 +10,7 @@
 #import "WXApiObject.h"
 #import "WXApi.h"
 #import "UIImage+WaterMark.h"
+#import "XZStatisticView.h"
 
 
 #define SCREEN_WIDTH [[UIScreen mainScreen] bounds].size.width
@@ -32,7 +33,9 @@ NSInteger shareType; // 0：分享App，1：分享结果详情页
 
 @implementation XZShareView
 {
-    UITableView *_screenShotView;
+    UIView *screenShotView;
+    UITableView *tableView;
+    
     NSInteger shotWitdh;
     NSInteger shotHeight;
     NSInteger statusBarHeight;
@@ -95,18 +98,10 @@ NSInteger shareType; // 0：分享App，1：分享结果详情页
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    
-//    [self mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.bottom.equalTo(self.superview.mas_bottom);
-//        //        make.left.equalTo(self.view.mas_left);
-//        //        make.right.equalTo(self.view.mas_right);
-//        //        make.height.equalTo(@44);
-//    }];
-    
+
     backViewHeight = 120; // 背景view高度
     self.backView.frame = CGRectMake(0, self.frame.size.height - backViewHeight, self.frame.size.width, backViewHeight);
 
-    
     const NSInteger iconWidth = 45;  // 分享button宽度
     const NSInteger iconHeight = 45; // 分享button高度
     const NSInteger yOffset = 15;    // 分享button在y轴，相对于父view——backView的偏移
@@ -120,23 +115,17 @@ NSInteger shareType; // 0：分享App，1：分享结果详情页
 
     self.line.frame = CGRectMake(0, yOffset * 2 + iconHeight, self.frame.size.width, 1);
     self.cancel.frame = CGRectMake((self.frame.size.width - 100)/2, self.line.frame.origin.y + (backViewHeight - self.line.frame.origin.y - 30)/2, 100, 30);
-    
-    
-//    [self.backView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.bottom.equalTo(self.superview.mas_bottom);
-//        //        make.left.equalTo(self.view.mas_left);
-//        //        make.right.equalTo(self.view.mas_right);
-//        //        make.height.equalTo(@44);
-//    }];
-//    
-//    [self calculateHeight];
-    
 }
 
 #pragma mark - Event response
 - (void)shareToWeiXinFriends {
-    _screenShotView = (UITableView *)self.superview;
-    _screenShotView.scrollEnabled = YES;
+    screenShotView = (UIView *)self.superview;
+    
+    for (UIView *view in screenShotView.subviews) {
+        if ([view isKindOfClass:[UITableView class]]) {
+            tableView = (UITableView *)view;
+        }
+    }
     
     [self removeFromSuperview];
     
@@ -159,7 +148,8 @@ NSInteger shareType; // 0：分享App，1：分享结果详情页
         NSData *imageData =UIImagePNGRepresentation([UIImage imageNamed:@"AppShare"]);
         imageObj.imageData = imageData;
     } else if (shareType == 1) {
-        NSData *imageData = [self getScreenShot];
+        UIImage *image = [self addSlaveImage:[self takeSecondViewScreenShot] toMasterImage:[self takeFirstViewScreenShot]];
+        NSData *imageData = UIImagePNGRepresentation(image);
         imageObj.imageData = imageData;
     }
     
@@ -173,8 +163,8 @@ NSInteger shareType; // 0：分享App，1：分享结果详情页
 }
 
 - (void)shareToWeiXinMoments {
-    _screenShotView = [[UITableView alloc]init];
-    _screenShotView = (UITableView *)self.superview;
+    screenShotView = (UIView *)self.superview;
+    
     [self removeFromSuperview];
     
     //创建发送对象实例
@@ -194,8 +184,7 @@ NSInteger shareType; // 0：分享App，1：分享结果详情页
         NSData *imageData = UIImagePNGRepresentation([UIImage imageNamed:@"AppShare"]);
         imageObj.imageData = imageData;
     } else if (shareType == 1) {
-        NSData *imageData = [self getScreenShot];
-        imageObj.imageData = imageData;
+
     }
     
     //完成发送对象实例
@@ -217,18 +206,6 @@ NSInteger shareType; // 0：分享App，1：分享结果详情页
 }
 
 - (void)cancelShare {
-    
-//    [UIView animateWithDuration: 1
-//                          delay: 0
-//         usingSpringWithDamping: 0.7
-//          initialSpringVelocity: 2
-//                        options: UIViewAnimationOptionCurveEaseInOut | UIViewAnimationOptionAllowUserInteraction
-//                     animations: ^{
-//                         self.frame = CGRectMake(self.frame.origin.x,
-//                                                self.frame.origin.y + self.frame.size.height,
-//                                                self.frame.size.width,
-//                                                self.frame.size.height);
-//                     } completion: nil];
 //    _screenShotView = (UITableView *)self.superview;
 //    _screenShotView.scrollEnabled = YES;
     
@@ -239,42 +216,97 @@ NSInteger shareType; // 0：分享App，1：分享结果详情页
 }
 
 
+- (UIImage *)addSlaveImage:(UIImage *)slaveImage toMasterImage:(UIImage *)masterImage {
+     CGSize size;
+     size.width = masterImage.size.width;
+     size.height = masterImage.size.height + slaveImage.size.height;
+     
+     UIGraphicsBeginImageContextWithOptions(size, YES, 0.0);
+     
+     //Draw masterImage
+     [masterImage drawInRect:CGRectMake(0, 0, masterImage.size.width, masterImage.size.height)];
+     
+     //Draw slaveImage
+     [slaveImage drawInRect:CGRectMake(0, masterImage.size.height, masterImage.size.width, slaveImage.size.height)];
+     
+     UIImage *resultImage = UIGraphicsGetImageFromCurrentImageContext();
+     
+     UIGraphicsEndImageContext();
+     return resultImage;
+ }
 
-- (NSData *)getScreenShot {
-    
+- (UIImage *)takeFirstViewScreenShot {
     UIImage *image = nil;
-    UIGraphicsBeginImageContextWithOptions(_screenShotView.contentSize, YES, 0.0);
+    XZStatisticView *statView;
+    CGSize size = CGSizeMake(self.frame.size.width, 36);
     
-    //保存collectionView当前的偏移量
-    CGPoint savedContentOffset = _screenShotView.contentOffset;
-    CGRect saveFrame = _screenShotView.frame;
+    /*
+     *UIGraphicsBeginImageContextWithOptions有三个参数
+     *size    bitmap上下文的大小，就是生成图片的size
+     *opaque  是否不透明，当指定为YES的时候图片的质量会比较好
+     *scale   缩放比例，指定为0.0表示使用手机主屏幕的缩放比例
+     */
+    UIGraphicsBeginImageContextWithOptions(size, YES, 0.0);
     
-    //将collectionView的偏移量设置为(0,0)
-    _screenShotView.contentOffset = CGPointZero;
-    _screenShotView.frame = CGRectMake(0, 0, _screenShotView.contentSize.width, _screenShotView.contentSize.height);
+    for (XZStatisticView *view in screenShotView.subviews) {
+        if ([view isKindOfClass:[XZStatisticView class]]) {
+            statView = (XZStatisticView *)view;
+        }
+    }
     
-    //在当前上下文中渲染出collectionView
-    [_screenShotView.layer renderInContext: UIGraphicsGetCurrentContext()];
-    //截取当前上下文生成Image
+    //此处我截取的是TableView的header.
+    [statView.layer renderInContext: UIGraphicsGetCurrentContext()];
     image = UIGraphicsGetImageFromCurrentImageContext();
     
-    //恢复collectionView的偏移量
-    _screenShotView.contentOffset = savedContentOffset;
-    _screenShotView.frame = saveFrame;
-    
     UIGraphicsEndImageContext();
-    
-    UIImage *imageWithWaterMark = [self makeWaterMark:image];
-    
-    if (imageWithWaterMark != nil) {
-        return UIImagePNGRepresentation(imageWithWaterMark);
+    if (image != nil) {
+        return image;
     }else {
         return nil;
     }
-    
-    
 
-//    UIImage *image = [self takeScreenShot: _screenShotView];
+}
+
+- (UIImage *)takeSecondViewScreenShot {
+    UIImage *image = nil;
+    // 创建适用于图形操作的上下文
+    DDLogDebug(@"tableView.contensize-height: %f, width: %f", tableView.contentSize.height, tableView.contentSize.width);
+    UIGraphicsBeginImageContextWithOptions(tableView.contentSize, YES, 0.0);
+    
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    //  KEY: need to translate the context down to the current visible portion of the tablview
+//    CGContextTranslateCTM(context, 0, -tableView.contentOffset.y);
+    
+    // 保存tableView当前的偏移量
+    CGPoint savedContentOffset = tableView.contentOffset;
+    CGRect savedFrame = tableView.frame;
+    
+    // 将tableView的偏移量设置为(0,0)
+    tableView.contentOffset = CGPointZero;
+    tableView.frame = CGRectMake(0, 0, tableView.contentSize.width, tableView.contentSize.height);
+
+    //在当前上下文中渲染出tableView
+    [tableView.layer renderInContext: context];
+    
+    //截取当前上下文生成Image
+    image = UIGraphicsGetImageFromCurrentImageContext();
+
+    // 恢复tableView的偏移量
+    tableView.contentOffset = savedContentOffset;
+    tableView.frame = savedFrame;
+    
+    UIGraphicsEndImageContext();
+    
+//    UIImage *imageWithWaterMark = [self makeWaterMark:image];
+    
+    if (image != nil) {
+        return image;
+    }else {
+        return nil;
+    }
+
+//    UIImage *image = [self takeScreenShot: screenShotView];
 //    NSData *imageData = UIImagePNGRepresentation(image);
 //    UIImageWriteToSavedPhotosAlbum(image, self, nil, nil);
 //    [self saveToDisk:image];

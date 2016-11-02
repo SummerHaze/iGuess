@@ -17,6 +17,14 @@
 
 @implementation XZAboutViewController
 
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    //    DDLogDebug(@"initWithCoder");
+    if ((self = [super initWithCoder:aDecoder])) {
+        self.hidesBottomBarWhenPushed = YES;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     

@@ -52,25 +52,23 @@
 }
 
 #pragma mark - Life cycle
-- (id)initWithCoder:(NSCoder *)aDecoder {
-//    DDLogDebug(@"initWithCoder");
-    if ((self = [super initWithCoder:aDecoder])) {
-        self.hidesBottomBarWhenPushed = YES;
-    }
-    return self;
-}
-
 //- (void)awakeFromNib {
 //    DDLogDebug(@"awakeFromNib");
 //}
 
 - (void)viewDidLoad {
 //    DDLogDebug(@"viewDidLoad");
-    [super viewDidLoad];
-    
-    // 添加自定义倒计时view
+    [super viewDidLoad];    // 添加自定义倒计时view
     self.countDownView.frame = self.view.frame;
     [self.view addSubview:self.countDownView];
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder {
+//    DDLogDebug(@"initWithCoder");
+    if ((self = [super initWithCoder:aDecoder])) {
+        self.hidesBottomBarWhenPushed = YES;
+    }
+    return self;
 }
 
 - (void)viewWillAppear:(BOOL)animated {

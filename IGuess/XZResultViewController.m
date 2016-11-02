@@ -77,6 +77,11 @@
     globalFailCounts = fail;
 }
 
+//- (void)viewDidAppear:(BOOL)animated {
+//    self.screenShotView = self.tableView;
+//}
+
+
 //- (void)viewWillLayoutSubviews {
 //    [super viewWillLayoutSubviews];
 //    if (self.view.subviews[0] != self.tableView) {
@@ -96,6 +101,7 @@
 - (XZShareView *)shareView {
     if (!_shareView) {
         _shareView = [[XZShareView alloc]init];
+//        _shareView.shotTableView = self.tableView;
         //        [_shareView setBackgroundColor:[UIColor lightGrayColor]];
         //        [_shareView setAlpha:0.5];
     }
@@ -204,11 +210,11 @@
     return item;
 }
 
-#pragma mark - UIScrollView delegate
-// 滑动tableView后再点击分享，保证shareView依然在屏幕最底端
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    yOffset = scrollView.contentOffset.y;
-}
+//#pragma mark - UIScrollView delegate
+//// 滑动tableView后再点击分享，保证shareView依然在屏幕最底端
+//- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+//    yOffset = scrollView.contentOffset.y;
+//}
 
 
 @end

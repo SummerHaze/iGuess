@@ -39,6 +39,8 @@
 		16D6E43F1C8C587300B7A4B9 /* IGuessTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 16D6E43E1C8C587300B7A4B9 /* IGuessTests.m */; };
 		16D6E44B1C8C5D8F00B7A4B9 /* XZPlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16D6E44A1C8C5D8F00B7A4B9 /* XZPlayViewController.m */; };
 		16DB22001D8030F100081CFC /* XZHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 16DB21FF1D8030F100081CFC /* XZHistory.m */; };
+		16E5F0F51DC87CBB00241D9A /* XZUpdateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16E5F0F41DC87CBB00241D9A /* XZUpdateViewController.m */; };
+		16E5F0F81DC8B0B800241D9A /* XZStateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16E5F0F71DC8B0B800241D9A /* XZStateViewController.m */; };
 		16E86CEA1CF59458007580C4 /* XZResultItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 16E86CE91CF59458007580C4 /* XZResultItem.m */; };
 		16E86CED1CF59471007580C4 /* XZResultDetailItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 16E86CEC1CF59471007580C4 /* XZResultDetailItem.m */; };
 		16E86CF31CFDC3E9007580C4 /* XZResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16E86CF21CFDC3E9007580C4 /* XZResultViewController.m */; };
@@ -122,6 +124,10 @@
 		16D6E44A1C8C5D8F00B7A4B9 /* XZPlayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZPlayViewController.m; sourceTree = "<group>"; };
 		16DB21FE1D8030F100081CFC /* XZHistory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZHistory.h; sourceTree = "<group>"; };
 		16DB21FF1D8030F100081CFC /* XZHistory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZHistory.m; sourceTree = "<group>"; };
+		16E5F0F31DC87CBB00241D9A /* XZUpdateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZUpdateViewController.h; sourceTree = "<group>"; };
+		16E5F0F41DC87CBB00241D9A /* XZUpdateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZUpdateViewController.m; sourceTree = "<group>"; };
+		16E5F0F61DC8B0B800241D9A /* XZStateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZStateViewController.h; sourceTree = "<group>"; };
+		16E5F0F71DC8B0B800241D9A /* XZStateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZStateViewController.m; sourceTree = "<group>"; };
 		16E86CE81CF59458007580C4 /* XZResultItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZResultItem.h; sourceTree = "<group>"; };
 		16E86CE91CF59458007580C4 /* XZResultItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZResultItem.m; sourceTree = "<group>"; };
 		16E86CEB1CF59471007580C4 /* XZResultDetailItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZResultDetailItem.h; sourceTree = "<group>"; };
@@ -329,6 +335,10 @@
 				16F7A7091D82B5D800DB773D /* XZNoteViewController.m */,
 				1663B98D1DC1E2CA00D97CCA /* XZAboutViewController.h */,
 				1663B98E1DC1E2CA00D97CCA /* XZAboutViewController.m */,
+				16E5F0F31DC87CBB00241D9A /* XZUpdateViewController.h */,
+				16E5F0F41DC87CBB00241D9A /* XZUpdateViewController.m */,
+				16E5F0F61DC8B0B800241D9A /* XZStateViewController.h */,
+				16E5F0F71DC8B0B800241D9A /* XZStateViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -526,6 +536,7 @@
 				1663B99D1DC21FCC00D97CCA /* XZShareView.m in Sources */,
 				16D562031D8946200067D283 /* XZVideoEngine.m in Sources */,
 				16B5042B1D991E79002CE833 /* XZCountDownView.m in Sources */,
+				16E5F0F51DC87CBB00241D9A /* XZUpdateViewController.m in Sources */,
 				16E86CED1CF59471007580C4 /* XZResultDetailItem.m in Sources */,
 				169136461D7F242E001BB375 /* XZDBOperation.m in Sources */,
 				167727271D82693D00F38060 /* XZResultDetailCell.m in Sources */,
@@ -550,6 +561,7 @@
 				16F7A70A1D82B5D800DB773D /* XZNoteViewController.m in Sources */,
 				1663B98F1DC1E2CA00D97CCA /* XZAboutViewController.m in Sources */,
 				16A1A4261CF57E020013E3F8 /* XZSettingsViewController.m in Sources */,
+				16E5F0F81DC8B0B800241D9A /* XZStateViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -677,6 +689,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "IGuess/IGuess-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
@@ -718,6 +731,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = xz.IGuess;
 				PRODUCT_NAME = "猜猜看";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -727,6 +741,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "IGuess/IGuess-Prefix.pch";
 				INFOPLIST_FILE = IGuess/Info.plist;
@@ -767,6 +782,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = xz.IGuess;
 				PRODUCT_NAME = "猜猜看";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
