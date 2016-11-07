@@ -70,7 +70,7 @@
         self.tableView.userInteractionEnabled = NO;
         DDLogInfo(@"history >>> no results");
         UIImageView *imageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"placeholder"]];
-        imageView.frame = CGRectMake(tableView.center.x-180/2, tableView.center.y-150, 180, 134);
+        imageView.frame = CGRectMake(tableView.center.x-180/2, tableView.center.y-150, 180, 90);
         imageView.contentMode = UIViewContentModeScaleAspectFit;
         [self.tableView addSubview:imageView];
     } else {

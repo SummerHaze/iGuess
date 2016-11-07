@@ -17,6 +17,7 @@
 
 @property (nonatomic, strong) XZCardView *cardView;
 @property (nonatomic, strong) UILabel *guideLabel;
+@property (nonatomic, strong) UIImageView *imageView;
 
 @end
 
@@ -37,53 +38,8 @@
     return self;
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    // 页面底部指示label
-    self.guideLabel = [[UILabel alloc]init];
-    [self.view addSubview:self.guideLabel];
-    
-    self.guideLabel.text = @"手势：向左滑出——展示下个，向上滑出——删除词条";
-    self.guideLabel.font = [UIFont fontWithName:@"Arial" size:13];
-    self.guideLabel.textAlignment = NSTextAlignmentCenter;
-    self.guideLabel.numberOfLines = 1;
-//    self.guideLabel.backgroundColor = [UIColor orangeColor];
-    [self.guideLabel setTextColor:[UIColor grayColor]];
-    
-    [self.guideLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(self.view.mas_bottom);
-        make.left.equalTo(self.view.mas_left);
-        make.right.equalTo(self.view.mas_right);
-        make.height.equalTo(@44);
-    }];
-    
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    ZLSwipeableView *swipeableView = [[ZLSwipeableView alloc] initWithFrame:CGRectZero];
-    self.swipeableView = swipeableView;
-    [self.view addSubview:self.swipeableView];
-
-    self.swipeableView.dataSource = self;
-    self.swipeableView.delegate = self;
-    self.swipeableView.translatesAutoresizingMaskIntoConstraints = NO;
-    // 暂时只开放左滑和上滑
-    self.swipeableView.allowedDirection = ZLSwipeableViewDirectionLeft | ZLSwipeableViewDirectionUp;
-    
-    NSDictionary *metrics = @{};
-    
-    [self.view addConstraints:[NSLayoutConstraint
-                               constraintsWithVisualFormat:@"|-50-[swipeableView]-50-|"
-                               options:0
-                               metrics:metrics
-                               views:NSDictionaryOfVariableBindings(swipeableView)]];
-    
-    [self.view addConstraints:[NSLayoutConstraint
-                               constraintsWithVisualFormat:@"V:|-120-[swipeableView]-100-|"
-                               options:0
-                               metrics:metrics
-                               views:NSDictionaryOfVariableBindings(swipeableView)]];
     
     // 读取note中词条
     NSString *sql = @"SELECT * FROM notes";
@@ -94,7 +50,60 @@
     indexRandomArray = [self getIndexRandomArray:words];
     tmpArray = [NSMutableArray arrayWithArray:indexRandomArray];
     number = 0;
+    /*
+    if ([indexRandomArray count] == 0) {
+        self.imageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"placeholder"]];
+        self.imageView.frame = CGRectMake(self.view.center.x-180/2, self.view.center.y-150, 180, 134);
+        self.imageView.contentMode = UIViewContentModeScaleAspectFit;
+        [self.view addSubview:self.imageView];
+    } else {
+        */
+        self.imageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"placeholder2"]];
+        self.imageView.frame = CGRectMake(self.view.center.x-180/2, self.view.center.y-100, 180, 90);
+        self.imageView.contentMode = UIViewContentModeScaleAspectFit;
+        [self.view addSubview:self.imageView];
+        ZLSwipeableView *swipeableView = [[ZLSwipeableView alloc] initWithFrame:CGRectZero];
+        self.swipeableView = swipeableView;
+        [self.view addSubview:self.swipeableView];
+        
+        self.swipeableView.dataSource = self;
+        self.swipeableView.delegate = self;
+        self.swipeableView.translatesAutoresizingMaskIntoConstraints = NO;
+        // 暂时只开放左滑和上滑
+        self.swipeableView.allowedDirection = ZLSwipeableViewDirectionLeft | ZLSwipeableViewDirectionUp;
+        
+        NSDictionary *metrics = @{};
+        
+        [self.view addConstraints:[NSLayoutConstraint
+                                   constraintsWithVisualFormat:@"|-50-[swipeableView]-50-|"
+                                   options:0
+                                   metrics:metrics
+                                   views:NSDictionaryOfVariableBindings(swipeableView)]];
+        
+        [self.view addConstraints:[NSLayoutConstraint
+                                   constraintsWithVisualFormat:@"V:|-120-[swipeableView]-100-|"
+                                   options:0
+                                   metrics:metrics
+                                   views:NSDictionaryOfVariableBindings(swipeableView)]];
+        
+        self.guideLabel = [[UILabel alloc]init];
+        self.guideLabel.text = @"手势：向左滑出——展示下个，向上滑出——删除词条";
+        self.guideLabel.font = [UIFont fontWithName:@"Arial" size:13];
+        self.guideLabel.textAlignment = NSTextAlignmentCenter;
+        self.guideLabel.numberOfLines = 1;
+        [self.guideLabel setTextColor:[UIColor grayColor]];
+        [self.view addSubview:self.guideLabel];
+   // }
+}
 
+- (void)viewWillAppear:(BOOL)animated {
+    // 页面底部指示label
+    [self.guideLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(self.view.mas_bottom);
+        make.left.equalTo(self.view.mas_left);
+        make.right.equalTo(self.view.mas_right);
+        make.height.equalTo(@44);
+    }];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -116,31 +125,8 @@
         NSString *sql = [NSString stringWithFormat:@"DELETE FROM notes WHERE ROUND=%ld and NAME=\"%@\"",(long)item.round, item.name];
         [operation deleteFromResults:sql];
     }
+    
     NSLog(@"did swipe in direction: %zd", direction);
-}
-
-- (void)swipeableView:(ZLSwipeableView *)swipeableView didCancelSwipe:(UIView *)view {
-    NSLog(@"did cancel swipe");
-}
-
-- (void)swipeableView:(ZLSwipeableView *)swipeableView
-  didStartSwipingView:(UIView *)view
-           atLocation:(CGPoint)location {
-    NSLog(@"did start swiping at location: x %f, y %f", location.x, location.y);
-}
-
-- (void)swipeableView:(ZLSwipeableView *)swipeableView
-          swipingView:(UIView *)view
-           atLocation:(CGPoint)location
-          translation:(CGPoint)translation {
-    NSLog(@"swiping at location: x %f, y %f, translation: x %f, y %f", location.x, location.y,
-          translation.x, translation.y);
-}
-
-- (void)swipeableView:(ZLSwipeableView *)swipeableView
-    didEndSwipingView:(UIView *)view
-           atLocation:(CGPoint)location {
-    NSLog(@"did end swiping at location: x %f, y %f", location.x, location.y);
 }
 
 #pragma mark - ZLSwipeableViewDataSource
@@ -152,8 +138,11 @@
         XZResultDetailItem *item = indexRandomArray[index];
         [self.cardView setLabel:item.name];
         [indexRandomArray removeObjectAtIndex:index];
+        return self.cardView;
+    } else {
+        return nil;
     }
-    return self.cardView;
+    
 }
 
 // 卡片顺序随机出

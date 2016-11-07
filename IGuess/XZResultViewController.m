@@ -51,7 +51,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.tableView.tableFooterView=[[UIView alloc]init];
-    // self.navigationController.interactivePopGestureRecognizer.delegate = (id)self;
+    self.navigationController.interactivePopGestureRecognizer.delegate = (id)self;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -77,6 +77,16 @@
     // 给顶部的statisticView赋值
     globalPassCounts = pass;
     globalFailCounts = fail;
+    
+    // 根据不同页面的跳转，left item显示不同title
+    int index = (int)[self.navigationController.viewControllers indexOfObject:self];
+    // 如果是从play页面跳转过来，暂时不支持横滑返回
+    if ([self.navigationController.viewControllers[index-1] isKindOfClass:[XZPlayViewController class]]) {
+        self.navigationController.navigationBar.topItem.leftBarButtonItem.title = @"关闭";
+    } //else {
+      //  self.navigationController.navigationBar.topItem.leftBarButtonItem.title = @"<历史记录";
+    //}
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -194,11 +204,28 @@
     return item;
 }
 
+#pragma mark - UIGesture recognizer delegate
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
+    int index = (int)[self.navigationController.viewControllers indexOfObject:self];
+    // 如果是从play页面跳转过来，暂时不支持横滑返回
+    if ([self.navigationController.viewControllers[index-1] isKindOfClass:[XZPlayViewController class]]) {
+        return NO;
+    } else {
+        return YES;
+    }
+}
+
+/*
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:
+(UIGestureRecognizer *)otherGestureRecognizer {
+    return NO;
+}
+*/
 //#pragma mark - UIScrollView delegate
-//// 滑动tableView后再点击分享，保证shareView依然在屏幕最底端
-//- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-//    yOffset = scrollView.contentOffset.y;
-//}
+// 滑动tableView后再点击分享，保证shareView依然在屏幕最底端
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    //NSLog(@"offset: %f", scrollView.contentOffset.y);
+}
 
 
 @end

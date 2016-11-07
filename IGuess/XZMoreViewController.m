@@ -21,7 +21,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.countLabel.text = [NSString stringWithFormat:@"总词数: %ld",(long)[self getWordsCount]];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+   self.countLabel.text = [NSString stringWithFormat:@"总词数: %ld",(long)[self getWordsCount]];  
 }
 
 - (void)didReceiveMemoryWarning {
@@ -48,6 +51,8 @@
 
 #pragma mark - Table view delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
     if (indexPath.section == 2 && indexPath.row == 1) {
         shareType = 0; // 分享App
         

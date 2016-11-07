@@ -75,7 +75,7 @@ NSInteger shareType; // 0：分享App，1：分享结果详情页
         self.WXMoments.enabled = YES;
         self.cancel.enabled = YES;
         
-        // 11.2 qq互联平台的认证失败，暂时不支持
+        // 11.2 summ qq互联平台的认证失败，暂时不支持
         self.QQFriends.enabled = NO;
         self.QZone.enabled = NO;
         
@@ -151,7 +151,8 @@ NSInteger shareType; // 0：分享App，1：分享结果详情页
         NSData *imageData =UIImagePNGRepresentation([UIImage imageNamed:@"AppShare"]);
         imageObj.imageData = imageData;
     } else if (shareType == 1) {
-        UIImage *image = [self addSlaveImage:[self takeSecondViewScreenShot] toMasterImage:[self takeFirstViewScreenShot]];
+        // UIImage *image = [self addSlaveImage:[self takeSecondViewScreenShot] toMasterImage:[self takeFirstViewScreenShot]];
+        UIImage *image = [self takeSecondViewScreenShot];
         NSData *imageData = UIImagePNGRepresentation(image);
         imageObj.imageData = imageData;
     }
@@ -209,34 +210,10 @@ NSInteger shareType; // 0：分享App，1：分享结果详情页
 }
 
 - (void)cancelShare {
-//    _screenShotView = (UITableView *)self.superview;
-//    _screenShotView.scrollEnabled = YES;
-    
     [self removeFromSuperview];
-    
-//    self.tabBarController.tabBar.hidden = YES;
-    
 }
 
 
-- (UIImage *)addSlaveImage:(UIImage *)slaveImage toMasterImage:(UIImage *)masterImage {
-     CGSize size;
-     size.width = masterImage.size.width;
-     size.height = masterImage.size.height + slaveImage.size.height;
-     
-     UIGraphicsBeginImageContextWithOptions(size, YES, 0.0);
-     
-     //Draw masterImage
-     [masterImage drawInRect:CGRectMake(0, 0, masterImage.size.width, masterImage.size.height)];
-     
-     //Draw slaveImage
-     [slaveImage drawInRect:CGRectMake(0, masterImage.size.height, masterImage.size.width, slaveImage.size.height)];
-     
-     UIImage *resultImage = UIGraphicsGetImageFromCurrentImageContext();
-     
-     UIGraphicsEndImageContext();
-     return resultImage;
- }
 
 - (UIImage *)takeFirstViewScreenShot {
     UIImage *image = nil;
@@ -272,77 +249,73 @@ NSInteger shareType; // 0：分享App，1：分享结果详情页
 
 - (UIImage *)takeSecondViewScreenShot {
     UIImage *image = nil;
-    // 创建适用于图形操作的上下文
-    DDLogDebug(@"tableView.contensize-height: %f, width: %f", tableView.contentSize.height, tableView.contentSize.width);
-    UIGraphicsBeginImageContextWithOptions(tableView.contentSize, YES, 0.0);
+    UIImage *imageNew = nil;
+    float yPoint = 0;
     
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    
-    //  KEY: need to translate the context down to the current visible portion of the tablview
-//    CGContextTranslateCTM(context, 0, -tableView.contentOffset.y);
+    // 计算tableView的内容在屏幕上会显示的页数
+    int page = ceil(tableView.contentSize.height / tableView.frame.size.height);
+    NSLog(@"tableview's size: %f, %f", tableView.contentSize.height, tableView.frame.size.height);
     
     // 保存tableView当前的偏移量
     CGPoint savedContentOffset = tableView.contentOffset;
     CGRect savedFrame = tableView.frame;
     
-    // 将tableView的偏移量设置为(0,0)
-    tableView.contentOffset = CGPointZero;
-    tableView.frame = CGRectMake(0, 0, tableView.contentSize.width, tableView.contentSize.height);
-
-    //在当前上下文中渲染出tableView
-    [tableView.layer renderInContext: context];
+    UIGraphicsBeginImageContextWithOptions(tableView.contentSize, YES, 0.0);
     
-    //截取当前上下文生成Image
-    image = UIGraphicsGetImageFromCurrentImageContext();
-
+    for (int i = 0; i < page; i++) {
+        CGPoint currentPoint = CGPointMake(0, yPoint);
+        
+        tableView.contentOffset = currentPoint;
+        tableView.frame = CGRectMake(0, yPoint, tableView.frame.size.width, tableView.frame.size.height);
+        
+        CGContextRef context = UIGraphicsGetCurrentContext();
+        [tableView.layer renderInContext:context];
+        
+        image = UIGraphicsGetImageFromCurrentImageContext();
+        
+        // tableView拖到最后一页时，tableView.layer内容均加载到内存（summ 猜测）
+        if ((imageNew != nil) && (i == page - 1)) {
+            imageNew = [self addSlaveImage:image toMasterImage:imageNew];
+        } else {
+            imageNew = [self takeFirstViewScreenShot];
+        }
+        
+        yPoint += tableView.frame.size.height;
+    }
+    
+    // 关闭context
+    UIGraphicsEndImageContext();
+    
     // 恢复tableView的偏移量
     tableView.contentOffset = savedContentOffset;
     tableView.frame = savedFrame;
-    
-    UIGraphicsEndImageContext();
-    
-//    UIImage *imageWithWaterMark = [self makeWaterMark:image];
-    
-    if (image != nil) {
-        return image;
-    }else {
+
+    if (imageNew != nil) {
+        return imageNew;
+    } else {
         return nil;
     }
 
-//    UIImage *image = [self takeScreenShot: screenShotView];
-//    NSData *imageData = UIImagePNGRepresentation(image);
-//    UIImageWriteToSavedPhotosAlbum(image, self, nil, nil);
-//    [self saveToDisk:image];
-//    
-//    return imageData;
-
 }
 
-- (UIImage *)takeScreenShot:(UIView *)view {
-    statusBarHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
+// 图片拼接
+- (UIImage *)addSlaveImage:(UIImage *)slaveImage toMasterImage:(UIImage *)masterImage {
+    CGSize size;
+    size.width = masterImage.size.width;
+    size.height = masterImage.size.height + slaveImage.size.height;
     
-    shotWitdh = SCREEN_WIDTH;
-    shotHeight = SCREEN_HEIGHT - statusBarHeight - navigationBarHeight;
+    UIGraphicsBeginImageContextWithOptions(size, YES, 0.0);
     
-    // 开启位图上下文
-//    UIGraphicsBeginImageContextWithOptions(self.bounds.size, NO, 0);
-    UIGraphicsBeginImageContext(CGSizeMake(SCREEN_WIDTH, shotHeight));
+    //Draw masterImage
+    [masterImage drawInRect:CGRectMake(0, 0, masterImage.size.width, masterImage.size.height)];
     
-    // 获取当前上下文
-    CGContextRef context = UIGraphicsGetCurrentContext();
-//    NSLog(@"2current context: %@",UIGraphicsGetCurrentContext());
-    // 把图层渲染到上下文
-    [view.layer renderInContext:context];
-    // 从上下文取出图片
-    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    //Draw slaveImage
+    [slaveImage drawInRect:CGRectMake(0, masterImage.size.height, masterImage.size.width, slaveImage.size.height)];
     
-//    [image drawInRect:CGRectMake(0, 0 - statusBarHeight - navigationBarHeight, shotWitdh, shotHeight)];
-//    UIImage *clipImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIImage *resultImage = UIGraphicsGetImageFromCurrentImageContext();
     
-    // 关闭上下文
     UIGraphicsEndImageContext();
-    
-    return image;
+    return resultImage;
 }
 
 - (void)saveToDisk:(UIImage *)image {
@@ -368,6 +341,7 @@ NSInteger shareType; // 0：分享App，1：分享结果详情页
     }
 }
 
+// 打水印
 - (UIImage *)makeWaterMark:(UIImage *)image {
     // 调用方法传入一个image对象,想要添加的文字和文字所在位置
     UIImage *imageWithWaterMark = [UIImage imageWithimage:image

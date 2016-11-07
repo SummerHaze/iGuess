@@ -18,14 +18,6 @@
 
 @implementation XZCardView
 
-//- (instancetype)init {
-//    self = [super init];
-//    if (self) {
-//        [self setup];
-//    }
-//    return self;
-//}
-
 - (instancetype)initWithFrame:(CGRect)frame {
     if ([super initWithFrame:frame]) {
         [self setupLayer];
@@ -39,14 +31,6 @@
     [super layoutSubviews];
     self.wordButton.frame = CGRectMake(10,0,self.layer.frame.size.width-10,self.layer.frame.size.height);
 }
-
-//- (instancetype)initWithCoder:(NSCoder *)aDecoder {
-//    self = [super initWithCoder:aDecoder];
-//    if (self) {
-//        [self setup];
-//    }
-//    return self;
-//}
 
 - (void)setupLayer {
     // Shadow
@@ -90,7 +74,6 @@
 }
 
 - (void)setLabel:(NSString *)note {
-//    self.wordLabel.text = note;
     [self.wordButton setTitle:note forState:UIControlStateNormal];
 }
 

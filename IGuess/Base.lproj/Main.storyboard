@@ -1577,7 +1577,7 @@
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="详细结果" id="XhC-Ox-ktX" userLabel="Detail">
-                        <barButtonItem key="leftBarButtonItem" title="Back" id="JzT-iP-ieY">
+                        <barButtonItem key="leftBarButtonItem" title="&lt; 历史记录" id="JzT-iP-ieY">
                             <connections>
                                 <action selector="back" destination="UzG-HL-Zws" id="5bp-eo-Mm3"/>
                             </connections>
