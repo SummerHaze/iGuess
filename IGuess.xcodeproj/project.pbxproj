@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		160474A31DAB7374008CB4BD /* XZHistoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 160474A21DAB7374008CB4BD /* XZHistoryCell.m */; };
 		16485C541DC398EF00F35398 /* UIImage+WaterMark.m in Sources */ = {isa = PBXBuildFile; fileRef = 16485C531DC398EF00F35398 /* UIImage+WaterMark.m */; };
+		164FDA4D1DCA0BFF004848F1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 164FDA4C1DCA0BFF004848F1 /* Assets.xcassets */; };
 		1656BF1D1D7ECE5300689B8D /* XZMoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1656BF1C1D7ECE5300689B8D /* XZMoreViewController.m */; };
 		1663B98F1DC1E2CA00D97CCA /* XZAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1663B98E1DC1E2CA00D97CCA /* XZAboutViewController.m */; };
 		1663B9941DC2074E00D97CCA /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1663B9911DC2074E00D97CCA /* libWeChatSDK.a */; };
@@ -34,7 +35,6 @@
 		16D6E4291C8C587300B7A4B9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 16D6E4281C8C587300B7A4B9 /* AppDelegate.m */; };
 		16D6E42C1C8C587300B7A4B9 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16D6E42B1C8C587300B7A4B9 /* ViewController.m */; };
 		16D6E42F1C8C587300B7A4B9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 16D6E42D1C8C587300B7A4B9 /* Main.storyboard */; };
-		16D6E4311C8C587300B7A4B9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 16D6E4301C8C587300B7A4B9 /* Assets.xcassets */; };
 		16D6E4341C8C587300B7A4B9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 16D6E4321C8C587300B7A4B9 /* LaunchScreen.storyboard */; };
 		16D6E43F1C8C587300B7A4B9 /* IGuessTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 16D6E43E1C8C587300B7A4B9 /* IGuessTests.m */; };
 		16D6E44B1C8C5D8F00B7A4B9 /* XZPlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16D6E44A1C8C5D8F00B7A4B9 /* XZPlayViewController.m */; };
@@ -65,6 +65,7 @@
 		160474A21DAB7374008CB4BD /* XZHistoryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZHistoryCell.m; sourceTree = "<group>"; };
 		16485C521DC398EF00F35398 /* UIImage+WaterMark.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+WaterMark.h"; sourceTree = "<group>"; };
 		16485C531DC398EF00F35398 /* UIImage+WaterMark.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+WaterMark.m"; sourceTree = "<group>"; };
+		164FDA4C1DCA0BFF004848F1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1656BF1B1D7ECE5300689B8D /* XZMoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZMoreViewController.h; sourceTree = "<group>"; };
 		1656BF1C1D7ECE5300689B8D /* XZMoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XZMoreViewController.m; sourceTree = "<group>"; };
 		1663B98D1DC1E2CA00D97CCA /* XZAboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XZAboutViewController.h; sourceTree = "<group>"; };
@@ -114,7 +115,6 @@
 		16D6E42A1C8C587300B7A4B9 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		16D6E42B1C8C587300B7A4B9 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		16D6E42E1C8C587300B7A4B9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		16D6E4301C8C587300B7A4B9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		16D6E4331C8C587300B7A4B9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		16D6E4351C8C587300B7A4B9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		16D6E43A1C8C587300B7A4B9 /* IGuessTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IGuessTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -346,8 +346,8 @@
 		16E11D0F1D7EEB640076308F /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				164FDA4C1DCA0BFF004848F1 /* Assets.xcassets */,
 				1691363A1D7EEF3B001BB375 /* DB */,
-				16D6E4301C8C587300B7A4B9 /* Assets.xcassets */,
 			);
 			name = Resource;
 			sourceTree = "<group>";
@@ -430,7 +430,8 @@
 				TargetAttributes = {
 					16D6E4201C8C587300B7A4B9 = {
 						CreatedOnToolsVersion = 7.1.1;
-						DevelopmentTeam = 6QC26V9DR4;
+						DevelopmentTeam = GLWH8HHHZ5;
+						ProvisioningStyle = Automatic;
 					};
 					16D6E4391C8C587300B7A4B9 = {
 						CreatedOnToolsVersion = 7.1.1;
@@ -464,10 +465,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				16D6E4341C8C587300B7A4B9 /* LaunchScreen.storyboard in Resources */,
-				16D6E4311C8C587300B7A4B9 /* Assets.xcassets in Resources */,
 				16D388DC1D770B6A00E9A34B /* words.db in Resources */,
 				16D6E42F1C8C587300B7A4B9 /* Main.storyboard in Resources */,
 				16F7A7071D829D4F00DB773D /* results.db in Resources */,
+				164FDA4D1DCA0BFF004848F1 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -690,6 +691,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = GLWH8HHHZ5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "IGuess/IGuess-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
@@ -729,7 +731,7 @@
 					"-Objc",
 					"-all_load",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = xz.IGuess;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xz.IGuess;
 				PRODUCT_NAME = "猜猜看";
 				PROVISIONING_PROFILE = "";
 			};
@@ -742,6 +744,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = GLWH8HHHZ5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "IGuess/IGuess-Prefix.pch";
 				INFOPLIST_FILE = IGuess/Info.plist;
@@ -780,7 +783,7 @@
 					"-Objc",
 					"-all_load",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = xz.IGuess;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xz.IGuess;
 				PRODUCT_NAME = "猜猜看";
 				PROVISIONING_PROFILE = "";
 			};

@@ -49,6 +49,7 @@
     UITableView *tableView = (UITableView *)self.superview;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
+    // 添加生词
     if ([self.addButton.currentBackgroundImage isEqual: [UIImage imageNamed:@"add"]]) {
         self.isAdded = @1;
         [cell.addButton setBackgroundImage:[UIImage imageNamed:@"added"] forState:UIControlStateNormal];
@@ -61,13 +62,13 @@
         hud.alpha = 0.8f;
         
         if (saveResult == YES) {
-            hud.label.text = NSLocalizedString(@"Added to Notebook!", @"HUD message title");
+            hud.label.text = NSLocalizedString(@"添加生词成功!", @"HUD message title");
         } else {
-            hud.label.text = NSLocalizedString(@"Add to Notebook fail!", @"HUD message title");
+            hud.label.text = NSLocalizedString(@"添加生词失败!", @"HUD message title");
         }
         
         [hud hideAnimated:YES afterDelay:0.8];
-    } else {
+    } else { // 删除生词
         self.isAdded = @0;
         [cell.addButton setBackgroundImage:[UIImage imageNamed:@"add"] forState:UIControlStateNormal];
         NSString *sql = [NSString stringWithFormat:@"DELETE FROM notes WHERE NAME=\"%@\"", item.name];
@@ -80,9 +81,9 @@
         hud.alpha = 0.8f;
         
         if (deleteResult == YES) {
-            hud.label.text = NSLocalizedString(@"Removed from Notebook!", @"HUD message title");
+            hud.label.text = NSLocalizedString(@"删除生词成功!", @"HUD message title");
         } else {
-            hud.label.text = NSLocalizedString(@"Remove from Notebook fail!", @"HUD message title");
+            hud.label.text = NSLocalizedString(@"删除生词失败!", @"HUD message title");
         }
         
         [hud hideAnimated:YES afterDelay:0.8];

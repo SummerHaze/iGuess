@@ -47,9 +47,11 @@
 //    return self;
 //}
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.tableView.tableFooterView=[[UIView alloc]init];
+    // self.navigationController.interactivePopGestureRecognizer.delegate = (id)self;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -86,9 +88,6 @@
 - (XZShareView *)shareView {
     if (!_shareView) {
         _shareView = [[XZShareView alloc]init];
-//        _shareView.shotTableView = self.tableView;
-        //        [_shareView setBackgroundColor:[UIColor lightGrayColor]];
-        //        [_shareView setAlpha:0.5];
     }
     return _shareView;
 }
@@ -188,7 +187,7 @@
     [self performSegueWithIdentifier:@"ShowMeaning" sender:item.name];
 }
 
-#pragma mark - ResultDetaiCell Delegate
+#pragma mark - ResultDetaiCell delegate
 - (XZResultDetailItem *)getResultDetailItem:(XZResultDetailCell *)cell {
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     XZResultDetailItem *item = self.results[indexPath.row];

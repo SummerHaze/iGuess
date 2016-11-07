@@ -19,9 +19,11 @@
 
 
 // summ change super to UIViewController
-@interface XZResultViewController : UIViewController <UITableViewDelegate, UIApplicationDelegate, ResultDetailCellDelegate, UIScrollViewDelegate>
+@interface XZResultViewController : UIViewController <UITableViewDelegate, UIApplicationDelegate, ResultDetailCellDelegate>
 
 @property (nonatomic) NSMutableArray *results;
+
+
 
 - (IBAction)back;
 

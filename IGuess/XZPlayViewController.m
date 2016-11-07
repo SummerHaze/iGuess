@@ -60,6 +60,7 @@
 //    DDLogDebug(@"viewDidLoad");
     [super viewDidLoad];    // 添加自定义倒计时view
     self.countDownView.frame = self.view.frame;
+    NSLog(@"2self.view.frame: %f, %f", self.view.frame.size.width, self.view.frame.size.height);
     [self.view addSubview:self.countDownView];
 }
 

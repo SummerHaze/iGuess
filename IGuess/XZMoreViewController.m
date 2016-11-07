@@ -21,7 +21,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.countLabel.text = [NSString stringWithFormat:@"Total Words Counts: %ld",(long)[self getWordsCount]];
+    self.countLabel.text = [NSString stringWithFormat:@"总词数: %ld",(long)[self getWordsCount]];
 }
 
 - (void)didReceiveMemoryWarning {

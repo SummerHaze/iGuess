@@ -173,9 +173,9 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
     if (section == 0) {
-        return @"PLAY DURATION";
+        return @"游戏时长";
     } else if (section == 1){
-        return @"COMMON";
+        return @"通用";
     } else {
         return nil;
     }

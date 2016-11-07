@@ -67,13 +67,15 @@
     
     if (!count) {
         // 没有结果显示占位图
+        self.tableView.userInteractionEnabled = NO;
         DDLogInfo(@"history >>> no results");
         UIImageView *imageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"placeholder"]];
-        imageView.frame = CGRectMake(tableView.center.x-127/2, tableView.center.y-130, 127, 118);
+        imageView.frame = CGRectMake(tableView.center.x-180/2, tableView.center.y-150, 180, 134);
         imageView.contentMode = UIViewContentModeScaleAspectFit;
         [self.tableView addSubview:imageView];
     } else {
         // 有结果，显示结果，移除占位图
+        self.tableView.userInteractionEnabled = YES;
         DDLogInfo(@"history >>> results exist");
         for (UIView *view in [tableView subviews]) {
             if ([view isKindOfClass:[UIImageView class]]) {

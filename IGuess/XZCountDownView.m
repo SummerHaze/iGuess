@@ -39,8 +39,9 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    self.countLabel.frame = CGRectMake(self.center.x-self.countLabel.frame.size.width/2,
-                                       self.center.y-self.countLabel.frame.size.height/2,
+    NSLog(@"self.view.frame: %f, %f", self.frame.size.width, self.frame.size.height);
+    self.countLabel.frame = CGRectMake(self.center.x - 100/2,
+                                       self.center.y - 100/2,
                                        100,
                                        100);
 }

@@ -50,9 +50,11 @@ NSInteger globalFailCounts;
 
 - (void)layoutSubviews {
     fullWidth = self.frame.size.width;
-//    fullHeight = self.frame.size.height;
     fullHeight = 36;
-    self.frame = CGRectMake(0, 0, fullWidth, fullHeight);
+    
+    // 直接将statView的frame设置为最终frame位置，避免Xcode8编译后，与layout最终位置不同导致下掉动画
+    float statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
+    self.frame = CGRectMake(0, statusBarHeight + 44, fullWidth, fullHeight);
     
     self.passLabel.text = [NSString stringWithFormat:@"%ld", (long)globalPassCounts];
     self.failLabel.text = [NSString stringWithFormat:@"%ld", (long)globalFailCounts];
@@ -64,7 +66,7 @@ NSInteger globalFailCounts;
         self.passLabel.frame = CGRectMake(0, 0, fullWidth, fullHeight);
         self.failLabel.frame = CGRectMake(0, 0, 0, fullHeight);
     } else if (globalPassCounts == 0 && globalFailCounts == 0) {
-        DDLogError(@"Error! pass and fail counts are both Zero!");
+        DDLogError(@"Error! Pass and Fail counts are both Zero!");
     } else {
         // 计算两个label的width比值
         float passRatio = (float)globalPassCounts / (globalPassCounts + globalFailCounts);
