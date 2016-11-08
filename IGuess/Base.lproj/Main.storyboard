@@ -1559,11 +1559,11 @@
             </objects>
             <point key="canvasLocation" x="201" y="1163"/>
         </scene>
-        <!--游戏-->
+        <!--猜词-->
         <scene sceneID="IsO-1t-dNB">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Kgd-xv-Srr" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="游戏" image="game" id="hFj-r7-fZ1"/>
+                    <tabBarItem key="tabBarItem" title="猜词" image="game" id="hFj-r7-fZ1"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="9bA-1u-deL">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
