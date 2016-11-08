@@ -223,9 +223,9 @@
 */
 //#pragma mark - UIScrollView delegate
 // 滑动tableView后再点击分享，保证shareView依然在屏幕最底端
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+//- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     //NSLog(@"offset: %f", scrollView.contentOffset.y);
-}
+//}
 
 
 @end

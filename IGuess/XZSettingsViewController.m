@@ -166,6 +166,8 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+
     if (indexPath.section == 1 && indexPath.row == 0) {
         [self performSegueWithIdentifier:@"PickType" sender:nil];
     }

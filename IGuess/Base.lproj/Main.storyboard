@@ -15,7 +15,7 @@
         <scene sceneID="025-3Z-Ycb">
             <objects>
                 <tableViewController id="e1k-jW-4if" customClass="XZSettingsViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="aK8-W9-3gW">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="aK8-W9-3gW">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -279,104 +279,6 @@
                                             </variation>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="Mk0-hu-9Kg">
-                                        <rect key="frame" x="0.0" y="291" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Mk0-hu-9Kg" id="vgk-6F-H6b">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <switch opaque="NO" tag="3000" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="tiT-eH-Ibo">
-                                                    <rect key="frame" x="296" y="6.5" width="51" height="31"/>
-                                                </switch>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="推送通知" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WEI-Rq-f9e">
-                                                    <rect key="frame" x="30" y="11.5" width="70" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="WEI-Rq-f9e" firstAttribute="centerY" secondItem="vgk-6F-H6b" secondAttribute="centerY" id="8NT-uk-Z5p"/>
-                                                <constraint firstItem="WEI-Rq-f9e" firstAttribute="leading" secondItem="vgk-6F-H6b" secondAttribute="leading" constant="30" id="BJp-vp-GvM"/>
-                                                <constraint firstItem="tiT-eH-Ibo" firstAttribute="centerY" secondItem="vgk-6F-H6b" secondAttribute="centerY" id="LQP-xG-Hen"/>
-                                                <constraint firstAttribute="trailing" secondItem="tiT-eH-Ibo" secondAttribute="trailing" constant="30" id="caV-jC-u1a"/>
-                                            </constraints>
-                                            <variation key="default">
-                                                <mask key="subviews">
-                                                    <exclude reference="tiT-eH-Ibo"/>
-                                                    <exclude reference="WEI-Rq-f9e"/>
-                                                </mask>
-                                                <mask key="constraints">
-                                                    <exclude reference="8NT-uk-Z5p"/>
-                                                    <exclude reference="BJp-vp-GvM"/>
-                                                    <exclude reference="LQP-xG-Hen"/>
-                                                    <exclude reference="caV-jC-u1a"/>
-                                                </mask>
-                                            </variation>
-                                            <variation key="widthClass=compact">
-                                                <mask key="subviews">
-                                                    <include reference="tiT-eH-Ibo"/>
-                                                    <include reference="WEI-Rq-f9e"/>
-                                                </mask>
-                                                <mask key="constraints">
-                                                    <include reference="8NT-uk-Z5p"/>
-                                                    <include reference="BJp-vp-GvM"/>
-                                                    <include reference="LQP-xG-Hen"/>
-                                                    <include reference="caV-jC-u1a"/>
-                                                </mask>
-                                            </variation>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="jfn-7V-1R1">
-                                        <rect key="frame" x="0.0" y="335" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="jfn-7V-1R1" id="2gb-10-3j2">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <switch opaque="NO" tag="3000" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="zGw-dV-oe5">
-                                                    <rect key="frame" x="296" y="6.5" width="51" height="31"/>
-                                                </switch>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="视频录制" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oVQ-P4-RP7">
-                                                    <rect key="frame" x="30" y="11.5" width="70" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="zGw-dV-oe5" firstAttribute="centerY" secondItem="2gb-10-3j2" secondAttribute="centerY" id="axp-R0-uwc"/>
-                                                <constraint firstItem="oVQ-P4-RP7" firstAttribute="centerY" secondItem="2gb-10-3j2" secondAttribute="centerY" id="bGQ-2A-A0g"/>
-                                                <constraint firstAttribute="trailing" secondItem="zGw-dV-oe5" secondAttribute="trailing" constant="30" id="eZz-Qf-Zhb"/>
-                                                <constraint firstItem="oVQ-P4-RP7" firstAttribute="leading" secondItem="2gb-10-3j2" secondAttribute="leading" constant="30" id="lVe-ik-fKs"/>
-                                            </constraints>
-                                            <variation key="default">
-                                                <mask key="subviews">
-                                                    <exclude reference="zGw-dV-oe5"/>
-                                                    <exclude reference="oVQ-P4-RP7"/>
-                                                </mask>
-                                                <mask key="constraints">
-                                                    <exclude reference="bGQ-2A-A0g"/>
-                                                    <exclude reference="lVe-ik-fKs"/>
-                                                    <exclude reference="axp-R0-uwc"/>
-                                                    <exclude reference="eZz-Qf-Zhb"/>
-                                                </mask>
-                                            </variation>
-                                            <variation key="widthClass=compact">
-                                                <mask key="subviews">
-                                                    <include reference="zGw-dV-oe5"/>
-                                                    <include reference="oVQ-P4-RP7"/>
-                                                </mask>
-                                                <mask key="constraints">
-                                                    <include reference="bGQ-2A-A0g"/>
-                                                    <include reference="lVe-ik-fKs"/>
-                                                    <include reference="axp-R0-uwc"/>
-                                                    <include reference="eZz-Qf-Zhb"/>
-                                                </mask>
-                                            </variation>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection id="zm1-zK-7kI">
@@ -392,8 +294,6 @@
                     <connections>
                         <outlet property="longDurationSwitch" destination="OvW-eq-GOM" id="s1I-dZ-Di1"/>
                         <outlet property="mediumDurationSwitch" destination="mbu-JD-GNL" id="gp0-of-6Ch"/>
-                        <outlet property="notificationSwitch" destination="tiT-eH-Ibo" id="HsC-XA-O5g"/>
-                        <outlet property="recordSwitch" destination="zGw-dV-oe5" id="TGl-Pr-iqS"/>
                         <outlet property="shortDurationSwitch" destination="iO7-hi-cyb" id="KFr-op-Mnt"/>
                         <outlet property="testDurationSwitch" destination="2Ek-YY-GTM" id="XUm-1U-FYf"/>
                         <outlet property="typeLabel" destination="bz6-Wt-SnQ" id="uhl-iZ-xFP"/>
@@ -417,16 +317,17 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
+                    <navigationItem key="navigationItem" title="生词本" id="ySe-zb-6cw"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Yui-Rx-OL0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1669.5" y="2331"/>
+            <point key="canvasLocation" x="1668" y="2347"/>
         </scene>
-        <!--About View Controller-->
+        <!--关于-->
         <scene sceneID="SYJ-gN-3sA">
             <objects>
                 <tableViewController id="cLY-Rj-2UT" customClass="XZAboutViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="cwU-KR-4AM">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="static" style="grouped" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="cwU-KR-4AM">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.92156862745098034" green="0.92156862745098034" blue="0.94509803921568625" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -590,19 +491,20 @@
                             <outlet property="delegate" destination="cLY-Rj-2UT" id="pkl-Pj-70B"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="关于" id="Aqr-c7-Id8"/>
                     <connections>
                         <outlet property="iconImage" destination="Y8b-1w-IOu" id="sSS-eW-UdB"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2yB-Ez-UVY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2389.5" y="2331"/>
+            <point key="canvasLocation" x="2390" y="2346"/>
         </scene>
         <!--Update instruction-->
         <scene sceneID="Trg-TT-kFZ">
             <objects>
                 <tableViewController id="wNs-Mb-MtP" userLabel="Update instruction" customClass="XZUpdateViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="EEx-Ci-eIs">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="EEx-Ci-eIs">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -664,16 +566,17 @@
                             <outlet property="delegate" destination="wNs-Mb-MtP" id="3Hp-cW-hVd"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="更新说明" id="x4d-Fl-w7Y"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7Do-OH-bdd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3084" y="2327.5862068965521"/>
+            <point key="canvasLocation" x="3135" y="2346"/>
         </scene>
         <!--更多-->
         <scene sceneID="GSJ-0D-v4X">
             <objects>
                 <tableViewController id="I7U-so-QV8" customClass="XZMoreViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="q5Q-LF-Onl">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="q5Q-LF-Onl">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1037,11 +940,11 @@
             </objects>
             <point key="canvasLocation" x="1669.5" y="1594"/>
         </scene>
-        <!--Type Picker View Controller-->
+        <!--词库类型-->
         <scene sceneID="qn1-ch-Ib4">
             <objects>
                 <tableViewController id="d3v-7m-LyH" customClass="XZTypePickerViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="UTg-cn-wia">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="UTg-cn-wia">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1072,6 +975,7 @@
                             <outlet property="delegate" destination="d3v-7m-LyH" id="gxb-NP-E0T"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="词库类型" id="ONu-Z8-xuU"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hji-sd-EeJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1096,7 +1000,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="E1h-Ir-PAi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2389.5" y="3085"/>
+            <point key="canvasLocation" x="2390" y="3072"/>
         </scene>
         <!--历史记录-->
         <scene sceneID="KQt-Xc-jnd">
@@ -1184,7 +1088,7 @@
             </objects>
             <point key="canvasLocation" x="4591.5" y="1163"/>
         </scene>
-        <!--Meaning View Controller-->
+        <!--词条释义-->
         <scene sceneID="Ise-Rg-xc4">
             <objects>
                 <viewController id="1e5-r7-g3s" customClass="XZMeaningViewController" sceneMemberID="viewController">
@@ -1197,6 +1101,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
+                    <navigationItem key="navigationItem" title="词条释义" id="Whg-Jm-hFf"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lLq-3m-H6I" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1292,7 +1197,7 @@
                                     <action selector="guessWrong" destination="TJt-Qd-Jnq" eventType="touchUpInside" id="Lnp-AP-aDs"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2NG-m5-I6A">
+                            <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2NG-m5-I6A">
                                 <rect key="frame" x="46" y="108" width="33" height="33"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="Z0g-L4-Q0M">
@@ -1762,6 +1667,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="FMG-co-Z0A"/>
-        <segue reference="JsJ-ZT-NiD"/>
+        <segue reference="Ufv-58-o2p"/>
     </inferredMetricsTieBreakers>
 </document>

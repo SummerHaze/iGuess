@@ -33,6 +33,10 @@
     self.tableView.tableHeaderView = [[UIView alloc]initWithFrame:frame];
 }
 
+#pragma mark - Table view delegate
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
 
 
 @end

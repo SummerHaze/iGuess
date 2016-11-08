@@ -52,28 +52,20 @@
 }
 
 #pragma mark - Life cycle
-//- (void)awakeFromNib {
-//    DDLogDebug(@"awakeFromNib");
-//}
-
-- (void)viewDidLoad {
-//    DDLogDebug(@"viewDidLoad");
-    [super viewDidLoad];    // 添加自定义倒计时view
-    self.countDownView.frame = self.view.frame;
-    NSLog(@"2self.view.frame: %f, %f", self.view.frame.size.width, self.view.frame.size.height);
-    [self.view addSubview:self.countDownView];
-}
-
 - (id)initWithCoder:(NSCoder *)aDecoder {
-//    DDLogDebug(@"initWithCoder");
     if ((self = [super initWithCoder:aDecoder])) {
         self.hidesBottomBarWhenPushed = YES;
     }
     return self;
 }
 
+- (void)viewDidLoad {
+    [super viewDidLoad];    // 添加自定义倒计时view
+    self.countDownView.frame = self.view.frame;
+    [self.view addSubview:self.countDownView];
+}
+
 - (void)viewWillAppear:(BOOL)animated {
-//    DDLogDebug(@"viewWillAppear");
     [super viewWillAppear:animated];
     
     [self.navigationController setNavigationBarHidden:YES animated:NO];
@@ -88,7 +80,6 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-//    DDLogDebug(@"viewDidAppear");
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(applicationDidEnterBackground)
                                                  name:UIApplicationDidEnterBackgroundNotification
@@ -106,17 +97,12 @@
     second = 3;
     [self startCoverCountDown];
     [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow: 3.0f]];
-//    for (int i=0; i<3; i++) {
-//        sleep(1);
-//        [self.countDownView setText:[NSString stringWithFormat:@"%d",3-i]];
-//    }
     [self.countDownView removeFromSuperview];
     
     // 动画调整布局，添加摄像头layer
     if (self.game.record.boolValue == 1) {
         // 布局动画
         [self initVideoAnimation];
-//        self.puzzleLabel.font = [UIFont fontWithName:@"Arial" size:40];
         // 启动视频录制
         if (_videoEngine == nil) {
             // 此处的尺寸，仅影响preview layer的frame，与视频文件尺寸无关
@@ -135,7 +121,6 @@
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-//    DDLogDebug(@"viewWillDisappear");
     [super viewWillDisappear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:NO];
 }
@@ -150,7 +135,6 @@
 }
 
 - (void)dealloc {
-//    DDLogDebug(@"dealloc");
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -202,7 +186,7 @@
 - (XZVideoEngine *)videoEngine {
     if (_videoEngine == nil) {
         _videoEngine = [[XZVideoEngine alloc] init];
-        //        _videoEngine.delegate = self;
+        // _videoEngine.delegate = self;
     }
     return _videoEngine;
 }
@@ -345,7 +329,6 @@
     [self.game guessRight];
     [self puzzlesAnimation];
     self.puzzleLabel.text = [self.game getNextPuzzle];
-
 }
 
 - (IBAction)guessWrong {
@@ -358,9 +341,14 @@
     if ([self.controlButton.currentBackgroundImage isEqual: pauseImage]) {
         [self.controlButton setBackgroundImage:playImage forState:UIControlStateNormal];
         [self pauseCountDown:gameTimer];
+        // 计时器暂停期间，答题按钮disable
+        self.passButton.enabled = NO;
+        self.failButton.enabled = NO;
     } else if ([self.controlButton.currentBackgroundImage isEqual: playImage]) {
         [self.controlButton setBackgroundImage:pauseImage forState:UIControlStateNormal];
         [self resumeCountDown:gameTimer];
+        self.passButton.enabled = YES;
+        self.failButton.enabled = YES;
     }
 }
 

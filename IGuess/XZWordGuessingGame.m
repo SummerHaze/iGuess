@@ -49,7 +49,7 @@ static const NSInteger JISUANJI_COUNTS = 132;
 }
 
 // 获取下一个词条
-- (NSString *)getNextPuzzle{
+- (NSString *)getNextPuzzle {
     NSString *nextPuzzle;
     nextPuzzle = [self.puzzles objectAtIndex:self.guessedWordsCounts];
     self.currentPuzzle = nextPuzzle;

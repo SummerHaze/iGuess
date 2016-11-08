@@ -46,7 +46,7 @@
     XZResultDetailItem *item = [self.delegate getResultDetailItem:cell];
     XZDBOperation *operation = [[XZDBOperation alloc]init];
     
-    UITableView *tableView = (UITableView *)self.superview;
+    UIView *rootView = (UIView *)self.superview.superview.superview;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     // 添加生词
@@ -56,7 +56,7 @@
         BOOL saveResult= [operation saveToResults:@"INSERT INTO notes (result,id,round,name) VALUES(:result,:id,:round,:name);" results:@[item]];
         
         // hud提示操作成功
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:tableView animated:YES];
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:rootView animated:YES];
         hud.mode = MBProgressHUDModeText;
         hud.offset = CGPointMake(0.f, 100.f);
         hud.alpha = 0.8f;
@@ -75,7 +75,7 @@
         BOOL deleteResult = [operation deleteFromResults:sql];
         
         // hud提示删除成功
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:tableView animated:YES];
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:rootView animated:YES];
         hud.mode = MBProgressHUDModeText;
         hud.offset = CGPointMake(0.f, 100.0f);
         hud.alpha = 0.8f;

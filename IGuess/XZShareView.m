@@ -151,7 +151,6 @@ NSInteger shareType; // 0：分享App，1：分享结果详情页
         NSData *imageData =UIImagePNGRepresentation([UIImage imageNamed:@"AppShare"]);
         imageObj.imageData = imageData;
     } else if (shareType == 1) {
-        // UIImage *image = [self addSlaveImage:[self takeSecondViewScreenShot] toMasterImage:[self takeFirstViewScreenShot]];
         UIImage *image = [self takeSecondViewScreenShot];
         NSData *imageData = UIImagePNGRepresentation(image);
         imageObj.imageData = imageData;
@@ -169,6 +168,12 @@ NSInteger shareType; // 0：分享App，1：分享结果详情页
 - (void)shareToWeiXinMoments {
     screenShotView = (UIView *)self.superview;
     
+    for (UIView *view in screenShotView.subviews) {
+        if ([view isKindOfClass:[UITableView class]]) {
+            tableView = (UITableView *)view;
+        }
+    }
+    
     [self removeFromSuperview];
     
     //创建发送对象实例
@@ -178,17 +183,21 @@ NSInteger shareType; // 0：分享App，1：分享结果详情页
     
     //创建分享内容对象
     WXMediaMessage *mediaMessage = [WXMediaMessage message];
+    [mediaMessage setThumbImage:[UIImage imageNamed:@"shareThumb"]];//分享图片,使用SDK的setThumbImage方法可压缩图片大小
     
     //创建多媒体对象
     WXImageObject *imageObj = [WXImageObject object];
     
     // 分享App
     if (shareType == 0) {
-        [mediaMessage setThumbImage:[UIImage imageNamed:@"shareThumb"]];//分享图片,使用SDK的setThumbImage方法可压缩图片大小
-        NSData *imageData = UIImagePNGRepresentation([UIImage imageNamed:@"AppShare"]);
+        //    urlMessage.title = @"一起来玩猜猜看吧！";//分享标题
+        //    urlMessage.description = @"简洁明了的猜词小游戏，那就是我";//分享描述
+        NSData *imageData =UIImagePNGRepresentation([UIImage imageNamed:@"AppShare"]);
         imageObj.imageData = imageData;
     } else if (shareType == 1) {
-
+        UIImage *image = [self takeSecondViewScreenShot];
+        NSData *imageData = UIImagePNGRepresentation(image);
+        imageObj.imageData = imageData;
     }
     
     //完成发送对象实例
@@ -273,13 +282,16 @@ NSInteger shareType; // 0：分享App，1：分享结果详情页
         
         image = UIGraphicsGetImageFromCurrentImageContext();
         
-        // tableView拖到最后一页时，tableView.layer内容均加载到内存（summ 猜测）
-        if ((imageNew != nil) && (i == page - 1)) {
+        if (page == 1) {
+            // 结果列表只有1页，直接截取
+            imageNew = [self addSlaveImage:image toMasterImage:[self takeFirstViewScreenShot]];
+        } else if ((page != 1) && (imageNew != nil) && (i == page - 1)) {
+            // 结果列表有多页，tableView拖到最后一页时截取，此时tableView.layer内容均加载到内存（summ 猜测)
             imageNew = [self addSlaveImage:image toMasterImage:imageNew];
-        } else {
+        } else if ((page != 1) && (imageNew == nil)) {
             imageNew = [self takeFirstViewScreenShot];
         }
-        
+
         yPoint += tableView.frame.size.height;
     }
     
@@ -339,16 +351,6 @@ NSInteger shareType; // 0：分享App，1：分享结果详情页
         navigationBarHeight = viewController.navigationController.navigationBar.frame.size.height;
         tabBarHeight = viewController.tabBarController.tabBar.frame.size.height;
     }
-}
-
-// 打水印
-- (UIImage *)makeWaterMark:(UIImage *)image {
-    // 调用方法传入一个image对象,想要添加的文字和文字所在位置
-    UIImage *imageWithWaterMark = [UIImage imageWithimage:image
-                                     content:@"猜猜看吧\n呵呵呵\n嘻嘻嘻\n呼呼呼"
-                                       frame:CGRectMake(100, 250, 100, 100)];
-    
-    return imageWithWaterMark;
 }
 
 @end

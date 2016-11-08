@@ -35,7 +35,7 @@
 
     NSString *encodingString = [self.name stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
 //    NSString *encodingString = [self.name stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSString *urlString = [NSString stringWithFormat:@"http://baike.baidu.com/item/%@", encodingString];
+    NSString *urlString = [NSString stringWithFormat:@"https://baike.baidu.com/item/%@", encodingString];
     DDLogDebug(@"request url is: %@", urlString);
     
     NSURL *url = [NSURL URLWithString: urlString];
