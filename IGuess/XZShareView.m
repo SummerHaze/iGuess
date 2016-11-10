@@ -67,7 +67,7 @@ NSInteger shareType; // 0：分享App，1：分享结果详情页
         [self.QQFriends setBackgroundImage:[UIImage imageNamed:@"share_qq"] forState:UIControlStateNormal];
         [self.QZone setBackgroundImage:[UIImage imageNamed:@"share_qzone"] forState:UIControlStateNormal];
         [self.line setBackgroundColor:[UIColor lightGrayColor]];
-        [self.cancel setTitle:@"Cancel" forState:UIControlStateNormal];
+        [self.cancel setTitle:@"取消" forState:UIControlStateNormal];
         [self.cancel setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
         
         // button绑定事件
@@ -208,6 +208,7 @@ NSInteger shareType; // 0：分享App，1：分享结果详情页
     [WXApi sendReq:sendReq];
 }
 
+// summ 待实现
 - (void)shareToQQFriends {
     [self removeFromSuperview];
     

@@ -11,11 +11,11 @@
 #import "XZResultDetailItem.h"
 #import "XZSetting.h"
 
-static const NSInteger TMP_DURATION = 10;
-static const int INIT_ITEM_COUNTS = 300;  //首次取出来的词条数
-static const NSInteger CHENGYU_COUNTS = 4634;
-static const NSInteger BUDAIXI_COUNTS = 12400;
-static const NSInteger JISUANJI_COUNTS = 132;
+static const NSInteger DEFAULT_DURATION = 60;  // 不做任何设置情况下的默认游戏时长
+static const int INIT_ITEM_COUNTS = 300;       // 首次取出来的词条数
+static const NSInteger CHENGYU_COUNTS = 4634;  // 成语数据库的词条数目，如果数据库变更，此处也要变更
+static const NSInteger BUDAIXI_COUNTS = 12400; // 布袋戏数据库的词条数目，如果数据库变更，此处也要变更
+static const NSInteger JISUANJI_COUNTS = 132;  // 计算机数据库的词条数目，如果数据库变更，此处也要变更
 
 @interface XZWordGuessingGame()
 
@@ -70,8 +70,8 @@ static const NSInteger JISUANJI_COUNTS = 132;
 }
 
 #pragma mark - DBOperation
+// 生成[from, to]范围内的随机整数
 - (int)getRandomNumber:(int)from to:(int)to {
-    // 生成[from, to]范围内的随机整数
     return (int)(from + (arc4random() % (to - from + 1)));
 }
 
@@ -82,6 +82,7 @@ static const NSInteger JISUANJI_COUNTS = 132;
     NSString *query;
     NSMutableString *IDs = [[NSMutableString alloc]initWithString:@"("];
     
+    // 根据类型选择不同数据库
     if ([type isEqualToString: @"成语"]) {
         totalWordsCounts = CHENGYU_COUNTS;
     } else if ([type isEqualToString: @"计算机"]) {
@@ -92,6 +93,7 @@ static const NSInteger JISUANJI_COUNTS = 132;
         DDLogError(@"play >>> 加载 >>> 词库: %@", type);
     }
     
+    // 随机获取INIT_ITEM_COUNTS个词条ID
     if (totalWordsCounts > INIT_ITEM_COUNTS) {
         for (int i=1; i<=INIT_ITEM_COUNTS; i++) {
             random = [self getRandomNumber:1 to:totalWordsCounts];
@@ -110,6 +112,7 @@ static const NSInteger JISUANJI_COUNTS = 132;
         }
     }
     
+    // 随机从所选词条中出词语
     if ([type isEqualToString: @"成语"]) {
         query = [NSString stringWithFormat:@"SELECT * FROM chengyu where ID in %@ order by random()",IDs];
     } else if ([type isEqualToString: @"计算机"]) {
@@ -176,7 +179,7 @@ static const NSInteger JISUANJI_COUNTS = 132;
             NSDictionary *settingsBefore=[NSKeyedUnarchiver unarchiveObjectWithFile:path];
             duration = [settingsBefore objectForKey:@"duration"];
         } else {
-            duration = [NSNumber numberWithInt:TMP_DURATION];
+            duration = [NSNumber numberWithInt:DEFAULT_DURATION]; // 不做任何设置下的默认游戏时长
         }
         
         NSMutableArray *keys = [[NSMutableArray alloc]init];
@@ -217,7 +220,6 @@ static const NSInteger JISUANJI_COUNTS = 132;
 }
 
 - (NSString *)plistFilePath {
-//    DDLogVerbose(@"plistFilePath : %@",[[self documentsDirectory]stringByAppendingPathComponent:@"Settings.plist"]);
     return [[self documentsDirectory]stringByAppendingPathComponent:@"Settings.plist"];
 }
 

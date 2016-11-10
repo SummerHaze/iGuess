@@ -29,7 +29,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <switch opaque="NO" tag="3000" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2Ek-YY-GTM">
+                                                <switch opaque="NO" tag="3000" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="2Ek-YY-GTM">
                                                     <rect key="frame" x="296" y="6.5" width="51" height="31"/>
                                                 </switch>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10s" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kpJ-ii-oEe">
@@ -78,7 +78,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <switch opaque="NO" tag="3000" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="iO7-hi-cyb">
+                                                <switch opaque="NO" tag="3000" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iO7-hi-cyb">
                                                     <rect key="frame" x="296" y="6.5" width="51" height="31"/>
                                                 </switch>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="60s" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yrg-nI-7v7">
@@ -395,7 +395,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="45.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="版本 V1.0.0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="xzj-wu-Jtv">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="版本 V1.1.1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="xzj-wu-Jtv">
                                                     <rect key="frame" x="15" y="0.0" width="345" height="45.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -518,7 +518,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="111.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" tag="1010" contentMode="scaleToFill" text="版本V1.0.0   1.  终于可以简单玩猜词游戏啦 2.  猜不中的难词可以添加进生词本哦 3.  不同类型词库任君享用" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="NBt-Xg-d67">
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" tag="1010" contentMode="scaleToFill" text="版本V1.1.0   1.  终于可以简单玩猜词游戏啦 2.  猜不中的难词可以添加进生词本哦 3.  不同类型词库任君享用" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="NBt-Xg-d67">
                                                     <rect key="frame" x="14" y="0.0" width="361" height="111.5"/>
                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -554,6 +554,53 @@
                                                     <include reference="Qk4-74-wGk"/>
                                                     <include reference="bvm-mI-YoW"/>
                                                     <include reference="n2N-Yy-mqS"/>
+                                                </mask>
+                                            </variation>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="112" id="ZF4-xh-UbS">
+                                        <rect key="frame" x="0.0" y="112" width="375" height="112"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZF4-xh-UbS" id="GsQ-dR-OGC">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="111.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" tag="1010" contentMode="scaleToFill" text="版本V1.1.1  1.  修复了分享小Bug，放心推荐给朋友吧 2.  修复了评论小Bug，可以精确找到我 3.  默认游戏时长不再是转瞬即逝的10s" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="dMf-IA-rCC">
+                                                    <rect key="frame" x="14" y="0.0" width="361" height="111.5"/>
+                                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="textColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences" enablesReturnKeyAutomatically="YES"/>
+                                                </textView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="dMf-IA-rCC" firstAttribute="leading" secondItem="GsQ-dR-OGC" secondAttribute="leading" id="7oh-hq-9Ag">
+                                                    <variation key="widthClass=compact" constant="14"/>
+                                                </constraint>
+                                                <constraint firstAttribute="bottom" secondItem="dMf-IA-rCC" secondAttribute="bottom" id="SuB-et-xc9"/>
+                                                <constraint firstAttribute="trailing" secondItem="dMf-IA-rCC" secondAttribute="trailing" id="Z4V-yC-TBg"/>
+                                                <constraint firstItem="dMf-IA-rCC" firstAttribute="top" secondItem="GsQ-dR-OGC" secondAttribute="top" id="ny6-0W-tZ5"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="subviews">
+                                                    <exclude reference="dMf-IA-rCC"/>
+                                                </mask>
+                                                <mask key="constraints">
+                                                    <exclude reference="7oh-hq-9Ag"/>
+                                                    <exclude reference="SuB-et-xc9"/>
+                                                    <exclude reference="Z4V-yC-TBg"/>
+                                                    <exclude reference="ny6-0W-tZ5"/>
+                                                </mask>
+                                            </variation>
+                                            <variation key="widthClass=compact">
+                                                <mask key="subviews">
+                                                    <include reference="dMf-IA-rCC"/>
+                                                </mask>
+                                                <mask key="constraints">
+                                                    <include reference="7oh-hq-9Ag"/>
+                                                    <include reference="SuB-et-xc9"/>
+                                                    <include reference="Z4V-yC-TBg"/>
+                                                    <include reference="ny6-0W-tZ5"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>

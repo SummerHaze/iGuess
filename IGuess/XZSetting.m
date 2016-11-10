@@ -8,7 +8,7 @@
 
 #import "XZSetting.h"
 
-static const NSInteger tmpDuration = 10;
+static const NSInteger defaultDuration = 60;  // 不做任何设置情况下的游戏默认时长
 
 @interface XZSetting()
 
@@ -30,7 +30,7 @@ static const NSInteger tmpDuration = 10;
         NSDictionary *settingsBefore=[NSKeyedUnarchiver unarchiveObjectWithFile:path];
         self.duration = [[settingsBefore objectForKey:@"duration"] intValue];
     } else {
-        self.duration = tmpDuration;  // 容错，如果duration为空，则默认置为10s
+        self.duration = defaultDuration;  // 容错，如果duration为空，则默认置为10s
     }
     DDLogVerbose(@"加载 >>> 时长: %ld", (long)self.duration);
     
@@ -130,7 +130,6 @@ static const NSInteger tmpDuration = 10;
 }
 
 - (NSString *)plistFilePath {
-//    DDLogVerbose(@"plistFilePath : %@",[[self documentsDirectory]stringByAppendingPathComponent:@"Settings.plist"]);
     return [[self documentsDirectory]stringByAppendingPathComponent:@"Settings.plist"];
 }
 

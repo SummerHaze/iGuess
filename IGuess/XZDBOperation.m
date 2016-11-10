@@ -26,6 +26,8 @@
     NSString *name;
     NSMutableArray *words;
     words = [NSMutableArray arrayWithCapacity:MIN(initItemCounts,totalWordsCounts)];
+    
+    // 读数据
     while ([s next]) {
 //        wordId = [s intForColumn:@"ID"];
 //        type = [s stringForColumn:@"TYPE"];

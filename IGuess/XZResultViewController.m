@@ -40,14 +40,6 @@
 }
 
 #pragma mark - Life cycle
-//- (id)initWithCoder:(NSCoder *)aDecoder {
-//    if ((self = [super initWithCoder:aDecoder])) {
-//        self.hidesBottomBarWhenPushed = YES;
-//    }
-//    return self;
-//}
-
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.tableView.tableFooterView=[[UIView alloc]init];

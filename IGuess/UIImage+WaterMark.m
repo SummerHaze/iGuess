@@ -11,7 +11,7 @@
 @implementation UIImage (WaterMark)
 
 + (UIImage *)imageWithimage:(UIImage *)image content:(NSString *)content frame:(CGRect)frame {
-    // 开启图形'上下文'
+    // 开启图形上下文
     UIGraphicsBeginImageContextWithOptions(image.size, NO, 0);
     // 绘制原生图片
     [image drawAtPoint:CGPointZero];
