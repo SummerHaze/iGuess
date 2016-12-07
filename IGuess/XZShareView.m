@@ -151,7 +151,7 @@ NSInteger shareType; // 0：分享App，1：分享结果详情页
         NSData *imageData =UIImagePNGRepresentation([UIImage imageNamed:@"AppShare"]);
         imageObj.imageData = imageData;
     } else if (shareType == 1) {
-        UIImage *image = [self takeSecondViewScreenShot];
+        UIImage *image = [self takeScreenShot];
         NSData *imageData = UIImagePNGRepresentation(image);
         imageObj.imageData = imageData;
     }
@@ -195,7 +195,7 @@ NSInteger shareType; // 0：分享App，1：分享结果详情页
         NSData *imageData =UIImagePNGRepresentation([UIImage imageNamed:@"AppShare"]);
         imageObj.imageData = imageData;
     } else if (shareType == 1) {
-        UIImage *image = [self takeSecondViewScreenShot];
+        UIImage *image = [self takeScreenShot];
         NSData *imageData = UIImagePNGRepresentation(image);
         imageObj.imageData = imageData;
     }
@@ -225,7 +225,7 @@ NSInteger shareType; // 0：分享App，1：分享结果详情页
 
 
 
-- (UIImage *)takeFirstViewScreenShot {
+- (UIImage *)takeHeaderViewScreenShot {
     UIImage *image = nil;
     XZStatisticView *statView;
     CGSize size = CGSizeMake(self.frame.size.width, 36);
@@ -257,7 +257,7 @@ NSInteger shareType; // 0：分享App，1：分享结果详情页
 
 }
 
-- (UIImage *)takeSecondViewScreenShot {
+- (UIImage *)takeScreenShot {
     UIImage *image = nil;
     UIImage *imageNew = nil;
     float yPoint = 0;
@@ -285,12 +285,12 @@ NSInteger shareType; // 0：分享App，1：分享结果详情页
         
         if (page == 1) {
             // 结果列表只有1页，直接截取
-            imageNew = [self addSlaveImage:image toMasterImage:[self takeFirstViewScreenShot]];
+            imageNew = [self addSlaveImage:image toMasterImage:[self takeHeaderViewScreenShot]];
         } else if ((page != 1) && (imageNew != nil) && (i == page - 1)) {
             // 结果列表有多页，tableView拖到最后一页时截取，此时tableView.layer内容均加载到内存（summ 猜测)
             imageNew = [self addSlaveImage:image toMasterImage:imageNew];
         } else if ((page != 1) && (imageNew == nil)) {
-            imageNew = [self takeFirstViewScreenShot];
+            imageNew = [self takeHeaderViewScreenShot];
         }
 
         yPoint += tableView.frame.size.height;

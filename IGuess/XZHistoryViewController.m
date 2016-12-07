@@ -88,8 +88,13 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    XZHistoryCell *cell = (XZHistoryCell *)[tableView dequeueReusableCellWithIdentifier:@"HistoryItem" forIndexPath:indexPath];
-    
+    static NSString *cellIdentifier = @"HistoryItem";
+    XZHistoryCell *cell = (XZHistoryCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    if (cell == nil) {
+        cell = [[XZHistoryCell alloc]initWithStyle:UITableViewCellStyleDefault
+                                     reuseIdentifier:cellIdentifier];
+    }
+
     if ([resultsSortedByRound count]) {
         // results数据库有数据，展示结果列表
         XZResultItem *item = resultsCountedByRound[indexPath.row];

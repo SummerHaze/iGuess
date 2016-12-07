@@ -39,6 +39,11 @@
     NSInteger fail;
 }
 
+//- (void)awakeFromNib {
+//    
+//}
+
+
 #pragma mark - Life cycle
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -145,7 +150,14 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    XZResultDetailCell *cell = (XZResultDetailCell *)[tableView dequeueReusableCellWithIdentifier:@"CurrentResult" forIndexPath:indexPath];
+//    XZResultDetailCell *cell = (XZResultDetailCell *)[tableView dequeueReusableCellWithIdentifier:@"CurrentResult" forIndexPath:indexPath];
+    
+    static NSString *cellIdentifier = @"CurrentResult";
+    XZResultDetailCell *cell = (XZResultDetailCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    if (cell == nil) {
+        cell = [[XZResultDetailCell alloc]initWithStyle:UITableViewCellStyleDefault
+                                   reuseIdentifier:cellIdentifier];
+    }
     
     XZResultDetailItem *item = self.results[indexPath.row];
     NSInteger count = [notes count];
