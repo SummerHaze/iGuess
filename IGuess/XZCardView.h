@@ -13,6 +13,7 @@
 @protocol XZCardViewDelegate <NSObject>
 
 - (void)showMeaningWebview:(XZCardView *)cardView;
+@property (nonatomic, copy) NSString *str;
 
 @end
 

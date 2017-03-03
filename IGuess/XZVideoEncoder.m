@@ -27,11 +27,11 @@
     _path = nil;
 }
 
-//WCLRecordEncoder遍历构造器的
+//XZRecordEncoder遍历构造器的
 + (XZVideoEncoder*)encoderForPath:(NSString*)path Height:(NSInteger)cy width:(NSInteger)cx channels:(int)ch samples:(Float64)rate
 {
-    XZVideoEncoder *enc = [XZVideoEncoder alloc];
-    return [enc initPath:path Height:cy width:cx channels:ch samples:rate];
+    XZVideoEncoder *enc = [[XZVideoEncoder alloc]initPath:path Height:cy width:cx channels:ch samples:rate];
+    return enc;
 }
 
 //初始化方法
@@ -60,7 +60,7 @@
 //初始化视频输入
 - (void)initVideoInputHeight:(NSInteger)cy width:(NSInteger)cx {
     //录制视频的一些配置，分辨率，编码方式等等
-    NSDictionary* settings = [NSDictionary dictionaryWithObjectsAndKeys:
+    NSDictionary *settings = [NSDictionary dictionaryWithObjectsAndKeys:
                                 AVVideoCodecH264, AVVideoCodecKey,
                                 [NSNumber numberWithInteger: cx], AVVideoWidthKey,
                                 [NSNumber numberWithInteger: cy], AVVideoHeightKey,

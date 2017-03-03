@@ -290,9 +290,9 @@
         // 游戏结束强制弹框
         UIAlertController *alertController =
         [UIAlertController alertControllerWithTitle:@"游戏结束"
-                                            message:[NSString stringWithFormat:@"PASS: %ld\nFAIL: %ld",(long)passCount, (long)failCount]
-                                            // 视频录制功能暂时不开放
-//                                            message:[NSString stringWithFormat:@"PASS: %ld\n FAIL: %ld\n 如有录制视频,请在本地相册查看",(long)passCount, (long)failCount]
+//                                            message:[NSString stringWithFormat:@"PASS: %ld\nFAIL: %ld",(long)passCount, (long)failCount]
+//                                             视频录制功能暂时不开放
+                                            message:[NSString stringWithFormat:@"PASS: %ld\n FAIL: %ld\n 如有录制视频,请在本地相册查看",(long)passCount, (long)failCount]
                                      preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"再来一轮"
                                                          style:UIAlertActionStyleCancel

@@ -12,4 +12,6 @@
 
 + (UIImage *)imageWithimage:(UIImage *)image content:(NSString *)content frame:(CGRect)frame;
 
+@property (nonatomic, copy) NSString *str;
+
 @end

@@ -144,7 +144,7 @@ static const NSInteger JISUANJI_COUNTS = 132;  // 计算机数据库的词条数
 - (void)saveSingleResult:(NSString *)name result:(NSString *)result {
     // 要用毫秒时间戳形式存储游戏时间，否则点击过快可能造成两次的时间相同，添加进字典失败
     NSDate *dat = [NSDate dateWithTimeIntervalSinceNow:0];
-    NSTimeInterval interval = [dat timeIntervalSince1970]*1000;
+    NSTimeInterval interval = [dat timeIntervalSince1970] * 1000;
     NSString *timestamp = [NSString stringWithFormat:@"%.0f", interval];
     
     XZResultDetailItem *item = [[XZResultDetailItem alloc]init];

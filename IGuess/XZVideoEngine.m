@@ -44,10 +44,9 @@
 
 @implementation XZVideoEngine
 
-#pragma mark - public方法
+#pragma mark - public方法，管理视频录制进度
 //启动录制
 - (void)startUp {
-    //    NSLog(@"启动录制功能");
     self.startTime = CMTimeMake(0, 0);
     self.isCapturing = NO;
     self.isPaused = NO;
@@ -71,7 +70,6 @@
 - (void) startCapture {
     @synchronized(self) {
         if (!self.isCapturing) {
-            //            NSLog(@"开始录制");
             self.videoEncoder = nil;
             self.isPaused = NO;
             self.isDisconnected = NO;
@@ -171,6 +169,7 @@
 //    [NSArray arrayWithObject:[NSValue valueWithCMTime:thumbTime]] completionHandler:generatorHandler];
 //}
 
+#pragma mark - getter
 //捕获到的视频呈现的layer
 - (AVCaptureVideoPreviewLayer *)previewLayer {
     if (_previewLayer == nil) {
@@ -200,21 +199,27 @@
             [_recordSession addOutput:self.videoOutput];
             //设置视频的分辨率
             // 此处设置的分辨率，影响视频输出流的尺寸
-            _cx = 1280;
-            _cy = 720;
+            _cx = 720;
+            _cy = 1280;
         }
         //添加音频输出
         if ([_recordSession canAddOutput:self.audioOutput]) {
             [_recordSession addOutput:self.audioOutput];
         }
         //设置视频录制的方向
-        DDLogDebug(@"support video orientation : %d", self.videoConnection.isVideoOrientationSupported);
         self.videoConnection.videoOrientation = AVCaptureVideoOrientationPortrait;
     }
     return _recordSession;
 }
 
-#pragma mark - AVFoundation input
+//获取videoSession的videoConnection对象，用于管理视频方向等——解决了录制的视频是横向的问题
+- (AVCaptureConnection *)videoConnection {
+    if (_videoConnection == nil) {
+        _videoConnection = [self.videoOutput connectionWithMediaType:AVMediaTypeVideo];
+    }
+    return _videoConnection;
+}
+
 //后置摄像头输入
 - (AVCaptureDeviceInput *)backCameraInput {
     if (_backCameraInput == nil) {
@@ -252,7 +257,6 @@
     return _audioMicInput;
 }
 
-#pragma mark - AVFoundation output
 //视频输出
 - (AVCaptureVideoDataOutput *)videoOutput {
     if (_videoOutput == nil) {
@@ -260,9 +264,10 @@
         // 设置delegate，在captureQueue中调用captureOutput获取frame。queue必须是serial queue，保证frame的有序传递
         [_videoOutput setSampleBufferDelegate:self queue:self.captureQueue];
         // 设置硬件解码器输出格式，提高转码效率
-        NSDictionary* capSettings = [NSDictionary dictionaryWithObjectsAndKeys:
-                                        [NSNumber numberWithInt:kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange],kCVPixelBufferPixelFormatTypeKey,
-                                        nil];
+        NSDictionary *capSettings = [NSDictionary dictionaryWithObjectsAndKeys:
+                                     [NSNumber numberWithInt:kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange],
+                                     kCVPixelBufferPixelFormatTypeKey,
+                                     nil];
         _videoOutput.videoSettings = capSettings;
     }
     return _videoOutput;
@@ -307,8 +312,9 @@
 //    }
 //}
 
-//用来返回是前置摄像头还是后置摄像头
-- (AVCaptureDevice *)cameraWithPosition:(AVCaptureDevicePosition) position {
+
+//返回是前置摄像头还是后置摄像头
+- (AVCaptureDevice *)cameraWithPosition:(AVCaptureDevicePosition)position {
     //返回和视频录制相关的所有默认设备
     NSArray *devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
     //遍历这些设备返回跟position相关的设备
@@ -320,26 +326,26 @@
     return nil;
 }
 
-//开启闪光灯
-- (void)openFlashLight {
-    AVCaptureDevice *backCamera = [self backCamera];
-    if (backCamera.torchMode == AVCaptureTorchModeOff) {
-        [backCamera lockForConfiguration:nil];
-        backCamera.torchMode = AVCaptureTorchModeOn;
-        backCamera.flashMode = AVCaptureFlashModeOn;
-        [backCamera unlockForConfiguration];
-    }
-}
-//关闭闪光灯
-- (void)closeFlashLight {
-    AVCaptureDevice *backCamera = [self backCamera];
-    if (backCamera.torchMode == AVCaptureTorchModeOn) {
-        [backCamera lockForConfiguration:nil];
-        backCamera.torchMode = AVCaptureTorchModeOff;
-        backCamera.flashMode = AVCaptureTorchModeOff;
-        [backCamera unlockForConfiguration];
-    }
-}
+////开启闪光灯
+//- (void)openFlashLight {
+//    AVCaptureDevice *backCamera = [self backCamera];
+//    if (backCamera.torchMode == AVCaptureTorchModeOff) {
+//        [backCamera lockForConfiguration:nil];
+//        backCamera.torchMode = AVCaptureTorchModeOn;
+//        backCamera.flashMode = AVCaptureFlashModeOn;
+//        [backCamera unlockForConfiguration];
+//    }
+//}
+////关闭闪光灯
+//- (void)closeFlashLight {
+//    AVCaptureDevice *backCamera = [self backCamera];
+//    if (backCamera.torchMode == AVCaptureTorchModeOn) {
+//        [backCamera lockForConfiguration:nil];
+//        backCamera.torchMode = AVCaptureTorchModeOff;
+//        backCamera.flashMode = AVCaptureTorchModeOff;
+//        [backCamera unlockForConfiguration];
+//    }
+//}
 
 //录制的队列
 - (dispatch_queue_t)captureQueue {
@@ -350,8 +356,9 @@
 }
 
 
-#pragma mark - 存储视频
+#pragma mark - AVCaptureAudioDataOutputSampleBufferDelegate
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection {
+    
     BOOL isVideo = YES;
     @synchronized(self) {
         if (!self.isCapturing || self.isPaused) {
@@ -360,6 +367,7 @@
         if (captureOutput != self.videoOutput) {
             isVideo = NO;
         }
+        
         //初始化编码器，当有音频和视频参数时创建编码器
         if ((self.videoEncoder == nil) && !isVideo) {
             CMFormatDescriptionRef fmt = CMSampleBufferGetFormatDescription(sampleBuffer);
@@ -392,13 +400,15 @@
 //            _lastVideo.flags = 0;
 //            _lastAudio.flags = 0;
 //        }
+        
         // 增加sampleBuffer的引用计时,这样我们可以释放这个或修改这个数据，防止在修改时被释放
         CFRetain(sampleBuffer);
-        if (_timeOffset.value > 0) {
-            CFRelease(sampleBuffer);
-            //根据得到的timeOffset调整
-            sampleBuffer = [self adjustTime:sampleBuffer by:_timeOffset];
-        }
+//        if (_timeOffset.value > 0) {
+//            CFRelease(sampleBuffer);
+//            //根据得到的timeOffset调整
+//            sampleBuffer = [self adjustTime:sampleBuffer by:_timeOffset];
+//        }
+        
 //        // 记录暂停上一次录制的时间
 //        CMTime pts = CMSampleBufferGetPresentationTimeStamp(sampleBuffer);
 //        CMTime dur = CMSampleBufferGetDuration(sampleBuffer);
@@ -451,7 +461,7 @@
     BOOL isDir = NO;
     NSFileManager *fileManager = [NSFileManager defaultManager];
     
-      // summ 很奇怪，为什么要判断videos下面是否有文件？先注释掉
+      // 为什么要判断videos下面是否有文件？先注释掉
 //    // 该existed仅能表示videoCacheDir中是否有文件或文件夹，路径本身是否是文件夹的判断结果，存储在isDir中
 //    BOOL existed = [fileManager fileExistsAtPath:videoCacheDir isDirectory:&isDir];
 //    // 本身不是文件夹，或目录下没有文件和文件夹，则创建videos文件夹
@@ -498,7 +508,7 @@
     return sout;
 }
 
-#pragma mark - 切换动画
+// 切换动画
 //- (void)changeCameraAnimation {
 //    CATransition *changeAnimation = [CATransition animation];
 //    changeAnimation.delegate = self;
